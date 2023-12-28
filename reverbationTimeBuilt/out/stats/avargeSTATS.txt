@@ -1,0 +1,14 @@
+***This is computation of revarbation time of file avarge.wav ***
+
+
+***************************************************************************
+
+
+Decreasement of 10 dB was first recognized in 0.13773 s	time10 is 0.826377
+Decreasement of 20 dB was first recognized in 0.29424 s	time20 is 0.882719
+Decreasement of 30 dB was first recognized in 0.494574 s	time30 is 0.989147
+
+Bigest decrease was 37.3153 dB in time 0.757511	tmax is 1.21802
+
+
+Avarged t60 is 0.979065 s

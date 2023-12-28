@@ -1,0 +1,14 @@
+***This is computation of revarbation time of file example5.wav ***
+
+
+***************************************************************************
+
+
+Decreasement of 10 dB was first recognized in 0.118948 s	time10 is 0.713685
+Decreasement of 20 dB was first recognized in 0.313021 s	time20 is 0.939062
+Decreasement of 30 dB was first recognized in 0.494574 s	time30 is 0.989147
+
+Bigest decrease was 35.552 dB in time 0.582219	tmax is 0.982592
+
+
+Avarged t60 is 0.906122 s
