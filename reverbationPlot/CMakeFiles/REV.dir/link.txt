@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/REV.dir/src/libs/myFile.cpp.o CMakeFiles/REV.dir/src/libs/stats.cpp.o CMakeFiles/REV.dir/src/libs/surface.cpp.o CMakeFiles/REV.dir/src/main.cpp.o -o REV 

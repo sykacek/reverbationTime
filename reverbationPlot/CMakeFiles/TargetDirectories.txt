@@ -1,5 +1,0 @@
-/home/mike/Desktop/reverbationPlot/CMakeFiles/REV.dir
-/home/mike/Desktop/reverbationPlot/CMakeFiles/STATS.dir
-/home/mike/Desktop/reverbationPlot/CMakeFiles/ALL.dir
-/home/mike/Desktop/reverbationPlot/CMakeFiles/edit_cache.dir
-/home/mike/Desktop/reverbationPlot/CMakeFiles/rebuild_cache.dir
