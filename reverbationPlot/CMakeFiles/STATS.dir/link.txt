@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/STATS.dir/src/libs/myFile.cpp.o CMakeFiles/STATS.dir/src/libs/stats.cpp.o CMakeFiles/STATS.dir/src/libs/surface.cpp.o CMakeFiles/STATS.dir/src/statsMain.cpp.o -o STATS 
