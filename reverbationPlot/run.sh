@@ -1,6 +1,6 @@
 #! /bin/bash
 
-mkdir build
+mkdir build out out/data out/images out/stats
 cmake -S . -B build
 cmake build
 cmake --build build
