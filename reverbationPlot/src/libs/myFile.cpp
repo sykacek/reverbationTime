@@ -17,10 +17,10 @@ std::string fileLib::nameProtect(std::string fileName)
 
 void fileLib::message(std::string text, bool mode)
 {
-    if(mode == true)
-        std::cout << "Soubor " << text << " byl otevřen\n";
-    else 
-        std::cout << "Soubor " << text << " byl zavřen\n";
+    //if(mode == true)
+        //std::cout << "Soubor " << text << " byl otevřen\n";
+    //else 
+        //std::cout << "Soubor " << text << " byl zavřen\n";
     
 
 }
@@ -33,7 +33,7 @@ uint32_t fileLib::fileLenght(std::string fileName)
 
     if(testName.is_open()){
 
-        std::cout << "(fileLenght)";
+        //std::cout << "(fileLenght)";
         message(fileName, true);
         uint32_t i = 0;
         double temp;
@@ -42,8 +42,8 @@ uint32_t fileLib::fileLenght(std::string fileName)
 
             testName >> temp;
             if(!testName){
-                std::cout << "(fileLenght)velikost souboru " << fileName << " je " << i << " řádků\n";
-                std::cout << "(fileLenght)";
+                //std::cout << "(fileLenght)velikost souboru " << fileName << " je " << i << " řádků\n";
+                //std::cout << "(fileLenght)";
                 message(fileName, false);
                 return i;
             }
@@ -52,11 +52,11 @@ uint32_t fileLib::fileLenght(std::string fileName)
 
         testName.close();
 
-        std::cout << "(fileLenght)";
+        //std::cout << "(fileLenght)";
         message(fileName, false);
         
     } else{
-        std::cout << "(FileLenght)Soubor " << fileName << " nebyl nalezen\n";
+        //std::cout << "(FileLenght)Soubor " << fileName << " nebyl nalezen\n";
     }
     return (uint32_t) 0;
 }
@@ -67,7 +67,7 @@ uint32_t fileLib::fileLineLenght(std::string fileName)
 
     if(read.is_open())
     {
-        std::cout << "(fileLineLenght)";
+        //std::cout << "(fileLineLenght)";
         message(fileName, true);
 
         std::string temp{0};
@@ -79,12 +79,12 @@ uint32_t fileLib::fileLineLenght(std::string fileName)
             len ++;
         }
 
-        std::cout << "*(fileLineLenght)";
+        //std::cout << "*(fileLineLenght)";
         message(fileName, false);
 
         read.close();
 
-        std::cout << "len is " << len << "\n";
+        //std::cout << "len is " << len << "\n";
 
         return len;
     }
@@ -111,7 +111,7 @@ uint32_t fileLib::arrayLenght(double array[])
 uint32_t fileLib::arrayLenght(std::vector<double> & vect)
 {
     uint32_t len = vect.size();
-    std::cout << "len is " << len << "\n";
+    //std::cout << "len is " << len << "\n";
     return len;
 }
 
@@ -137,12 +137,12 @@ bool fileLib::fileRead(std::string fileName, double readArray[])
 
     uint32_t amountOfValues;
 
-    std::cout << "(FileRead)";
+    //std::cout << "(FileRead)";
     amountOfValues = fileLenght(fileName);
 
     std::fstream testFile1(fileName, std::ios_base::in);
     if(testFile1.is_open()){
-        std::cout << "(fileRead)";
+        //std::cout << "(fileRead)";
         message(fileName, true);
         double *p = &readArray[0];
 
@@ -151,13 +151,13 @@ bool fileLib::fileRead(std::string fileName, double readArray[])
 
         testFile1.close();
 
-        std::cout << "(fileRead)";
+        //std::cout << "(fileRead)";
         message(fileName, false);
 
         return true;
 
     } else{
-        std::cout << "Soubor " << fileName << " se nepodařilo otevřít\n";
+        //std::cout << "Soubor " << fileName << " se nepodařilo otevřít\n";
     }
     return false;
 }
@@ -196,7 +196,7 @@ bool fileLib::fileRead(std::string fileName, std::vector<double> &readvector, ui
     if(file.is_open())
     {
         double temp;
-        std::cout << "(fileRead)";
+        //std::cout << "(fileRead)";
         message(fileName, true);
 
         uint32_t len = fileLenght(fileName);
@@ -212,13 +212,13 @@ bool fileLib::fileRead(std::string fileName, std::vector<double> &readvector, ui
         }
         
 
-        std::cout << "*(fileRead)";
+        //std::cout << "*(fileRead)";
         message(fileName, false);
         return true;
     }
     else
     {
-    std::cout << "file " << fileName << " was not opened\n";
+    //std::cout << "file " << fileName << " was not opened\n";
     return false;
     }
 }
@@ -230,7 +230,7 @@ bool fileLib::fileWrite(std::string fileName, double array1[])
     std::fstream file(fileName, std::ios_base::out);
 
     if(file.is_open()){
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, true);
 
         int lenght = fileLib::arrayLenght(array1);
@@ -243,7 +243,7 @@ bool fileLib::fileWrite(std::string fileName, double array1[])
         }
 
         file.close();
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, false);
         return true;
     } else
@@ -258,7 +258,7 @@ bool fileLib::fileWrite(std::string fileName, double array1[], double array2[])
     std::fstream file(fileName, std::ios_base::out);
 
     if(file.is_open()){
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, true);
 
         int lenght = fileLib::arrayLenght(array1);
@@ -272,12 +272,12 @@ bool fileLib::fileWrite(std::string fileName, double array1[], double array2[])
         }
 
         file.close();
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, false);
         return true;
     } else
     {
-        std::cout << "Soubor se nepodařilo otevřít\n";
+        //std::cout << "Soubor se nepodařilo otevřít\n";
         return false;
     }
 }
@@ -291,7 +291,7 @@ bool fileLib::fileWrite(std::string fileName, std::vector<double> &vect)
 
     if(file.is_open())
     {
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, true);
 
         for(int i = 0; i < len; i++)
@@ -299,7 +299,7 @@ bool fileLib::fileWrite(std::string fileName, std::vector<double> &vect)
             file << vect[i] << "\n";
         }
 
-        std::cout << "*(fileWrite)";
+        //std::cout << "*(fileWrite)";
         message(fileName, false);
         return true;
     }
@@ -319,14 +319,14 @@ bool fileLib::fileWrite(std::string fileName, std::vector<double> &one, std::vec
 
     if(file.is_open())
     {
-        std::cout << "(fileWrite)";
+        //std::cout << "(fileWrite)";
         message(fileName, true);
         for(int i = 0; i < len; i ++)
         {
             file << one[i] << "\t" << two[i] << "\n";
         }
 
-        std::cout << "*(fileWrite)";
+        //std::cout << "*(fileWrite)";
         message(fileName, false);
 
         return true;
@@ -347,22 +347,22 @@ bool fileLib::fileAppendLine(std::string fileName, double array1[])
     std::fstream file(fileName, std::ios_base::app);
     if(file.is_open())
     {
-        std::cout << "(fileAppend)";
+        //std::cout << "(fileAppend)";
         message(fileName, true);
 
         int fileLen = fileLib::arrayLenght(array1);
 
-        std::cout << "FileLen is " << fileLen << std::endl;
+        //std::cout << "FileLen is " << fileLen << std::endl;
 
         double * p = array1;
 
         for(int i = 0; i < fileLen; i++){
-            std::cout << i << "\n" << *(p + i);
+            //std::cout << i << "\n" << *(p + i);
             file << *(p + i) << "\n";
         }
 
         file.close();
-        std::cout << "(fileAppend)";
+        //std::cout << "(fileAppend)";
         message(fileName, false);
         return true;
 } else
@@ -376,24 +376,24 @@ bool fileLib::fileAppendTab(std::string fileName, double array1[])
     std::fstream file(fileName, std::ios_base::app);
     if(file.is_open())
     {
-        std::cout << "(fileAppend)";
+        //std::cout << "(fileAppend)";
         message(fileName, true);
 
         int fileLen = fileLib::arrayLenght(array1);
 
-        std::cout << "FileLen is " << fileLen << std::endl;
+        //std::cout << "FileLen is " << fileLen << std::endl;
 
         double * p = array1;
 
         for(int i = 0; i < fileLen; i++){
-            std::cout << i << "\n" << *(p + i);
+            //std::cout << i << "\n" << *(p + i);
             file << *(p + i) << "\t";
         }
 
         file << "\n";
 
         file.close();
-        std::cout << "(fileAppend)";
+        //std::cout << "(fileAppend)";
         message(fileName, false);
         return true;
 } else
@@ -410,7 +410,7 @@ bool fileLib::fileAproximation(std::string fileRead, std::string fileWrite, int 
 {
     if(fileWrite == "")
     {
-        //std::cout << "empty string \n";
+        ////std::cout << "empty string \n";
         fileWrite = "../src/temp/fileAproximation.txt";
     }
     std::fstream read(fileRead, std::ios_base::in);
@@ -418,7 +418,7 @@ bool fileLib::fileAproximation(std::string fileRead, std::string fileWrite, int 
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileAproximation)";
+        //std::cout << "(fileAproximation)";
         message(fileRead, true);
         message(fileWrite, true);
 
@@ -447,7 +447,7 @@ bool fileLib::fileAproximation(std::string fileRead, std::string fileWrite, int 
         }
 
 
-        std::cout << "(fileAproximation)";
+        //std::cout << "(fileAproximation)";
         message(fileRead, false);
         message(fileWrite, false);
 
@@ -456,7 +456,7 @@ bool fileLib::fileAproximation(std::string fileRead, std::string fileWrite, int 
 
         if(fileWrite == "../src/temp/fileAproximation.txt")
         {
-            std::cout << "working well\n";
+            //std::cout << "working well\n";
             fileCopy("../src/temp/fileAproximation.txt", fileRead);
         }
 
@@ -477,16 +477,16 @@ bool fileLib::fileExpand1(std::string fileRead, std::string fileWrite, int aprox
     fileRead = fileLib::nameProtect(fileRead);
     fileWrite = fileLib::nameProtect(fileWrite);
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     uint32_t fileLen = fileLenght(fileRead);
 
     uint32_t ratio = aproximate/fileLen;
 
-    //std::cout << "ratio is " << ratio << "\n";
+    ////std::cout << "ratio is " << ratio << "\n";
 
     double readArray[maxLen] = {};
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     bool done = fileLib::fileRead(fileRead, readArray);
     
     double writeArray[maxLen];
@@ -497,11 +497,11 @@ bool fileLib::fileExpand1(std::string fileRead, std::string fileWrite, int aprox
         for(int j = 0; j < ratio; j++)
         {
             writeArray[i*ratio + j] = readArray[i];
-            //std::cout << i*ratio + j << "\t" << writeArray[i*ratio + j] << "\n";
+            ////std::cout << i*ratio + j << "\t" << writeArray[i*ratio + j] << "\n";
         }
     } 
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     bool done1 = fileLib::fileWrite(fileWrite, writeArray);
 
 
@@ -514,16 +514,16 @@ bool fileLib::fileExpand2(std::string fileRead, std::string fileWrite, int aprox
     fileRead = fileLib::nameProtect(fileRead);
     fileWrite = fileLib::nameProtect(fileWrite);
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     uint32_t fileLen = fileLib::fileLenght(fileRead)/2;
 
     uint32_t ratio = fileLen/aproximate;
 
-    std::cout << "ratio is " << ratio << "\n";
+    //std::cout << "ratio is " << ratio << "\n";
 
     double readArray1[maxLen] = {}, readArray2[maxLen] = {}, writeArray1[maxLen] = {}, writeArray2[maxLen] = {};
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     bool done = fileLib::fileRead(fileRead, readArray1, readArray2);
     
 
@@ -534,11 +534,11 @@ bool fileLib::fileExpand2(std::string fileRead, std::string fileWrite, int aprox
             writeArray1[i*ratio + j] = readArray1[i];
             writeArray2[i*ratio + j] = readArray2[i];
 
-            std::cout << i*ratio + j << "\t" << writeArray1[i*ratio +j] << "\t" << writeArray2[i*ratio + j] << "\n";
+            //std::cout << i*ratio + j << "\t" << writeArray1[i*ratio +j] << "\t" << writeArray2[i*ratio + j] << "\n";
         }
     }
 
-    std::cout << "FILEAPROXIMATION";
+    //std::cout << "FILEAPROXIMATION";
     bool done1 = fileLib::fileWrite(fileWrite, writeArray1, writeArray2);
 
 
@@ -552,7 +552,7 @@ bool fileLib::arrayAproximation(double array1[], double array2[], int times)
     double * two = array2;
 
     int len = fileLib::arrayLenght(array1);
-    std::cout << "délka čtené řady je " << len << std::endl;
+    //std::cout << "délka čtené řady je " << len << std::endl;
 
     for(int i = 0; i < len; i++)
     {
@@ -563,7 +563,7 @@ bool fileLib::arrayAproximation(double array1[], double array2[], int times)
     }
 
     len = fileLib::arrayLenght(array2);
-   std::cout << "délka vypsané řady je " << len << "\n";
+   //std::cout << "délka vypsané řady je " << len << "\n";
 
     if(len > 0)
         return true;
@@ -576,13 +576,13 @@ bool fileLib::arrayAproximationTranspose(double array1[], double array2[], int t
 {
     int transpose = times/2;
 
-    //std::cout << "transpose is " << transpose << "\n";
+    ////std::cout << "transpose is " << transpose << "\n";
 
     bool a = fileLib::arrayAproximation(array1, array2, times);
 
     int len = fileLib::arrayLenght(array2);
 
-    //std::cout << "len is " << len << "\n";
+    ////std::cout << "len is " << len << "\n";
 
     double first = array2[0];
 
@@ -595,7 +595,7 @@ bool fileLib::arrayAproximationTranspose(double array1[], double array2[], int t
         else
         {
             *(p + i) = *(p + i + transpose);
-            //std::cout << *(p + i) << "\n";
+            ////std::cout << *(p + i) << "\n";
         }
         
     }
@@ -646,7 +646,7 @@ bool fileLib::fileCopy(std::string fileRead, std::string fileWrite, uint32_t num
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileCopy)";
+        //std::cout << "(fileCopy)";
         message(fileRead, true);
         message(fileWrite, true);
 
@@ -660,7 +660,7 @@ bool fileLib::fileCopy(std::string fileRead, std::string fileWrite, uint32_t num
         }
 
 
-        std::cout << "*(fileCopy)";
+        //std::cout << "*(fileCopy)";
         message(fileRead, false);
         message(fileWrite, false);
 
@@ -687,13 +687,13 @@ bool fileLib::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, u
 
     if(fileRead.is_open() && fileWrite.is_open())
     {
-        std::cout << "(fileLogCopy)";
+        //std::cout << "(fileLogCopy)";
         message(fileNameRead, true);
         message(fileNameWrite, true);
 
         double temp1, temp2, temp3;
         uint32_t len = fileLenght(fileNameRead);
-        std::cout << "len is " << len << "\n";
+        //std::cout << "len is " << len << "\n";
 
         for(uint32_t i = 0; i < len; i++)
         {
@@ -710,7 +710,7 @@ bool fileLib::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, u
             }
 
         }
-        std::cout << "*(fileLogCopy)";
+        //std::cout << "*(fileLogCopy)";
         message(fileNameRead, false);
         message(fileNameWrite, false);
 
@@ -769,7 +769,7 @@ uint32_t fileLib::minimumInCol(std::string fileName, uint32_t numOfCol, uint32_t
     {
         read >> temp;
         
-        //std::cout << "gfht\n";
+        ////std::cout << "gfht\n";
         
         if(counter % numOfCol == column)
         {
@@ -799,7 +799,7 @@ bool fileLib::fileFabs(std::string fileRead, std::string fileWrite, uint32_t num
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileFabs)";
+        //std::cout << "(fileFabs)";
         message(fileRead, true);
         message(fileWrite, true);
 
@@ -819,7 +819,7 @@ bool fileLib::fileFabs(std::string fileRead, std::string fileWrite, uint32_t num
         }
 
 
-        std::cout << "*(fileFabs)";
+        //std::cout << "*(fileFabs)";
         message(fileRead, false);
         message(fileWrite, false);
 
@@ -846,7 +846,7 @@ bool fileLib::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_t
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileColumnRemove)";
+        //std::cout << "(fileColumnRemove)";
         message(fileName, true);
 
         double temp;
@@ -855,7 +855,7 @@ bool fileLib::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_t
         if(eliminate == pos)
             pos--;
 
-        //std::cout << eliminate << "\t" << pos << "\n";
+        ////std::cout << eliminate << "\t" << pos << "\n";
 
         while(read)
         {
@@ -863,19 +863,19 @@ bool fileLib::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_t
             if(!read)
                 break;
             if(counter % numOfCol == eliminate)
-                ;//std::cout << "fasddf\n";
+                ;////std::cout << "fasddf\n";
             else 
                 write << temp << "\t";
             if(counter % numOfCol == pos)
                 write << "\n";
-            //std::cout << counter << "\n";
+            ////std::cout << counter << "\n";
             counter++;
 
         }
 
         read.close();
         write.close();
-        std::cout << "*(fileColumnRemove)";
+        //std::cout << "*(fileColumnRemove)";
         message(fileName, false);
 
         fileCopy("../src/temp/fileColumnRemove.txt", fileName);
@@ -896,17 +896,17 @@ bool fileLib::fileShortenOrdered(std::string fileName, uint32_t startPoint, doub
 
     if(startPoint == fileLineLenght(fileName) - 2)
     {
-        std::cout << "startPoint is bigger than lenght of file\n";
+        //std::cout << "startPoint is bigger than lenght of file\n";
         return false;
     }
-    std::cout << "fileName is " << fileName << "\n";
+    //std::cout << "fileName is " << fileName << "\n";
     std::fstream read1(fileName, std::ios_base::in);
    
     std::fstream write1("../src/temp/fileShortenOrdered.txt", std::ios_base::out);
 
     if(read1.is_open() && write1.is_open())
     {
-        std::cout << "(fileShortenOrdered)";
+        //std::cout << "(fileShortenOrdered)";
         message(fileName, true);
 
         double temp;
@@ -916,13 +916,13 @@ bool fileLib::fileShortenOrdered(std::string fileName, uint32_t startPoint, doub
         if(delta == 0)
             delta = temp;
 
-        std::cout << delta << "\n";
+        //std::cout << delta << "\n";
 
 
         for(uint32_t i = 1; i < 2*startPoint - 2; i++)
         {
             read1 >> temp;
-            //std::cout << i << "\t" << temp << "\n";
+            ////std::cout << i << "\t" << temp << "\n";
         }
         
         int counter = 0;
@@ -935,17 +935,17 @@ bool fileLib::fileShortenOrdered(std::string fileName, uint32_t startPoint, doub
             read1 >> temp;
             if(!read1)
                 break;
-            //std::cout << "counter is " << counter << "\t";
+            ////std::cout << "counter is " << counter << "\t";
             
             if(counter % 2 == 1)
             {
-                //std::cout << temp << "\n";
+                ////std::cout << temp << "\n";
                 write1 << temp << "\n";
             }
             else
             {
                 write1 << delta*i++ << "\t";
-                //std::cout << delta*i << "\n";
+                ////std::cout << delta*i << "\n";
             }
 
             counter++;
@@ -955,7 +955,7 @@ bool fileLib::fileShortenOrdered(std::string fileName, uint32_t startPoint, doub
         read1.close();
         write1.close();
 
-        std::cout << "*(fileShortenOrdered)";
+        //std::cout << "*(fileShortenOrdered)";
         message(fileName, false);
 
         fileCopy("../src/temp/fileShortenOrdered.txt", fileName);
@@ -977,15 +977,15 @@ bool fileLib::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t numOf
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileCutFromLine)";
+        //std::cout << "(fileCutFromLine)";
         message(fileName, true);
 
         uint32_t len = fileLineLenght(fileName);
 
         if(len < cut)
         {
-            std::cout << "cut line is bigger than size of file\n"
-            << "maximum len is " << len/numOfCol << " !\n";
+            //std::cout << "cut line is bigger than size of file\n"
+            //<< "maximum len is " << len/numOfCol << " !\n";
             return false;
         }
         else
@@ -1003,7 +1003,7 @@ bool fileLib::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t numOf
         read.close();
         write.close();
 
-        std::cout << "*(fileCutFromLine)";
+        //std::cout << "*(fileCutFromLine)";
         message(fileName, false);
 
         fileCopy("../src/temp/fileCutFromLine.txt", fileName);
@@ -1026,7 +1026,7 @@ bool fileLib::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOfC
 
     if(read.is_open() && write.is_open())
     {
-        std::cout << "(fileCutToLine)";
+        //std::cout << "(fileCutToLine)";
         message(fileName, true);
 
         std::string ligne;
@@ -1042,7 +1042,7 @@ bool fileLib::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOfC
         read.close();
         write.close();
 
-        std::cout << "*(fileCutToLine)";
+        //std::cout << "*(fileCutToLine)";
         message(fileName, false);
 
         fileCopy("../src/temp/fileCutToLine.dat", fileName, numOfCol);
@@ -1058,9 +1058,9 @@ bool fileLib::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOfC
 
 bool fileLib::filesAvarge(std::vector<std::string> &files, std::string fileWrite, uint32_t numOfCol, uint32_t order1, uint32_t order2)
 {
-    std::cout << "numOfCol is: " << numOfCol << "\n";
+    //std::cout << "numOfCol is: " << numOfCol << "\n";
     uint16_t len = files.size(), counter = 0;
-    std::cout << len << "\n";
+    //std::cout << len << "\n";
 
     std::fstream write(fileWrite, std::ios_base::out);
 
@@ -1128,7 +1128,7 @@ double fileLib::returnTimeFromValue(std::string fileName, double value, uint16_t
 
     if(read.is_open())
     {
-        std::cout << "(returnTimeFromValue)";
+        //std::cout << "(returnTimeFromValue)";
         message(fileName, true);
 
         double time, temp;
@@ -1144,7 +1144,7 @@ double fileLib::returnTimeFromValue(std::string fileName, double value, uint16_t
                 break;
 
         }
-        std::cout << "*(returnTimeFromValue)";
+        //std::cout << "*(returnTimeFromValue)";
         message(fileName, false);
         read.close();
         return time;
@@ -1168,7 +1168,7 @@ bool fileLib::loadFromPath(std::string path, std::vector<std::string> &files)
         return true;
     else
     {
-        std::cout << "folder is empty\n";
+        ////std::cout << "folder is empty\n";
         return false;
     }
 }
@@ -1179,7 +1179,7 @@ uint32_t fileLib::findLineFromDiff(std::string fileName, uint32_t startLine, dou
 
     if(read.is_open())
     {
-        std::cout << "(findLineFromDiff)";
+        ////std::cout << "(findLineFromDiff)";
         message(fileName, true);
 
         std::string line;
@@ -1204,7 +1204,7 @@ uint32_t fileLib::findLineFromDiff(std::string fileName, uint32_t startLine, dou
             if(counter++ % numofCol == column && temp < diff)
                 break;
         }
-        std::cout << "*(findLineFromDiff)";
+        ////std::cout << "*(findLineFromDiff)";
         message(fileName, false);
         read.close();
         return counter/numofCol;
@@ -1222,7 +1222,7 @@ double fileLib::biggestDecrease(std::string fileName, uint32_t startLine, uint16
 
     if(read.is_open())
     {
-        std::cout << "(biggestDecrease)";
+        ////std::cout << "(biggestDecrease)";
         message(fileName, true);
 
         double temp, maximum, start;
@@ -1258,7 +1258,7 @@ double fileLib::biggestDecrease(std::string fileName, uint32_t startLine, uint16
 
 
         read.close();
-        std::cout << "*(biggestDecrease)";
+        ////std::cout << "*(biggestDecrease)";
         message(fileName, false);
         return (start - maximum);
     }
@@ -1273,7 +1273,7 @@ double zeroProtect(double valueProtected)
 {
     if(valueProtected == 0)
     {
-        std::cout << "value " << valueProtected << " was protected from zero\n";
+        ////std::cout << "value " << valueProtected << " was protected from zero\n";
         return 1E-6;
     }
     else
@@ -1283,28 +1283,28 @@ double zeroProtect(double valueProtected)
 
 void etc::showArray(double array[])
 {
-    std::cout << "\nlenght of array is " << fileLib::arrayLenght(array) << "\n\n";
+    //std::cout << "\nlenght of array is " << fileLib::arrayLenght(array) << "\n\n";
     
     double * p = array;
     int i = 0;
 
     while(*(p + i) > 1e-250 && *(p +i) < 1e250)
     {
-        std::cout << *(p + i) << "\n";
+        ////std::cout << *(p + i) << "\n";
         i++;
     }
 }
 
 void etc::showArray(int array[])
 {
-    std::cout << "začátek měřené arraye\n\n";
+    ////std::cout << "začátek měřené arraye\n\n";
    
     int * p = array;
     int i = 0;
 
     while(*(p +i) != 0)
     {
-        std::cout << *(p +i) << "\n";
+        ////std::cout << *(p +i) << "\n";
         i++;
     }
 }
@@ -1312,10 +1312,10 @@ void etc::showArray(int array[])
 void etc::showArray(std::vector<double> &vect)
 {
     uint32_t len = vect.size();
-    std::cout << "len is " << len << "\n";
+    ////std::cout << "len is " << len << "\n";
 
-    for(int i = 0; i < len; i++)
-        std::cout << vect[i] << "\n";
+    //for(int i = 0; i < len; i++)
+        ////std::cout << vect[i] << "\n";
 }
 
 void etc::insertionSort(double array1[], double array2[])
@@ -1393,7 +1393,7 @@ inline void etc::quickSort(double array[], double array1[], int start, int end)
 bool etc::arraySum(double array1[], double array2[])
 {
     int len = fileLib::arrayLenght(array1);
-    //std::cout << "len is " << len << "\n";
+    ////std::cout << "len is " << len << "\n";
     insertionSort(array1, array2);
    
 
@@ -1404,7 +1404,7 @@ bool etc::arraySum(double array1[], double array2[])
     while(point < len )
     {
         diff = 1;
-        std::cout << "we are on " << point << "\n";
+        //std::cout << "we are on " << point << "\n";
         array1[counter] = array1[point];
         array2[counter] = array2[point];
         while(array1[point] == array1[point + diff])
@@ -1412,7 +1412,7 @@ bool etc::arraySum(double array1[], double array2[])
            
             array2[counter] += array2[point + diff];
            
-            std::cout << "we are on " << point << " + " << diff << "\n";
+            //std::cout << "we are on " << point << " + " << diff << "\n";
           
             array1[point + diff] = 0;
             array2[point + diff] = 0;
@@ -1448,7 +1448,7 @@ int etc::positionInArray(double array[], double wanted)
             return i;
     }
 
-    std::cout << "nothing was found\n";
+    //std::cout << "nothing was found\n";
     return 0;
 }
 
@@ -1462,7 +1462,7 @@ int etc::positionInArray(float array[], float wanted)
             return i;
     }
 
-    std::cout << "nothing was found\n";
+    //std::cout << "nothing was found\n";
     return 0;
 }
 
@@ -1477,6 +1477,6 @@ int etc::positionInArray(int array[], int wanted)
             return i;
     }
 
-    std::cout << "nothing was found\n";
+    //std::cout << "nothing was found\n";
     return 0;
 }

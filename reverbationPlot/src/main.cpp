@@ -62,8 +62,9 @@ int main()
             
         }
 
-        //minLen -= 2;
-        std::cout << "minLen is " << minLen << "\n";
+        
+        
+        //std::cout << "minLen is " << minLen << "\n";
 
         for(int i = 0; i < files.size(); i ++)
         {
