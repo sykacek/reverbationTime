@@ -13,7 +13,7 @@ You may fisrt need to give `run.sh` in parental directory execute permission
 ```sh
   chmod u+x run.sh
 ```
-after run `run.sh` script in by running
+after run `run.sh` script by running
 ```sh
   ./run.sh
   ```
