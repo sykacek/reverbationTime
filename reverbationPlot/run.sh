@@ -8,5 +8,5 @@ cp src/buildingFiles/* build/
 
 for file in build/*.sh
 do
-  chmod u+x $file
+	chmod u+x $file
 done
