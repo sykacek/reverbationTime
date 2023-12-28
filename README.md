@@ -20,7 +20,7 @@ and then in `build/` folder run
   make
   ```
 Output files will be written into `out/` folder, with gnuplot-generated graphs in `out/images/`, processed raw files inside `out/data/` folder
-and statistical data in .txt file are written in `out/stats/`.
-Name of each output file is copied from input audio file, for better recognition. It is recommended not to use _ inside file names because of gnuplot. 
-Data in `out/data/` files are starting from highest bit in whole audio file and from this place program is computing reverbation. In `out/stats/` files are printed values decreased by 10 dB, and highest
-messured decrease, if decrease of 60dB was not messured there is artihmetical avarge of values messured with 10dB steps and maximum decrease.
+and statistical data in .txt file are written in `out/stats/`. Output files ARE NOT cleared before NEW RUN automatically, you have to clear them manually. 
+Name of each output file is copied from input audio file, for better recognition. It is recommended not to use '_' inside file names because of gnuplot. 
+Data in `out/data/` files are starting from highest bit in whole audio file and from this place program is computing reverbation time. In `out/stats/` files are printed values decreased by 10 dB, and highest
+measured decrease, if decrease of 60dB was not measured there is artihmetical avarge of values measured with 10dB steps and maximum decrease.
