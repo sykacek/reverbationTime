@@ -1,6 +1,6 @@
 #! /bin/bash
 
-mkdir build out out/data out/images out/stats src/temp src/audioDatCopy
+mkdir build out out/data out/images out/stats src/temp src/audioDatCopy src/audioDat
 cmake -S . -B build
 cmake -DCMAKE_BUILD_TYPE=Release build
 cmake --build build
