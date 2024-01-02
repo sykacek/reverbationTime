@@ -12,10 +12,10 @@
 
 //Maximum lenght of array
 
-const int maxLen = 10000;
-const int maxSize = 100000;
+const uint32_t maxLen = 10000;
+const uint32_t maxSize = 100000;
 const uint8_t dim = 3;
-const int bufferSize = 64;
+const uint16_t bufferSize = 64;
 const uint16_t structMax = 20;
 
 
