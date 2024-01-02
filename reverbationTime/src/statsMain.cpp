@@ -36,7 +36,7 @@ int main()
         std::fstream write(path, std::ios_base::out);
         write << "***This is computation of revarbation time of file " << newName << ".wav ***\n\n";
 
-        write << "\n***************************************************************************\n\n";
+        write << "\n***************************************************************************\n\n\n";
 
         for(int j = 0; j < 6; j++)
         {
@@ -48,8 +48,8 @@ int main()
             if(time[j] > 0)
             {
                 revTime = time[j] * 60/(j*10 +10);
-                write << "\nDecreasement of " << j*10 + 10 << " dB was first recognized in " << time[j] << " s\t";
-                write << "time" << j*10 + 10 << " is " << revTime;
+                write << "Decreasement of " << j*10 + 10 << " dB was first measured in " << time[j] << " s\t";
+                write << "time" << j*10 + 10 << " is " << revTime << " s\n";
                 avarge += revTime;
                 counter++;
             }
