@@ -5,9 +5,9 @@ set terminal png
 do for[t in system("ls ../out/data/*.dat | cut -d/ -f4")]{
 #    print ''.t
     set output '../out/images/'.t.'.png'
-    set title 'Graf závislosti hladiny akustického tlaku na čase'
-    set xlabel 'čas [s]'
-    set ylabel 'hladina akustického tlaku [dB]'
+    set title 'Sound Pressure Level - time'
+    set xlabel 't [s]'
+    set ylabel 'SPL [dB]'
     plot '../out/data/'.t w l title 'soubor '.t
 
 }
