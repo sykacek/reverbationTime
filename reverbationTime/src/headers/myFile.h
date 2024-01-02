@@ -14,7 +14,7 @@
 
 const int maxLen = 10000;
 const int maxSize = 100000;
-const int dim = 3;
+const uint8_t dim = 3;
 const int bufferSize = 64;
 const uint16_t structMax = 20;
 
