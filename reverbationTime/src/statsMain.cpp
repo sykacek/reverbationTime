@@ -73,10 +73,10 @@ int main()
             avarge += revTime;
             counter++;
             
-            write << " dB in time " << tm << "\ttmax is " << revTime << "\n";
+            write << " dB in time " << tm << "\ttmax is " << revTime << " s\n";
         }
         
-        write << "\n\nAvarged t60 is " << avarge/counter << " s";
+        write << "\n\nAveraged t60 is " << avarge/counter << " s";
 
         write.close();
     }
