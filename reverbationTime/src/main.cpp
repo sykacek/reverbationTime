@@ -71,8 +71,8 @@ int main()
             fileLib::fileCutFromLine(files[i], minLen, 2);
         }
 
-        fileLib::filesAvarge(files, "../out/data/avarge.dat");
-        fileLib::fileLogCopy("../out/data/avarge.dat", "");
+        fileLib::filesAvarge(files, "../out/data/average.dat");
+        fileLib::fileLogCopy("../out/data/average.dat", "");
 
 
         fileLib::loadFromPath("../src/audioDatCopy/", files);
