@@ -5,7 +5,7 @@ mkdir build out out/data out/images out/stats src/temp src/audioDat src/audioDat
 cmake -S . -B build
 #cmake -DCMAKE_BUILD_TYPE=Release build
 cmake --build build
-cp src/buildingFiles/* build/
+cp src/buildf/* build/
 
 for file in build/*.sh
 do

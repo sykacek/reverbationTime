@@ -1,31 +1,50 @@
 # Reverbation Time
-Small program for plotting and analyzing reverbation from .wav files
-Program is running only on Linux, tested on Ubuntu 20. 04
 
-### dependencies
-Before building project you need to install dependencies
-```sh
-  sudo apt install sox gnuplot cmake make build-essential
-  ```
+ Utility for plotting and analyzing reverbation from .wav files.
 
-### build
-You may fisrt need to give `run.sh` in parental directory execute permission 
-```sh
-  chmod u+x run.sh
+## INTRO
+
+This project was made as tool for analyzing reverabation time for academic purposes. More than single executable program, the project is colection of already existing components connected together. Though there was still need to write compuation engine. Designing project this way allows higher customitization in sense of changing the components of the project.
+
+## INSTALL & RUN
+
+For detailed instruction please see [instalation guide](docs/INSTALL.md).
+
+## CUSTOMIZATION
+
+Before customization, look at 3 stages, how program works:
+
+1. Convert audio to the text format - sox
+2. Analyze data and create output data - C++ engine
+3. Plot data - gnuplot
+
+You can customize the project for your specific needs. There are many reasons why to replace some components, you may need higher performance, support more audio format or interpret data different way. C++ engine is working with text based files, so all those customizations are avaible
+
+#### HOW TO REPLACE SOX
+
+For converting audio you may use different utilities, but to keep compatibility with C++ engine you need to pass data in specific format. Only accepted format is tab-separated text files.
 ```
-after run `run.sh` script by running
-```sh
-  ./run.sh
-  ```
-This will create needed scripts and executables inside `build/` directory
-### analyze and plot samples
-Everytime you analyze audio, first put audio samples in directory `audioIn/`
-and then in `build/` directory run 
-```sh
-  make
-  ```
-Output files will be written into `out/` directory, with gnuplot-generated graphs in `out/images/`, processed raw files inside `out/data/` directory
-and statistical data in .txt file are written in `out/stats/`. Output files ARE NOT cleared before NEW RUN automatically, you have to clear them manually. 
-Name of each output file is copied from input audio file, for better recognition. It is recommended not to use '_' inside file names because of gnuplot. 
-Data in `out/data/` files are starting from highest bit in whole audio file and from this place program is computing reverbation time. In `out/stats/` files are printed values decreased by 10 dB, and highest
-measured decrease, if decrease of 60dB was not measured there is artihmetical avarge of values measured with 10dB steps and maximum decrease.
+  time 1    val 1
+  time 2    val 2
+  time 3    val 3
+  time 4    val 4
+  ...       ...
+  time n    val n
+```
+
+#### HOW TO REPLACE GNUPLOT
+
+Again, output files from C++ engine are in the same format as input files.
+```
+  time 1    val 1
+  time 2    val 2
+  time 3    val 3
+  time 4    val 4
+  ...       ...
+  time n    val n
+```
+
+### TESTS
+
+Because functions in C++ engine can be seen as generic string proccessing functions, you can use it as library.
+Results may be seen in `tests` directory, if you would like to execute the test please see [testing guide](docs/TESTING.md).

@@ -1,4 +1,15 @@
 #! /bin/bash
+if ! [[ -e *.wav ]]; then
+    echo "Error: no .wav file"
+    echo "Please insert any and try again"
+    exit 1
+fi
+
+
+if ! [[ -r *.wav ]]; then
+    echo "File is not readable!"
+    exit 1
+fi
 
 rm -r ../src/audioDat
 rm -r ../src/audioDatCopy
