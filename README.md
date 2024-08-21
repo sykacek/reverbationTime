@@ -47,3 +47,4 @@ Again, output files from C++ engine are in the same format as input files.
 ### TESTS
 
 Because functions in C++ engine can be seen as generic string proccessing functions, you can use it as library.
+Results may be seen in `tests` directory, if you would like to execute the test please see [testing guide](docs/TESTING.md).
