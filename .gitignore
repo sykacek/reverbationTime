@@ -1,3 +1,5 @@
+#generic CMake files
+
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
@@ -16,3 +18,6 @@ test/build
 
 #application build files
 build
+out
+src/audioDat
+src/temp
