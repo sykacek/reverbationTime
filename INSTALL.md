@@ -1,6 +1,6 @@
 ### INSTALLATION GUIDE 
 This document describes how to install and run the project for computing reverabtion time. 
-Think of this project as collection of tools more than single executable program. Although C++ files are build using CMake it is recommended to follow the guide below. Building with CMake manually won't prepare workspace completely (additional bash scripts won't be copied etc.)
+Think of this project as collection of tools more than single executable program. Although C++ files are build using CMake it is recommended to follow guide below. Building with CMake manually won't prepare workspace completely (additional bash scripts won't be copied etc.)
 
 First, install dependencies
 ```sh
@@ -17,7 +17,7 @@ then execute
 ```sh
     ./run.sh
 ```
-make sure you have right privileges, to obtain executable privilege execute
+make sure you have right privileges, to obtain executable privilege run
 ```sh
     chmod u+x run.sh
 ```
@@ -36,3 +36,5 @@ and then in `build` directory execute `make`
 ``````sh
   sudo apt install sox gnuplot cmake make build-essential
   ```
+
+which will generate output file located in `out` directory in the root of file
