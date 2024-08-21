@@ -21,3 +21,5 @@ build
 out
 src/audioDat
 src/temp
+
+!src/buildf/Makefile

@@ -1,5 +1,5 @@
 #! /bin/bash
-if ! [[ -e *.wav ]]; then
+if ! [[ -e audioIn/*.wav ]]; then
     echo "Error: no .wav file"
     echo "Please insert any and try again"
     exit 1
