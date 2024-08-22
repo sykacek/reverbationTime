@@ -1,12 +1,9 @@
-#include "headers/myFile.h"
-#include "headers/stats.h"
-
-
+#include "inc/txt_file.h"
 
 int main()
 {
     std::vector<std::string> files;
-    fileLib::loadFromPath("../out/data/", files);
+    txt_file::loadFromPath("../out/data/", files);
 
     double startValue{0}, startTime{0}, time[5];
 
@@ -43,7 +40,7 @@ int main()
             //std::cout << i << "\t" << j << "\n";
             double temp = -j*10 + startValue - 10, revTime;
             //std::cout << temp;
-            time[j] = fileLib::returnTimeFromValue(files[i], temp);
+            time[j] = txt_file::returnTimeFromValue(files[i], temp);
             time[j] -= startTime;
             if(time[j] > 0)
             {
@@ -61,11 +58,11 @@ int main()
         if(continuer == true)
         {
             double tm, value, revTime;
-            value = fileLib::biggestDecrease(files[i]);
+            value = txt_file::biggestDecrease(files[i]);
             write << "\n\nBigest decrease was " << value;
             value *= -1;
             value += startValue;
-            tm = fileLib::returnTimeFromValue(files[i], value);
+            tm = txt_file::returnTimeFromValue(files[i], value);
             tm -= startTime;
             value -= startValue;
             value *= -1;

@@ -1,0 +1,115 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/mike/Documents/code/C_C++/testing/reverbationTime/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+$(VERBOSE).SILENT	src/buildf/Makefile	/^$(VERBOSE).SILENT:$/;"	t
+$(VERBOSE)MAKESILENT	src/buildf/Makefile	/^$(VERBOSE)MAKESILENT = -s$/;"	m
+%	src/buildf/Makefile	/^% : %,v$/;"	t
+%	src/buildf/Makefile	/^% : RCS\/%$/;"	t
+%	src/buildf/Makefile	/^% : RCS\/%,v$/;"	t
+%	src/buildf/Makefile	/^% : SCCS\/s.%$/;"	t
+%	src/buildf/Makefile	/^% : s.%$/;"	t
+CACHE_BUFFER_SIZE	src/inc/txt_file.h	/^#define CACHE_BUFFER_SIZE /;"	d
+CMAKE_BINARY_DIR	src/buildf/Makefile	/^CMAKE_BINARY_DIR = \/home\/mike\/Desktop\/revCode\/build$/;"	m
+CMAKE_COMMAND	src/buildf/Makefile	/^CMAKE_COMMAND = \/usr\/bin\/cmake$/;"	m
+CMAKE_SOURCE_DIR	src/buildf/Makefile	/^CMAKE_SOURCE_DIR = \/home\/mike\/Desktop\/revCode$/;"	m
+DELTA	src/inc/txt_file.h	/^#define DELTA /;"	d
+EQUALS	src/buildf/Makefile	/^EQUALS = =$/;"	m
+FILE_DELTA	src/inc/txt_file.h	/^#define FILE_DELTA /;"	d
+PI	src/inc/txt_file.h	/^#define PI /;"	d
+PROCCESSING_BUFFER_SIZE	src/inc/txt_file.h	/^#define PROCCESSING_BUFFER_SIZE /;"	d
+REV	src/buildf/Makefile	/^REV: cmake_check_build_system$/;"	t
+REV/fast	src/buildf/Makefile	/^REV\/fast:$/;"	t
+RM	src/buildf/Makefile	/^RM = \/usr\/bin\/cmake -E rm -f$/;"	m
+SHELL	src/buildf/Makefile	/^SHELL = \/bin\/sh$/;"	m
+TEST	test/test.cpp	/^TEST(nameprotect, ret){$/;"	f
+__MYFILE_H__	src/inc/txt_file.h	/^#define __MYFILE_H__$/;"	d
+all	src/buildf/Makefile	/^all: cmake_check_build_system$/;"	t
+analyze	src/buildf/Makefile	/^analyze:$/;"	t
+arrayAproximation	src/lib/txt_file.cpp	/^bool txt_file::arrayAproximation(double array1[], double array2[], int times)$/;"	f	class:txt_file	typeref:typename:bool
+arrayAproximationTranspose	src/lib/txt_file.cpp	/^bool txt_file::arrayAproximationTranspose(double array1[], double array2[], int times)$/;"	f	class:txt_file	typeref:typename:bool
+arrayLenght	src/lib/txt_file.cpp	/^uint32_t txt_file::arrayLenght(double array[])$/;"	f	class:txt_file	typeref:typename:uint32_t
+arrayLenght	src/lib/txt_file.cpp	/^uint32_t txt_file::arrayLenght(std::vector<double> & vect)$/;"	f	class:txt_file	typeref:typename:uint32_t
+arraySum	src/lib/txt_file.cpp	/^bool etc::arraySum(double array1[], double array2[])$/;"	f	class:etc	typeref:typename:bool
+biggestDecrease	src/lib/txt_file.cpp	/^double txt_file::biggestDecrease(std::string fileName, uint32_t startLine, uint16_t numOfCol, ui/;"	f	class:txt_file	typeref:typename:double
+clean	src/buildf/Makefile	/^clean:$/;"	t
+cmake_check_build_system	src/buildf/Makefile	/^cmake_check_build_system:$/;"	t
+cmake_force	src/buildf/Makefile	/^cmake_force:$/;"	t
+columnsInLine	src/lib/txt_file.cpp	/^uint32_t txt_file::columnsInLine(std::string fileName)$/;"	f	class:txt_file	typeref:typename:uint32_t
+default_target	src/buildf/Makefile	/^default_target: analyze$/;"	t
+depend	src/buildf/Makefile	/^depend:$/;"	t
+edit_cache	src/buildf/Makefile	/^edit_cache:$/;"	t
+edit_cache/fast	src/buildf/Makefile	/^edit_cache\/fast: edit_cache$/;"	t
+etc	src/inc/txt_file.h	/^namespace etc$/;"	n
+fileAppendLine	src/lib/txt_file.cpp	/^bool txt_file::fileAppendLine(std::string fileName, double array1[])$/;"	f	class:txt_file	typeref:typename:bool
+fileAppendTab	src/lib/txt_file.cpp	/^bool txt_file::fileAppendTab(std::string fileName, double array1[])$/;"	f	class:txt_file	typeref:typename:bool
+fileAppendTab	src/lib/txt_file.cpp	/^bool txt_file::fileAppendTab(std::string fileNames[], std::string outFile, int len)$/;"	f	class:txt_file	typeref:typename:bool
+fileAproximation	src/lib/txt_file.cpp	/^bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int aproximate)$/;"	f	class:txt_file	typeref:typename:bool
+fileClear	src/lib/txt_file.cpp	/^bool txt_file::fileClear(std::string fileName)$/;"	f	class:txt_file	typeref:typename:bool
+fileColumnRemove	src/lib/txt_file.cpp	/^bool txt_file::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_t eliminate)$/;"	f	class:txt_file	typeref:typename:bool
+fileCopy	src/lib/txt_file.cpp	/^bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t numOfCol)$/;"	f	class:txt_file	typeref:typename:bool
+fileCutFromLine	src/lib/txt_file.cpp	/^bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t numOfCol)$/;"	f	class:txt_file	typeref:typename:bool
+fileCutToLine	src/lib/txt_file.cpp	/^bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOfCol)$/;"	f	class:txt_file	typeref:typename:bool
+fileExpand1	src/lib/txt_file.cpp	/^bool txt_file::fileExpand1(std::string fileRead, std::string fileWrite, int aproximate)$/;"	f	class:txt_file	typeref:typename:bool
+fileExpand2	src/lib/txt_file.cpp	/^bool txt_file::fileExpand2(std::string fileRead, std::string fileWrite, int aproximate)$/;"	f	class:txt_file	typeref:typename:bool
+fileFabs	src/lib/txt_file.cpp	/^bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t numOfCol)$/;"	f	class:txt_file	typeref:typename:bool
+fileLenght	src/lib/txt_file.cpp	/^uint32_t txt_file::fileLenght(std::string fileName)$/;"	f	class:txt_file	typeref:typename:uint32_t
+fileLineLenght	src/lib/txt_file.cpp	/^uint32_t txt_file::fileLineLenght(std::string fileName)$/;"	f	class:txt_file	typeref:typename:uint32_t
+fileLogCopy	src/lib/txt_file.cpp	/^bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint16_t numberI/;"	f	class:txt_file	typeref:typename:bool
+fileRead	src/lib/txt_file.cpp	/^bool txt_file::fileRead(std::string fileName, double readArray1[], double readArray2[])$/;"	f	class:txt_file	typeref:typename:bool
+fileRead	src/lib/txt_file.cpp	/^bool txt_file::fileRead(std::string fileName, double readArray[])$/;"	f	class:txt_file	typeref:typename:bool
+fileRead	src/lib/txt_file.cpp	/^bool txt_file::fileRead(std::string fileName, std::vector<double> &readvector, uint16_t NumberIn/;"	f	class:txt_file	typeref:typename:bool
+fileShortenOrdered	src/lib/txt_file.cpp	/^bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, double d)$/;"	f	class:txt_file	typeref:typename:bool
+fileWrite	src/lib/txt_file.cpp	/^bool txt_file::fileWrite(std::string fileName, double array1[])$/;"	f	class:txt_file	typeref:typename:bool
+fileWrite	src/lib/txt_file.cpp	/^bool txt_file::fileWrite(std::string fileName, double array1[], double array2[])$/;"	f	class:txt_file	typeref:typename:bool
+fileWrite	src/lib/txt_file.cpp	/^bool txt_file::fileWrite(std::string fileName, std::vector<double> &one, std::vector<double> &tw/;"	f	class:txt_file	typeref:typename:bool
+fileWrite	src/lib/txt_file.cpp	/^bool txt_file::fileWrite(std::string fileName, std::vector<double> &vect)$/;"	f	class:txt_file	typeref:typename:bool
+filesAvarge	src/lib/txt_file.cpp	/^bool txt_file::filesAvarge(std::vector<std::string> &files, std::string fileWrite, uint32_t numO/;"	f	class:txt_file	typeref:typename:bool
+findLineFromDiff	src/lib/txt_file.cpp	/^uint32_t txt_file::findLineFromDiff(std::string fileName, uint32_t startLine, double diff, uint1/;"	f	class:txt_file	typeref:typename:uint32_t
+help	src/buildf/Makefile	/^help:$/;"	t
+insertionSort	src/lib/txt_file.cpp	/^void etc::insertionSort(double array1[], double array2[])$/;"	f	class:etc	typeref:typename:void
+loadFromPath	src/lib/txt_file.cpp	/^bool txt_file::loadFromPath(std::string path, std::vector<std::string> &files)$/;"	f	class:txt_file	typeref:typename:bool
+logValue	src/lib/txt_file.cpp	/^bool txt_file::logValue(std::vector<double> &vect)$/;"	f	class:txt_file	typeref:typename:bool
+main	src/main.cpp	/^int main(void)$/;"	f	typeref:typename:int
+main	src/statsMain.cpp	/^int main()$/;"	f	typeref:typename:int
+main	test/test.cpp	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+maximumInCol	src/lib/txt_file.cpp	/^uint32_t txt_file::maximumInCol(std::string fileName, uint32_t numOfCol, uint32_t column)$/;"	f	class:txt_file	typeref:typename:uint32_t
+message	src/lib/txt_file.cpp	/^void txt_file::message(std::string text, bool mode)$/;"	f	class:txt_file	typeref:typename:void
+minimumInCol	src/lib/txt_file.cpp	/^uint32_t txt_file::minimumInCol(std::string fileName, uint32_t numOfCol, uint32_t column)$/;"	f	class:txt_file	typeref:typename:uint32_t
+nameProtect	src/lib/txt_file.cpp	/^static std::string txt_file::nameProtect(std::string fileName)$/;"	f	class:txt_file	typeref:typename:std::string	file:
+partition	src/lib/txt_file.cpp	/^inline int etc::partition(double array[], double array1[], int start, int end)$/;"	f	class:etc	typeref:typename:int
+positionInArray	src/lib/txt_file.cpp	/^int etc::positionInArray(double array[], double wanted)$/;"	f	class:etc	typeref:typename:int
+positionInArray	src/lib/txt_file.cpp	/^int etc::positionInArray(float array[], float wanted)$/;"	f	class:etc	typeref:typename:int
+positionInArray	src/lib/txt_file.cpp	/^int etc::positionInArray(int array[], int wanted)$/;"	f	class:etc	typeref:typename:int
+preinstall	src/buildf/Makefile	/^preinstall: all$/;"	t
+preinstall/fast	src/buildf/Makefile	/^preinstall\/fast:$/;"	t
+quickSort	src/lib/txt_file.cpp	/^inline void etc::quickSort(double array[], double array1[], int start, int end)$/;"	f	class:etc	typeref:typename:void
+rebuild_cache	src/buildf/Makefile	/^rebuild_cache:$/;"	t
+rebuild_cache/fast	src/buildf/Makefile	/^rebuild_cache\/fast: rebuild_cache$/;"	t
+removeAudioCache	src/buildf/Makefile	/^removeAudioCache:$/;"	t
+returnTimeFromValue	src/lib/txt_file.cpp	/^double txt_file::returnTimeFromValue(std::string fileName, double value, uint16_t numOfCol, uint/;"	f	class:txt_file	typeref:typename:double
+rmv	src/buildf/Makefile	/^rmv :$/;"	t
+showArray	src/lib/txt_file.cpp	/^void etc::showArray(double array[])$/;"	f	class:etc	typeref:typename:void
+showArray	src/lib/txt_file.cpp	/^void etc::showArray(int array[])$/;"	f	class:etc	typeref:typename:void
+showArray	src/lib/txt_file.cpp	/^void etc::showArray(std::vector<double> &vect)$/;"	f	class:etc	typeref:typename:void
+src/main.cpp.i	src/buildf/Makefile	/^src\/main.cpp.i:$/;"	t
+src/main.cpp.o	src/buildf/Makefile	/^src\/main.cpp.o:$/;"	t
+src/main.cpp.s	src/buildf/Makefile	/^src\/main.cpp.s:$/;"	t
+src/main.i	src/buildf/Makefile	/^src\/main.i: src\/main.cpp.i$/;"	t
+src/main.o	src/buildf/Makefile	/^src\/main.o: src\/main.cpp.o$/;"	t
+src/main.s	src/buildf/Makefile	/^src\/main.s: src\/main.cpp.s$/;"	t
+src/myFile.cpp.i	src/buildf/Makefile	/^src\/myFile.cpp.i:$/;"	t
+src/myFile.cpp.o	src/buildf/Makefile	/^src\/myFile.cpp.o:$/;"	t
+src/myFile.cpp.s	src/buildf/Makefile	/^src\/myFile.cpp.s:$/;"	t
+src/myFile.i	src/buildf/Makefile	/^src\/myFile.i: src\/myFile.cpp.i$/;"	t
+src/myFile.o	src/buildf/Makefile	/^src\/myFile.o: src\/myFile.cpp.o$/;"	t
+src/myFile.s	src/buildf/Makefile	/^src\/myFile.s: src\/myFile.cpp.s$/;"	t
+txt_file	src/inc/txt_file.h	/^namespace txt_file$/;"	n
+zeroProtect	src/lib/txt_file.cpp	/^double zeroProtect(double valueProtected)$/;"	f	typeref:typename:double

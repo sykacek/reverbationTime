@@ -168,15 +168,15 @@ src/myFile.i: src/myFile.cpp.i
 
 #create dat files from source audio
 analyze:
-	./createDat.sh
+	./dat_create.sh
 	./REV
-	./moveFromSrc.sh
+	./mvsrc.sh
 	./gnuplot.sh
 	./rename.sh
 	./STATS
 .PHONY : analyze
 
-rmv :
+rmv:
 	rm -r ../out/data ../out/images ../out/stats ../audioIn
 	mkdir -p ../out/data ../out/images ../out/stats ../audioIn
 .PHONY : rmv

@@ -23,3 +23,6 @@ src/audioDat
 src/temp
 
 !src/buildf/Makefile
+
+#VS CODE
+.vscode
