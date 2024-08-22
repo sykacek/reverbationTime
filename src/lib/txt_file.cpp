@@ -279,7 +279,7 @@ bool txt_file::fileAppendTab(std::string fileName, double array1[])
 bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int n)
 {
     if(fileWrite == "")
-        fileWrite = "src/temp/fileAproximation.txt";
+        fileWrite = DEST_FILEAPROXIMATION;
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -313,8 +313,8 @@ bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int
 
         read.close();
         write.close();
-        if(fileWrite == "src/temp/fileAproximation.txt")
-            fileCopy("src/temp/fileAproximation.txt", fileRead);
+        if(fileWrite == DEST_FILEAPROXIMATION)
+            fileCopy(DEST_FILEAPROXIMATION, fileRead);
 
         return true;
     } else {
@@ -378,7 +378,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t co
 
         std::string cut;
         while(read){
-            getline(read, cut);-
+            getline(read, cut);
             write << cut << "\n";
         }
         message(fileRead, false);
@@ -397,7 +397,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t co
 bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint16_t col_per_row, uint16_t order1, uint16_t order2)
 {
     if(fileNameWrite == "")
-        fileNameWrite = "src/temp/fileLogCopy.txt";
+        fileNameWrite = DEST_FILELOGCOPY;
 
     std::fstream fileRead(fileNameRead, std::ios_base::in);
     std::fstream fileWrite(fileNameWrite, std::ios_base::out);
@@ -425,8 +425,8 @@ bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, 
         fileRead.close();
         fileWrite.close();
 
-        if(fileNameWrite == "src/temp/fileLogCopy.txt")
-            fileCopy("src/temp/fileLogCopy.txt", fileNameRead);
+        if(fileNameWrite == DEST_FILELOGCOPY)
+            fileCopy(DEST_FILELOGCOPY, fileNameRead);
 
         return true;
     } else {
@@ -482,7 +482,7 @@ uint32_t txt_file::minimumInCol(std::string fileName, uint32_t col_per_row, uint
 bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per_row)
 {
     if(fileWrite == "")
-        fileWrite = "src/temp/fileFabs.txt";
+        fileWrite = DEST_FILEFABS;
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -510,8 +510,8 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t co
         read.close();
         write.close();
 
-        if(fileWrite == "src/temp/fileFabs.txt")
-            fileCopy("src/temp/fileFabs.txt", fileRead);
+        if(fileWrite == DEST_FILEFABS)
+            fileCopy(DEST_FILEFABS, fileRead);
 
         return true;
     } else {
@@ -523,7 +523,7 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t co
 bool txt_file::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t eliminate)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write("src/temp/fileColumnRemove.txt", std::ios_base::out);
+    std::fstream write(DEST_FILECOLUMNREMOVE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()) {
         message(fileName, true);
@@ -547,7 +547,7 @@ bool txt_file::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy("src/temp/fileColumnRemove.txt", fileName);
+        fileCopy(DEST_FILECOLUMNREMOVE, fileName);
 
         return true;
     } else {
@@ -565,7 +565,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         return false;
 
     std::fstream read1(fileName, std::ios_base::in);
-    std::fstream write1("src/temp/fileShortenOrdered.txt", std::ios_base::out);
+    std::fstream write1(DEST_FILESHORTENORDERED, std::ios_base::out);
 
     if(read1.is_open() && write1.is_open()){
         message(fileName, true);
@@ -594,7 +594,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         read1.close();
         write1.close();
         message(fileName, false);
-        fileCopy("src/temp/fileShortenOrdered.txt", fileName);
+        fileCopy(DEST_FILESHORTENORDERED, fileName);
 
         return true;
     } else {
@@ -606,7 +606,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
 bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_row)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write("src/temp/fileCutFromLine.txt", std::ios_base::out);
+    std::fstream write(DEST_FILECUTFROMLINE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()){
         message(fileName, true);
@@ -625,7 +625,7 @@ bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy("src/temp/fileCutFromLine.txt", fileName);
+        fileCopy(DEST_FILECUTFROMLINE, fileName);
 
         return true;
     } else {
@@ -637,7 +637,7 @@ bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_
 bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_per_row)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write("src/temp/fileCutToLine.dat", std::ios_base::out);
+    std::fstream write(DEST_FILECUTTOLINE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()){
         message(fileName, true);
@@ -653,7 +653,7 @@ bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_p
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy("src/temp/fileCutToLine.dat", fileName, col_per_row);
+        fileCopy(DEST_FILECUTTOLINE, fileName, col_per_row);
 
         return true;
     } else {

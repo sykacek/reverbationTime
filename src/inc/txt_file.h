@@ -30,6 +30,15 @@
 #define FILE_DELTA (0.5)
 #define PI (3.1415926)
 
+/* defualt file locations*/
+#define DEST_FILEAPROXIMATION           "fileAproximation.txt"
+#define DEST_FILECOLUMNREMOVE           "fileColumnRemove.txt"
+#define DEST_FILECUTFROMLINE            "fileCutFromLine.txt"
+#define DEST_FILECUTTOLINE              "fileCutToLine.txt"
+#define DEST_FILEFABS                   "fileFabs.txt"
+#define DEST_FILELOGCOPY                "fileLogCopy.txt"
+#define DEST_FILESHORTENORDERED         "fileShortenOrdered.txt"
+
 /**
  * Library functions for text handling
  */

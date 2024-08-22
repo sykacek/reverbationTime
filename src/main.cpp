@@ -1,6 +1,22 @@
 #include "inc/txt_file.h"
 #include <errno.h>
 
+#undef DEST_FILEAPROXIMATION 
+#undef DEST_FILECOLUMNREMOVE
+#undef DEST_FILECUTFROMLINE
+#undef DEST_FILECUTTOLINE
+#undef DEST_FILEFABS
+#undef DEST_FILELOGCOPY
+#undef DEST_FILESHORTENORDER
+
+#define DEST_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
+#define DEST_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
+#define DEST_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
+#define DEST_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
+#define DEST_FILEFABS                       "src/temp/fileFabstxt"
+#define DEST_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
+#define DEST_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
+
 int main(void)
 {
     //read file names
@@ -56,7 +72,6 @@ int main(void)
 
         txt_file::loadFromPath("src/audio_datcp/", files);
         for(int i = 0; i < files.size(); i++){
-            //txt_file::fileAproximation(files[i], "", 100);
             uint32_t max;
 
             max = txt_file::maximumInCol(files[i]);
