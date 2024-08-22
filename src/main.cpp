@@ -51,7 +51,7 @@ int main(void)
         for(int i = 0; i < files.size(); i ++){
             txt_file::fileCutFromLine(files[i], minLen, 2);
         }
-        txt_file::filesAvarge(files, "output/data/average.dat");
+        txt_file::filesAverage(files, "output/data/average.dat");
         txt_file::fileLogCopy("output/data/average.dat", "");
 
         txt_file::loadFromPath("src/audio_datcp/", files);
