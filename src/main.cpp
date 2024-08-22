@@ -3,12 +3,12 @@
 
 int main(void)
 {
+    //read file names
     std::vector<std::string> files;
-    txt_file::loadFromPath("../src/audio_dat/", files);
+    txt_file::loadFromPath("src/audio_dat/", files);
     int fils = files.size();
 
-    if(files.size() > 0)
-    {
+    if(files.size() > 0){
         uint32_t numOfCol, tempLen{0}, minLen = txt_file::fileLineLenght(files[0]),
         tempMax;
         std::string result, temp;

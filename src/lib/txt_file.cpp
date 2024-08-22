@@ -411,7 +411,7 @@ bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int
     if(fileWrite == "")
     {
         ////std::cout << "empty string \n";
-        fileWrite = "../src/temp/fileAproximation.txt";
+        fileWrite = "src/temp/fileAproximation.txt";
     }
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -454,10 +454,10 @@ bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int
         read.close();
         write.close();
 
-        if(fileWrite == "../src/temp/fileAproximation.txt")
+        if(fileWrite == "src/temp/fileAproximation.txt")
         {
             //std::cout << "working well\n";
-            fileCopy("../src/temp/fileAproximation.txt", fileRead);
+            fileCopy("src/temp/fileAproximation.txt", fileRead);
         }
 
 
@@ -671,7 +671,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t nu
     }
     else
     {
-        std::cout << "(fileCopy)unable to open files\n";
+        std::cout << "(fileCopy) unable to open files " << fileRead << "\n";
         return false;
     }
 }
@@ -679,7 +679,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t nu
 bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint16_t numberInRow, uint16_t order1, uint16_t order2)
 {
     if(fileNameWrite == "")
-        fileNameWrite = "../src/temp/fileLogCopy.txt";
+        fileNameWrite = "src/temp/fileLogCopy.txt";
 
     std::fstream fileRead(fileNameRead, std::ios_base::in);
     
@@ -717,14 +717,14 @@ bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, 
         fileRead.close();
         fileWrite.close();
 
-        if(fileNameWrite == "../src/temp/fileLogCopy.txt")
-            fileCopy("../src/temp/fileLogCopy.txt", fileNameRead);
+        if(fileNameWrite == "src/temp/fileLogCopy.txt")
+            fileCopy("src/temp/fileLogCopy.txt", fileNameRead);
 
         return true;
     }
     else
     {
-        std::cout << "(fileLogCopy)files were unable to open\n";
+        std::cout << "(fileLogCopy) failed to open files\n";
         return false;
     }
 
@@ -792,7 +792,7 @@ uint32_t txt_file::minimumInCol(std::string fileName, uint32_t numOfCol, uint32_
 bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t numOfCol)
 {
     if(fileWrite == "")
-        fileWrite = "../src/temp/fileFabs.txt";
+        fileWrite = "src/temp/fileFabs.txt";
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -826,8 +826,8 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t nu
         read.close();
         write.close();
 
-        if(fileWrite == "../src/temp/fileFabs.txt")
-            fileCopy("../src/temp/fileFabs.txt", fileRead);
+        if(fileWrite == "src/temp/fileFabs.txt")
+            fileCopy("src/temp/fileFabs.txt", fileRead);
 
         return true;
     }
@@ -842,7 +842,7 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t nu
 bool txt_file::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_t eliminate)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write("../src/temp/fileColumnRemove.txt", std::ios_base::out);
+    std::fstream write("src/temp/fileColumnRemove.txt", std::ios_base::out);
 
     if(read.is_open() && write.is_open())
     {
@@ -878,7 +878,7 @@ bool txt_file::fileColumnRemove(std::string fileName, uint16_t numOfCol, uint16_
         //std::cout << "*(fileColumnRemove)";
         message(fileName, false);
 
-        fileCopy("../src/temp/fileColumnRemove.txt", fileName);
+        fileCopy("src/temp/fileColumnRemove.txt", fileName);
 
         return true;
     }
@@ -902,7 +902,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
 
     //std::cout << "fileName is " << fileName << "\n";
     std::fstream read1(fileName, std::ios_base::in);
-    std::fstream write1("../src/temp/fileShortenOrdered.txt", std::ios_base::out);
+    std::fstream write1("src/temp/fileShortenOrdered.txt", std::ios_base::out);
 
     if(read1.is_open() && write1.is_open())
     {
@@ -940,7 +940,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         //std::cout << "*(fileShortenOrdered)";
         message(fileName, false);
 
-        fileCopy("../src/temp/fileShortenOrdered.txt", fileName);
+        fileCopy("src/temp/fileShortenOrdered.txt", fileName);
 
         return true;
     }
@@ -954,7 +954,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
 bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t numOfCol)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write("../src/temp/fileCutFromLine.txt", std::ios_base::out);
+    std::fstream write("src/temp/fileCutFromLine.txt", std::ios_base::out);
 
 
     if(read.is_open() && write.is_open())
@@ -988,7 +988,7 @@ bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t numO
         //std::cout << "*(fileCutFromLine)";
         message(fileName, false);
 
-        fileCopy("../src/temp/fileCutFromLine.txt", fileName);
+        fileCopy("src/temp/fileCutFromLine.txt", fileName);
 
         return true;
     }
@@ -1003,7 +1003,7 @@ bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOf
 {
     std::fstream read(fileName, std::ios_base::in);
 
-    std::fstream write("../src/temp/fileCutToLine.dat", std::ios_base::out);
+    std::fstream write("src/temp/fileCutToLine.dat", std::ios_base::out);
 
 
     if(read.is_open() && write.is_open())
@@ -1027,7 +1027,7 @@ bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t numOf
         //std::cout << "*(fileCutToLine)";
         message(fileName, false);
 
-        fileCopy("../src/temp/fileCutToLine.dat", fileName, numOfCol);
+        fileCopy("src/temp/fileCutToLine.dat", fileName, numOfCol);
 
         return true;
     }
