@@ -1,24 +1,20 @@
-#include "headers/myFile.h"
-#include "headers/stats.h"
+#include "inc/txt_file.h"
 
-
-
-int main()
+int main(void)
 {
     std::vector<std::string> files;
-    fileLib::loadFromPath("../out/data/", files);
+    txt_file::loadFromPath("output/data/", files);
 
     double startValue{0}, startTime{0}, time[5];
 
-    for(int i = 0; i < files.size(); i++)
-    {
+    for(int i = 0; i < files.size(); i++){
         std::fstream read(files[i], std::ios_base::in);
         read >> startTime;
         read >> startValue;
         read.close();
 
         std::stringstream devide(files[i]);
-        std::string newName, path = "../out/stats/", printable;
+        std::string newName, path = "output/stats/", printable;
         int pos = 0, counter = 0;
         double avarge = 0;
         bool continuer = false;
@@ -38,34 +34,28 @@ int main()
 
         write << "\n***************************************************************************\n\n\n";
 
-        for(int j = 0; j < 6; j++)
-        {
+        for(int j = 0; j < 6; j++){
             //std::cout << i << "\t" << j << "\n";
             double temp = -j*10 + startValue - 10, revTime;
             //std::cout << temp;
-            time[j] = fileLib::returnTimeFromValue(files[i], temp);
+            time[j] = txt_file::returnTimeFromValue(files[i], temp);
             time[j] -= startTime;
-            if(time[j] > 0)
-            {
+            if(time[j] > 0){
                 revTime = time[j] * 60/(j*10 +10);
                 write << "Decreasement of " << j*10 + 10 << " dB was first measured in " << time[j] << " s\t";
                 write << "time" << j*10 + 10 << " is " << revTime << " s\n";
                 avarge += revTime;
                 counter++;
-            }
-            else
+            } else
                 continuer = true;
-            
         }
-
-        if(continuer == true)
-        {
+        if(continuer == true){
             double tm, value, revTime;
-            value = fileLib::biggestDecrease(files[i]);
+            value = txt_file::biggestDecrease(files[i]);
             write << "\n\nBigest decrease was " << value;
             value *= -1;
             value += startValue;
-            tm = fileLib::returnTimeFromValue(files[i], value);
+            tm = txt_file::returnTimeFromValue(files[i], value);
             tm -= startTime;
             value -= startValue;
             value *= -1;
@@ -75,11 +65,9 @@ int main()
             
             write << " dB in time " << tm << "\ttmax is " << revTime << " s\n";
         }
-        
-        write << "\n\nAveraged t60 is " << avarge/counter << " s";
 
+        write << "\n\nAveraged t60 is " << avarge/counter << " s";
         write.close();
     }
-
     return 0;
 }

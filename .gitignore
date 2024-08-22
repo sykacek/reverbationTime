@@ -19,7 +19,9 @@ test/build
 #application build files
 build
 out
-src/audioDat
+src/audio_dat
+src/audio_datcp
 src/temp
 
-!src/buildf/Makefile
+#VS CODE
+.vscode

@@ -1,39 +1,55 @@
-#include "headers/myFile.h"
+#include "inc/txt_file.h"
 #include <errno.h>
+
+#undef DEST_FILEAPROXIMATION 
+#undef DEST_FILECOLUMNREMOVE
+#undef DEST_FILECUTFROMLINE
+#undef DEST_FILECUTTOLINE
+#undef DEST_FILEFABS
+#undef DEST_FILELOGCOPY
+#undef DEST_FILESHORTENORDER
+
+#define DEST_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
+#define DEST_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
+#define DEST_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
+#define DEST_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
+#define DEST_FILEFABS                       "src/temp/fileFabstxt"
+#define DEST_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
+#define DEST_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
 
 int main(void)
 {
+    //read file names
     std::vector<std::string> files;
-    fileLib::loadFromPath("../src/audioDat/", files);
+    txt_file::loadFromPath("src/audio_dat/", files);
     int fils = files.size();
 
-    if(files.size() > 0)
-    {
-        uint32_t numOfCol, tempLen{0}, minLen = fileLib::fileLineLenght(files[0]),
+    if(files.size() > 0){
+        uint32_t numOfCol, tempLen{0}, minLen = txt_file::fileLineLenght(files[0]),
         tempMax;
         std::string result, temp;
 
         for(int i = 0; i < fils; i++){
-            fileLib::fileCutToLine(files[i], 3);
-            numOfCol = fileLib::columnsInLine(files[i]);
+            txt_file::fileCutToLine(files[i], 3);
+            numOfCol = txt_file::columnsInLine(files[i]);
 
             for(int j = 0; j < numOfCol - 2; j++)
-                fileLib::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
+                txt_file::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
 
-            fileLib::fileFabs(files[i], "");
-            fileLib::fileAproximation(files[i], "", 600);
+            txt_file::fileFabs(files[i], "");
+            txt_file::fileAproximation(files[i], "", 600);
 
-            tempMax = fileLib::maximumInCol(files[i]);
-            fileLib::fileShortenOrdered(files[i], tempMax);
+            tempMax = txt_file::maximumInCol(files[i]);
+            txt_file::fileShortenOrdered(files[i], tempMax);
 
-            tempLen = fileLib::fileLineLenght(files[i]);
+            tempLen = txt_file::fileLineLenght(files[i]);
 
             if(tempLen < minLen)
                 minLen = tempLen;
             std::stringstream devide(files[i]);
             result.clear();
 
-            for(int i = 0; i < 2; i++){
+            for(int i = 0; i < 1; i++){
                 getline(devide, temp, '/');
                 result.append(temp);
                 result.append("/");
@@ -41,33 +57,32 @@ int main(void)
             
             getline(devide, temp, '/');
             result.append(temp);
-            result.append("Copy/");
+            result.append("cp/");
             getline(devide, temp, '/');
             result.append(temp);
 
-            fileLib::fileCopy(files[i], result);
+            txt_file::fileCopy(files[i], result);
         }
 
         for(int i = 0; i < files.size(); i ++){
-            fileLib::fileCutFromLine(files[i], minLen, 2);
+            txt_file::fileCutFromLine(files[i], minLen, 2);
         }
-        fileLib::filesAvarge(files, "../out/data/average.dat");
-        fileLib::fileLogCopy("../out/data/average.dat", "");
+        txt_file::filesAverage(files, "output/data/average.dat");
+        txt_file::fileLogCopy("output/data/average.dat", "");
 
-        fileLib::loadFromPath("../src/audioDatCopy/", files);
+        txt_file::loadFromPath("src/audio_datcp/", files);
         for(int i = 0; i < files.size(); i++){
-            //fileLib::fileAproximation(files[i], "", 100);
             uint32_t max;
 
-            max = fileLib::maximumInCol(files[i]);
+            max = txt_file::maximumInCol(files[i]);
 
             if(max == 0){
                 std::cout << "error here\n";
                 return 0;
             }
 
-            fileLib::fileShortenOrdered(files[i], max);
-            fileLib::fileLogCopy(files[i], "");
+            txt_file::fileShortenOrdered(files[i], max);
+            txt_file::fileLogCopy(files[i], "");
         }
     } else {
         std::cout << "unable to open File\n";
