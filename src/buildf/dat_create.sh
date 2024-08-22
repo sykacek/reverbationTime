@@ -21,5 +21,6 @@ mkdir ../audioDatCopy
 for file in ../../audioIn/*.wav
 do
     var=$( echo "$file" |cut -d/ -f4 )
+    echo $var
     sox $file ../audioDat/${var%.*}.dat
 done
