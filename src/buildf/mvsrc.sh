@@ -1,9 +1,9 @@
 #! /bin/bash
 
-for file in ../audio_datcp/*
+for file in src/audio_datcp/*
 do  
-    var=$(echo "$file" | cut -d/ -f4)
+    var=$(echo "$file" | cut -d/ -f3)
 #    echo $var
-    mv $file ../output/data/$var
+    mv $file output/data/$var
 done
 

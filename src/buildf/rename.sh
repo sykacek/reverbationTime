@@ -1,6 +1,6 @@
 #! /bin/bash
 
-for file in ../out/images/*.dat.png
+for file in output/images/*.dat.png
 do  
     var=${file%.*}
 #    echo ${var%.*}.png

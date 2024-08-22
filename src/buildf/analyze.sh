@@ -24,28 +24,28 @@ fi
 
 mkdir src/audio_datcp
 
-#stage 1 - create audio samples
+# create audio samples
 source src/buildf/dat_create.sh
 
+# proccess data
 ./build/REV
 
-# move files to to out directory 
-for file in src/audio_datcp
+# move files to to output directory 
+for file in src/audio_datcp/*
 do
     var=$(echo $file | cut -d/ -f3)
-    echo $var
-    cp $file out/data/$var
+    cp $file output/data/$var
 done
 
-# source src/buildf/mvsrc.sh
-./src/buildf/gnuplot.sh
+# plot data using gnuplot 
+source src/buildf/gnuplot.sh
 
-#rename .png files
+# rename .png files
 for file in output/images/*.dat.png
 do
     var=${file%.*}
     mv $file ${var%.*}
 done
-./src/buildf/rename.sh
 
+# create additional statistical data
 ./build/STATS

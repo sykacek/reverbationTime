@@ -33,7 +33,7 @@ int main(void)
             std::stringstream devide(files[i]);
             result.clear();
 
-            for(int i = 0; i < 2; i++){
+            for(int i = 0; i < 1; i++){
                 getline(devide, temp, '/');
                 result.append(temp);
                 result.append("/");
@@ -41,7 +41,7 @@ int main(void)
             
             getline(devide, temp, '/');
             result.append(temp);
-            result.append("Copy/");
+            result.append("cp/");
             getline(devide, temp, '/');
             result.append(temp);
 
@@ -51,10 +51,10 @@ int main(void)
         for(int i = 0; i < files.size(); i ++){
             txt_file::fileCutFromLine(files[i], minLen, 2);
         }
-        txt_file::filesAvarge(files, "../out/data/average.dat");
-        txt_file::fileLogCopy("../out/data/average.dat", "");
+        txt_file::filesAvarge(files, "output/data/average.dat");
+        txt_file::fileLogCopy("output/data/average.dat", "");
 
-        txt_file::loadFromPath("../src/audio_datcp/", files);
+        txt_file::loadFromPath("src/audio_datcp/", files);
         for(int i = 0; i < files.size(); i++){
             //txt_file::fileAproximation(files[i], "", 100);
             uint32_t max;

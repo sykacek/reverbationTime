@@ -671,7 +671,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t nu
     }
     else
     {
-        std::cout << "(fileCopy) unable to open files " << fileRead << "\n";
+        std::cout << "(fileCopy) failed to open file " << fileRead << "\n";
         return false;
     }
 }
@@ -685,8 +685,7 @@ bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, 
     
     std::fstream fileWrite(fileNameWrite, std::ios_base::out);
 
-    if(fileRead.is_open() && fileWrite.is_open())
-    {
+    if(fileRead.is_open() && fileWrite.is_open()){
         //std::cout << "(fileLogCopy)";
         message(fileNameRead, true);
         message(fileNameWrite, true);
