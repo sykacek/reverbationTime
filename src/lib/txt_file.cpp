@@ -1,6 +1,6 @@
 #include "../inc/txt_file.h"
 /**
- * API functions
+ * function implementation
  */
 
 static std::string txt_file::nameProtect(std::string fileName)
@@ -26,6 +26,13 @@ static void txt_file::message(std::string text, bool mode)
     */
 }
 
+static uint16_t txt_file::arr_s(double *arr)
+{
+    int ret = 0;
+    while(*(arr + ret++))
+        ret++;
+    return ret;
+}
 uint32_t txt_file::fileLenght(std::string fileName)
 {
     fileName = txt_file::nameProtect(fileName);
@@ -162,7 +169,7 @@ bool txt_file::fileWrite(std::string fileName, double array1[])
 
     if(file.is_open()){
         message(fileName, true);
-        int lenght = sizeof(array1)/sizeof(double);
+        int lenght = arr_s(array1);
         
         double *p = array1;
         for(int i = 0; i < lenght; i++){
@@ -183,7 +190,7 @@ bool txt_file::fileWrite(std::string fileName, double array1[], double array2[])
 
     if(file.is_open()){
         message(fileName, true);
-        int lenght = sizeof(array1)/sizeof(double);
+        int lenght = arr_s(array1);
 
         double *p = array1;
         double *z = array2;
@@ -240,7 +247,7 @@ bool txt_file::fileAppendLine(std::string fileName, double array1[])
 
     if(file.is_open()){
         message(fileName, true);
-        int fileLen = sizeof(array1);
+        int fileLen = arr_s(array1);
 
         double * p = array1;
         for(int i = 0; i < fileLen; i++){
@@ -261,7 +268,7 @@ bool txt_file::fileAppendTab(std::string fileName, double array1[])
     
     if(file.is_open()){
         message(fileName, true);
-        int fileLen = sizeof(array1);
+        int fileLen = arr_s(array1);
 
         double * p = array1;
         for(int i = 0; i < fileLen; i++){
@@ -325,13 +332,13 @@ bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int
 
 bool txt_file::arrayExpand(double dest[], double src[], int n)
 {
-    int len = sizeof(src)/sizeof(double);
+    int len = arr_s(src);
 
     for(int i = 0; i < len; i++){
         for(int j = 0; j < n; j++)
             *(dest + i*n + j) = *(src + i);
     }
-    len = sizeof(dest)/sizeof(double);
+    len = arr_s(dest);
 
     if(len > 0)
         return true;
@@ -668,7 +675,7 @@ bool txt_file::filesAverage(std::vector<std::string> &files, std::string fileWri
     std::fstream write(fileWrite, std::ios_base::out);
     double dataRead[col_per_row*PROCCESSING_BUFFER_SIZE], temp;
 
-    std::memset(dataRead, 0, sizeof(dataRead));
+    std::memset(dataRead, 0, arr_s(dataRead));
     bool end = false;
     int k = col_per_row * PROCCESSING_BUFFER_SIZE;
     

@@ -51,6 +51,9 @@ namespace txt_file
     /*print additional info about opening and closing files*/
     static void message(std::string text, bool mode);
 
+    /* determine size of array */
+    static uint16_t arr_s(double * arr);
+
     /* returns number of tab-separated cells in the file*/
     uint32_t fileLenght(std::string fileName);
     
