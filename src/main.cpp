@@ -4,7 +4,7 @@
 int main(void)
 {
     std::vector<std::string> files;
-    txt_file::loadFromPath("../src/audioDat/", files);
+    txt_file::loadFromPath("../src/audio_dat/", files);
     int fils = files.size();
 
     if(files.size() > 0)
@@ -54,7 +54,7 @@ int main(void)
         txt_file::filesAvarge(files, "../out/data/average.dat");
         txt_file::fileLogCopy("../out/data/average.dat", "");
 
-        txt_file::loadFromPath("../src/audioDatCopy/", files);
+        txt_file::loadFromPath("../src/audio_datcp/", files);
         for(int i = 0; i < files.size(); i++){
             //txt_file::fileAproximation(files[i], "", 100);
             uint32_t max;

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-for file in ../audioDatCopy/*
+for file in ../audio_datcp/*
 do  
     var=$(echo "$file" | cut -d/ -f4)
 #    echo $var

@@ -1,7 +1,24 @@
 #! /bin/bash
-rm -r build out src/audioDat src/temp src/audioDatCopy || true
+if ! [[ -d build ]]; then
+    mkdir build
+fi
 
-mkdir build out out/data out/images out/stats src/temp src/audioDat src/audioDatCopy || true
+if ! [[ -d out ]]; then
+    mkdir out
+fi
+
+if ! [[ -d src/audio_dat ]]; then
+    mkdir src/audio_dat
+fi
+
+if ! [[ -d src/audio_datcp ]]; then
+    mkdir src/audio_datcp
+fi
+
+if ! [[ -d src/temp ]]; then
+    mkdir src/temp
+fi
+
 cmake -S . -B build
 
 #uncomment to compile Release executable
