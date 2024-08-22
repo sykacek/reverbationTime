@@ -38,7 +38,7 @@ do
 done
 
 # plot data using gnuplot 
-source src/buildf/gnuplot.sh
+./src/buildf/gnuplot.sh
 
 # rename .png files
 for file in output/images/*.dat.png
