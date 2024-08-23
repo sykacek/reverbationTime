@@ -24,6 +24,13 @@ fi
 
 mkdir src/audio_datcp
 
+if ! [[ -d output ]]
+then
+    mkdir -p output/data
+    mkdir -p output/images
+    mkdir -p output/stats
+fi
+
 # create audio samples
 source src/buildf/dat_create.sh
 
