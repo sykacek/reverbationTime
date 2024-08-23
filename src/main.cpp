@@ -1,22 +1,6 @@
 #include "inc/txt_file.h"
 #include <errno.h>
 
-#undef PATH_FILEAPROXIMATION 
-#undef PATH_FILECOLUMNREMOVE
-#undef PATH_FILECUTFROMLINE
-#undef PATH_FILECUTTOLINE
-#undef PATH_FILEFABS
-#undef PATH_FILELOGCOPY
-#undef PATH_FILESHORTENORDER
-
-#define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
-#define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
-#define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
-#define PATH_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
-#define PATH_FILEFABS                       "src/temp/fileFabstxt"
-#define PATH_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
-#define PATH_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
-
 /**
  * program arguments:
  * 1 - apx_coeff - coefficient to be used to aproximate data files
@@ -24,8 +8,8 @@
 int main(int argc, char **argv)
 {
     /* read program arguments */
-    const int apx_coef = atoi(argv[1]);
-    if(apx_coef < 1){
+    int apx_coef = atoi(argv[1]);
+    if(apx_coef < 2){
         printf("Error: Inavlid argument apx_coef\n");
         return -EINVAL;
     }

@@ -572,7 +572,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         return false;
 
     std::fstream read1(fileName, std::ios_base::in);
-    std::fstream write1(PATH_FILESHORTENORDERED, std::ios_base::out);
+    std::fstream write1(PATH_FILESHORTENORDER, std::ios_base::out);
 
     if(read1.is_open() && write1.is_open()){
         message(fileName, true);
@@ -601,7 +601,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         read1.close();
         write1.close();
         message(fileName, false);
-        fileCopy(PATH_FILESHORTENORDERED, fileName);
+        fileCopy(PATH_FILESHORTENORDER, fileName);
 
         return true;
     } else {

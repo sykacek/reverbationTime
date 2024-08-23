@@ -1,21 +1,5 @@
 #include "inc/txt_file.h"
 
-#undef PATH_FILEAPROXIMATION 
-#undef PATH_FILECOLUMNREMOVE
-#undef PATH_FILECUTFROMLINE
-#undef PATH_FILECUTTOLINE
-#undef PATH_FILEFABS
-#undef PATH_FILELOGCOPY
-#undef PATH_FILESHORTENORDER
-
-#define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
-#define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
-#define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
-#define PATH_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
-#define PATH_FILEFABS                       "src/temp/fileFabstxt"
-#define PATH_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
-#define PATH_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
-
 int main(void)
 {
     /* load data from path */

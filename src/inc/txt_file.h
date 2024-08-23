@@ -31,14 +31,13 @@
 #define PI (3.1415926)
 
 /* defualt file locations*/
-#define PATH_FILEAPROXIMATION           "fileAproximation.txt"
-#define PATH_FILECOLUMNREMOVE           "fileColumnRemove.txt"
-#define PATH_FILECUTFROMLINE            "fileCutFromLine.txt"
-#define PATH_FILECUTTOLINE              "fileCutToLine.txt"
-#define PATH_FILEFABS                   "fileFabs.txt"
-#define PATH_FILELOGCOPY                "fileLogCopy.txt"
-#define PATH_FILESHORTENORDERED         "fileShortenOrdered.txt"
-
+#define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
+#define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
+#define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
+#define PATH_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
+#define PATH_FILEFABS                       "src/temp/fileFabstxt"
+#define PATH_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
+#define PATH_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
 /**
  * Library functions for text handling
  */
