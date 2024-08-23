@@ -40,5 +40,6 @@ do
     chmod u+x $file
 done
 
-mv src/buildf/analyze.sh .
-mv src/buildf/clear.sh .
+chmod u+x analyze.sh 
+chmod u+x clear.sh
+chmod u+x test.sh
