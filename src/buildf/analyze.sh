@@ -27,7 +27,7 @@ mkdir src/audio_datcp
 # create audio samples
 source src/buildf/dat_create.sh
 
-# proccess data
+# proccess data with apx_coeff = 600
 ./build/REV 600
 
 # move files to to output directory 

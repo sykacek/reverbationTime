@@ -78,9 +78,12 @@ int main(int argc, char **argv)
             txt_file::fileCopy(files[i], result);
         }
 
+        /* cut all fata files to same lenght, neccessary to be averaged */
         for(int i = 0; i < files.size(); i ++){
             txt_file::fileCutFromLine(files[i], minLen, 2);
         }
+
+        /* average files and set decreasement values logarithmic */
         txt_file::filesAverage(files, "output/data/average.dat");
         txt_file::fileLogCopy("output/data/average.dat", "");
 
@@ -89,18 +92,13 @@ int main(int argc, char **argv)
             uint32_t max;
             max = txt_file::maximumInCol(files[i]);
 
-            if(max == 0){
-                std::cout << "error here\n";
-                return 0;
-            }
-
             txt_file::fileShortenOrdered(files[i], max);
             txt_file::fileLogCopy(files[i], "");
         }
+
+        return 0;
     } else {
         std::cout << "Error: failed to open files\n";
         return -ENFILE;
     }
-
-    return 0;
 }
