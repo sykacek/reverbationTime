@@ -28,7 +28,7 @@ mkdir src/audio_datcp
 source src/buildf/dat_create.sh
 
 # proccess data
-./build/REV
+./build/REV 600
 
 # move files to to output directory 
 for file in src/audio_datcp/*

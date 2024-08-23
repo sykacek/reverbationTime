@@ -31,13 +31,13 @@
 #define PI (3.1415926)
 
 /* defualt file locations*/
-#define DEST_FILEAPROXIMATION           "fileAproximation.txt"
-#define DEST_FILECOLUMNREMOVE           "fileColumnRemove.txt"
-#define DEST_FILECUTFROMLINE            "fileCutFromLine.txt"
-#define DEST_FILECUTTOLINE              "fileCutToLine.txt"
-#define DEST_FILEFABS                   "fileFabs.txt"
-#define DEST_FILELOGCOPY                "fileLogCopy.txt"
-#define DEST_FILESHORTENORDERED         "fileShortenOrdered.txt"
+#define PATH_FILEAPROXIMATION           "fileAproximation.txt"
+#define PATH_FILECOLUMNREMOVE           "fileColumnRemove.txt"
+#define PATH_FILECUTFROMLINE            "fileCutFromLine.txt"
+#define PATH_FILECUTTOLINE              "fileCutToLine.txt"
+#define PATH_FILEFABS                   "fileFabs.txt"
+#define PATH_FILELOGCOPY                "fileLogCopy.txt"
+#define PATH_FILESHORTENORDERED         "fileShortenOrdered.txt"
 
 /**
  * Library functions for text handling
@@ -139,7 +139,7 @@ namespace txt_file
     double returnTimeFromValue(std::string fileName, double value, uint16_t col_per_row = 2, uint16_t column = 1);
     
     /* load files from path to %vector
-     * WARNING: if path is relative, it is relative to the directory where the program is run!
+     * WARNING: if path is relative, it will be relative to the directory where the program is run!
     */
     bool loadFromPath(std::string path, std::vector<std::string> & files);
     
