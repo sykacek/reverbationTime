@@ -51,7 +51,6 @@ TEST(file_line_len, ret){
 
     txt::fileRead(TEST_FILE, arr);
     int len = txt::arr_s(arr);
-    printf("%d, %d\n", ret, len);
     len /= 2;
 
     ASSERT_EQ(ret, len);
