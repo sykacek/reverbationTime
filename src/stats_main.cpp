@@ -24,7 +24,7 @@ int main(void)
 
     double startValue = 0, startTime = 0, time[5];
 
-    for(int i = 0; i < files.size(); i++){
+    for(long unsigned int i = 0; i < files.size(); i++){
         std::fstream read(files[i], std::ios_base::in);
         read >> startTime;
         read >> startValue;

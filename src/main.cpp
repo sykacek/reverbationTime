@@ -47,7 +47,7 @@ int main(int argc, char **argv)
             txt_file::fileCutToLine(files[i], 3);
             numOfCol = txt_file::columnsInLine(files[i]);
 
-            for(int j = 0; j < numOfCol - 2; j++)
+            for(uint j = 0; j < numOfCol - 2; j++)
                 txt_file::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
 
             txt_file::fileFabs(files[i], "");
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
         }
 
         /* cut all fata files to same lenght, neccessary to be averaged */
-        for(int i = 0; i < files.size(); i ++){
+        for(long unsigned int i = 0; i < files.size(); i ++){
             txt_file::fileCutFromLine(files[i], minLen, 2);
         }
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
         txt_file::fileLogCopy("output/data/average.dat", "");
 
         txt_file::loadFromPath("src/audio_datcp/", files);
-        for(int i = 0; i < files.size(); i++){
+        for(long unsigned int i = 0; i < files.size(); i++){
             uint32_t max;
             max = txt_file::maximumInCol(files[i]);
 

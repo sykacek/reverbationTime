@@ -3,9 +3,10 @@ project("Test reverbation API")
 
 find_package(GTest REQUIRED)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(tests_exe ../src/libs/*c)
+add_executable(tests_exe "../src/lib/txt_file.cpp" "test.cpp")
 
 target_include_directories(tests_exe
     PRIVATE

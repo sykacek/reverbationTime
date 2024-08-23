@@ -45,14 +45,14 @@
 
 namespace txt_file
 {
-    /*static lib function, check if file has .txt extention*/
-    static std::string nameProtect(std::string fileName);
+    /* lib function, check if file has .txt extention*/
+     std::string nameProtect(std::string fileName);
 
     /*print additional info about opening and closing files*/
-    static void message(std::string text, bool mode);
+     void message(std::string text, bool mode);
 
     /* determine size of array */
-    static uint16_t arr_s(double * arr);
+     uint16_t arr_s(double * arr);
 
     /* returns number of tab-separated cells in the file*/
     uint32_t fileLenght(std::string fileName);

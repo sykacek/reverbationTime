@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "../src/headers/myFile.h"
+#include "../src/inc/txt_file.h"
 
 TEST(nameprotect, ret){
     std::string name = "hello.";
-    std::string ret = fileLib::nameProtect(name);
-    ASSERT_STREQ(name, ret);
+    std::string ret = txt_file::nameProtect(name);
+    ASSERT_EQ(name, ret);
 }
 
 

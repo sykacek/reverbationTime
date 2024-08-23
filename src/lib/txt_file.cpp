@@ -3,7 +3,7 @@
  * function implementation
  */
 
-static std::string txt_file::nameProtect(std::string fileName)
+ std::string txt_file::nameProtect(std::string fileName)
 {
     for(int i = 0; fileName[i]; i++){
         if(fileName[i] == '.')
@@ -14,7 +14,7 @@ static std::string txt_file::nameProtect(std::string fileName)
     return fileName;
 }
 
-static void txt_file::message(std::string text, bool mode)
+ void txt_file::message(std::string text, bool mode)
 {
     /**
      * Uncomment for additional debbuging info 
@@ -26,7 +26,7 @@ static void txt_file::message(std::string text, bool mode)
     */
 }
 
-static uint16_t txt_file::arr_s(double *arr)
+ uint16_t txt_file::arr_s(double *arr)
 {
     int ret = 0;
     while(*(arr + ret++))
@@ -150,7 +150,7 @@ bool txt_file::fileRead(std::string fileName, std::vector<double> &readvector, u
         message(fileName, true);
         uint32_t len = fileLenght(fileName);
 
-        for(int i = 0; i < len; i++){
+        for(uint32_t i = 0; i < len; i++){
             file >> temp;
             if(i % col_per_row == pos)
                 readvector.push_back(temp);
@@ -208,10 +208,10 @@ bool txt_file::fileWrite(std::string fileName, double array1[], double array2[])
 bool txt_file::fileWrite(std::string fileName, std::vector<double> &vect)
 {
     std::fstream file(fileName, std::ios_base::out);
-    uint32_t len = vect.size();
+    uint len = vect.size();
     if(file.is_open()){
         message(fileName, true);
-        for(int i = 0; i < len; i++)
+        for(uint i = 0; i < len; i++)
             file << vect[i] << "\n";
 
         message(fileName, false);
@@ -224,12 +224,12 @@ bool txt_file::fileWrite(std::string fileName, std::vector<double> &vect)
 
 bool txt_file::fileWrite(std::string fileName, std::vector<double> &one, std::vector<double> &two)
 {
-    uint32_t len = one.size();
+    uint16_t len = one.size();
     std::fstream file(fileName, std::ios_base::out);
 
     if(file.is_open()){
         message(fileName, true);
-        for(int i = 0; i < len; i ++)
+        for(uint16_t i = 0; i < len; i ++)
             file << one[i] << "\t" << two[i] << "\n";
         message(fileName, false);
 
@@ -348,10 +348,10 @@ bool txt_file::arrayExpand(double dest[], double src[], int n)
 
 bool txt_file::logValue(std::vector<double> &vect)
 {
-    uint32_t len = vect.size();
+    uint16_t len = vect.size();
     double temp1, temp2;
 
-    for(int i = 0; i < len; i++){
+    for(uint16_t i = 0; i < len; i++){
         temp1 = vect[i];
         temp2 = 10*log10(temp1);
         vect[i] = temp2;
@@ -650,7 +650,7 @@ bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_p
         message(fileName, true);
         std::string ligne;
 
-        for(int i = 0; i < line; i++)
+        for(uint32_t i = 0; i < line; i++)
             getline(read, ligne);
 
         while(read){
@@ -683,10 +683,10 @@ bool txt_file::filesAverage(std::vector<std::string> &files, std::string fileWri
         for(uint16_t i = 0; i < len; i++){
             std::fstream read(files[i], std::ios_base::in);
 
-            for(int j = 0; j < counter*PROCCESSING_BUFFER_SIZE*col_per_row; j++)
+            for(uint32_t j = 0; j < counter*PROCCESSING_BUFFER_SIZE*col_per_row; j++)
                 read >> temp;
      
-            for(int j = 0; j < col_per_row*PROCCESSING_BUFFER_SIZE; j++){
+            for(uint32_t j = 0; j < col_per_row*PROCCESSING_BUFFER_SIZE; j++){
                 read >> temp;
                 if(!read){
                     k = j;
@@ -801,10 +801,10 @@ double txt_file::biggestDecrease(std::string fileName, uint32_t startLine, uint1
         uint32_t counter = 0;
         std::string line;
 
-        for(int i = 1; i < startLine; i++)
+        for(uint32_t i = 1; i < startLine; i++)
             getline(read, line);
 
-        for(int i = 0; i < column; i++)
+        for(uint16_t i = 0; i < column; i++)
             read >> temp;
         read >> start;
 
