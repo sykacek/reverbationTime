@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "../src/inc/txt_file.h"
-#define TEST_FILE "test/example_data.dat"
+std::string example_file = "../example_data.dat";
 
 TEST(nameprotect, retwdot){
     std::string name = "hello.";
@@ -37,19 +37,19 @@ TEST(arr_s, terminate_2){
 }
 
 TEST(file_len, ret){
-    int ret = txt::fileLenght(TEST_FILE);
+    int ret = txt::fileLenght(example_file);
     float arr[CACHE_BUFFER_SIZE] = {0};
 
-    txt::fileRead(TEST_FILE, arr);
+    txt::fileRead(example_file, arr);
     int len  = txt::arr_s(arr);
 
     ASSERT_EQ(ret, len);
 }
 TEST(file_line_len, ret){
-    int ret = txt::fileLineLenght(TEST_FILE);
+    int ret = txt::fileLineLenght(example_file);
     float arr[CACHE_BUFFER_SIZE] = {0};
 
-    txt::fileRead(TEST_FILE, arr);
+    txt::fileRead(example_file, arr);
     int len = txt::arr_s(arr);
     len /= 2;
 
@@ -57,7 +57,7 @@ TEST(file_line_len, ret){
 }
 
 TEST(col_per_row, ret){
-    std::fstream read(TEST_FILE, std::ios_base::in);
+    std::fstream read(example_file, std::ios_base::in);
     std::string line = {0};
     EXPECT_TRUE(getline(read, line));
     read.close();
@@ -69,7 +69,7 @@ TEST(col_per_row, ret){
         i++;
     }
 
-    int ret = txt::columnsInLine(TEST_FILE);
+    int ret = txt::columnsInLine(example_file);
     ASSERT_EQ(ret, j);
 }
 
@@ -79,9 +79,9 @@ TEST(file_read, size){
     store values in 2 floats --> 8 bytes
     */
     float arr[CACHE_BUFFER_SIZE] = {0};
-    txt::fileRead(TEST_FILE, arr);
+    txt::fileRead(example_file, arr);
     uint32_t memsize = sizeof(float) * txt::arr_s(arr);
-    uint32_t filesize = std::filesystem::file_size(TEST_FILE);
+    uint32_t filesize = std::filesystem::file_size(example_file);
 
     ASSERT_TRUE(memsize < filesize);
 }
@@ -91,6 +91,9 @@ TEST(file_read, size){
 
 int main(int argc, char **argv)
 {
+    if(argc > 1)
+        example_file = "test/example_data.dat";
+        
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
