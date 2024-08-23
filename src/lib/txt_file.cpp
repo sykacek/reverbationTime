@@ -29,7 +29,7 @@
  uint16_t txt_file::arr_s(double *arr)
 {
     int ret = 0;
-    while(*(arr + ret++))
+    while(*(arr + ret))
         ret++;
     return ret;
 }
