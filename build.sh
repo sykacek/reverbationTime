@@ -40,6 +40,5 @@ do
     chmod u+x $file
 done
 
-cp src/buildf/analyze.sh . 
-chmod u+x analyze.sh
-
+mv src/buildf/analyze.sh .
+mv src/buildf/clear.sh .

@@ -3,7 +3,7 @@
  * function implementation
  */
 
-static std::string txt_file::nameProtect(std::string fileName)
+ std::string txt_file::nameProtect(std::string fileName)
 {
     for(int i = 0; fileName[i]; i++){
         if(fileName[i] == '.')
@@ -14,7 +14,7 @@ static std::string txt_file::nameProtect(std::string fileName)
     return fileName;
 }
 
-static void txt_file::message(std::string text, bool mode)
+ void txt_file::message(std::string text, bool mode)
 {
     /**
      * Uncomment for additional debbuging info 
@@ -26,7 +26,7 @@ static void txt_file::message(std::string text, bool mode)
     */
 }
 
-static uint16_t txt_file::arr_s(double *arr)
+ uint16_t txt_file::arr_s(double *arr)
 {
     int ret = 0;
     while(*(arr + ret++))
@@ -150,7 +150,7 @@ bool txt_file::fileRead(std::string fileName, std::vector<double> &readvector, u
         message(fileName, true);
         uint32_t len = fileLenght(fileName);
 
-        for(int i = 0; i < len; i++){
+        for(uint32_t i = 0; i < len; i++){
             file >> temp;
             if(i % col_per_row == pos)
                 readvector.push_back(temp);
@@ -208,10 +208,10 @@ bool txt_file::fileWrite(std::string fileName, double array1[], double array2[])
 bool txt_file::fileWrite(std::string fileName, std::vector<double> &vect)
 {
     std::fstream file(fileName, std::ios_base::out);
-    uint32_t len = vect.size();
+    uint len = vect.size();
     if(file.is_open()){
         message(fileName, true);
-        for(int i = 0; i < len; i++)
+        for(uint i = 0; i < len; i++)
             file << vect[i] << "\n";
 
         message(fileName, false);
@@ -224,12 +224,12 @@ bool txt_file::fileWrite(std::string fileName, std::vector<double> &vect)
 
 bool txt_file::fileWrite(std::string fileName, std::vector<double> &one, std::vector<double> &two)
 {
-    uint32_t len = one.size();
+    uint16_t len = one.size();
     std::fstream file(fileName, std::ios_base::out);
 
     if(file.is_open()){
         message(fileName, true);
-        for(int i = 0; i < len; i ++)
+        for(uint16_t i = 0; i < len; i ++)
             file << one[i] << "\t" << two[i] << "\n";
         message(fileName, false);
 
@@ -286,7 +286,7 @@ bool txt_file::fileAppendTab(std::string fileName, double array1[])
 bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int n)
 {
     if(fileWrite == "")
-        fileWrite = DEST_FILEAPROXIMATION;
+        fileWrite = PATH_FILEAPROXIMATION;
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -320,8 +320,8 @@ bool txt_file::fileAproximation(std::string fileRead, std::string fileWrite, int
 
         read.close();
         write.close();
-        if(fileWrite == DEST_FILEAPROXIMATION)
-            fileCopy(DEST_FILEAPROXIMATION, fileRead);
+        if(fileWrite == PATH_FILEAPROXIMATION)
+            fileCopy(PATH_FILEAPROXIMATION, fileRead);
 
         return true;
     } else {
@@ -348,10 +348,10 @@ bool txt_file::arrayExpand(double dest[], double src[], int n)
 
 bool txt_file::logValue(std::vector<double> &vect)
 {
-    uint32_t len = vect.size();
+    uint16_t len = vect.size();
     double temp1, temp2;
 
-    for(int i = 0; i < len; i++){
+    for(uint16_t i = 0; i < len; i++){
         temp1 = vect[i];
         temp2 = 10*log10(temp1);
         vect[i] = temp2;
@@ -404,7 +404,7 @@ bool txt_file::fileCopy(std::string fileRead, std::string fileWrite, uint32_t co
 bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint16_t col_per_row, uint16_t order1, uint16_t order2)
 {
     if(fileNameWrite == "")
-        fileNameWrite = DEST_FILELOGCOPY;
+        fileNameWrite = PATH_FILELOGCOPY;
 
     std::fstream fileRead(fileNameRead, std::ios_base::in);
     std::fstream fileWrite(fileNameWrite, std::ios_base::out);
@@ -432,8 +432,8 @@ bool txt_file::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, 
         fileRead.close();
         fileWrite.close();
 
-        if(fileNameWrite == DEST_FILELOGCOPY)
-            fileCopy(DEST_FILELOGCOPY, fileNameRead);
+        if(fileNameWrite == PATH_FILELOGCOPY)
+            fileCopy(PATH_FILELOGCOPY, fileNameRead);
 
         return true;
     } else {
@@ -489,7 +489,7 @@ uint32_t txt_file::minimumInCol(std::string fileName, uint32_t col_per_row, uint
 bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per_row)
 {
     if(fileWrite == "")
-        fileWrite = DEST_FILEFABS;
+        fileWrite = PATH_FILEFABS;
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -517,8 +517,8 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t co
         read.close();
         write.close();
 
-        if(fileWrite == DEST_FILEFABS)
-            fileCopy(DEST_FILEFABS, fileRead);
+        if(fileWrite == PATH_FILEFABS)
+            fileCopy(PATH_FILEFABS, fileRead);
 
         return true;
     } else {
@@ -530,7 +530,7 @@ bool txt_file::fileFabs(std::string fileRead, std::string fileWrite, uint32_t co
 bool txt_file::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t eliminate)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write(DEST_FILECOLUMNREMOVE, std::ios_base::out);
+    std::fstream write(PATH_FILECOLUMNREMOVE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()) {
         message(fileName, true);
@@ -554,7 +554,7 @@ bool txt_file::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy(DEST_FILECOLUMNREMOVE, fileName);
+        fileCopy(PATH_FILECOLUMNREMOVE, fileName);
 
         return true;
     } else {
@@ -572,7 +572,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         return false;
 
     std::fstream read1(fileName, std::ios_base::in);
-    std::fstream write1(DEST_FILESHORTENORDERED, std::ios_base::out);
+    std::fstream write1(PATH_FILESHORTENORDERED, std::ios_base::out);
 
     if(read1.is_open() && write1.is_open()){
         message(fileName, true);
@@ -601,7 +601,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
         read1.close();
         write1.close();
         message(fileName, false);
-        fileCopy(DEST_FILESHORTENORDERED, fileName);
+        fileCopy(PATH_FILESHORTENORDERED, fileName);
 
         return true;
     } else {
@@ -613,7 +613,7 @@ bool txt_file::fileShortenOrdered(std::string fileName, uint32_t startPoint, dou
 bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_row)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write(DEST_FILECUTFROMLINE, std::ios_base::out);
+    std::fstream write(PATH_FILECUTFROMLINE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()){
         message(fileName, true);
@@ -632,7 +632,7 @@ bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy(DEST_FILECUTFROMLINE, fileName);
+        fileCopy(PATH_FILECUTFROMLINE, fileName);
 
         return true;
     } else {
@@ -644,13 +644,13 @@ bool txt_file::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_
 bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_per_row)
 {
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write(DEST_FILECUTTOLINE, std::ios_base::out);
+    std::fstream write(PATH_FILECUTTOLINE, std::ios_base::out);
 
     if(read.is_open() && write.is_open()){
         message(fileName, true);
         std::string ligne;
 
-        for(int i = 0; i < line; i++)
+        for(uint32_t i = 0; i < line; i++)
             getline(read, ligne);
 
         while(read){
@@ -660,7 +660,7 @@ bool txt_file::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_p
         read.close();
         write.close();
         message(fileName, false);
-        fileCopy(DEST_FILECUTTOLINE, fileName, col_per_row);
+        fileCopy(PATH_FILECUTTOLINE, fileName, col_per_row);
 
         return true;
     } else {
@@ -683,10 +683,10 @@ bool txt_file::filesAverage(std::vector<std::string> &files, std::string fileWri
         for(uint16_t i = 0; i < len; i++){
             std::fstream read(files[i], std::ios_base::in);
 
-            for(int j = 0; j < counter*PROCCESSING_BUFFER_SIZE*col_per_row; j++)
+            for(uint32_t j = 0; j < counter*PROCCESSING_BUFFER_SIZE*col_per_row; j++)
                 read >> temp;
      
-            for(int j = 0; j < col_per_row*PROCCESSING_BUFFER_SIZE; j++){
+            for(uint32_t j = 0; j < col_per_row*PROCCESSING_BUFFER_SIZE; j++){
                 read >> temp;
                 if(!read){
                     k = j;
@@ -801,10 +801,10 @@ double txt_file::biggestDecrease(std::string fileName, uint32_t startLine, uint1
         uint32_t counter = 0;
         std::string line;
 
-        for(int i = 1; i < startLine; i++)
+        for(uint32_t i = 1; i < startLine; i++)
             getline(read, line);
 
-        for(int i = 0; i < column; i++)
+        for(uint16_t i = 0; i < column; i++)
             read >> temp;
         read >> start;
 

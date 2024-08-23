@@ -24,11 +24,18 @@ fi
 
 mkdir src/audio_datcp
 
+if ! [[ -d output ]]
+then
+    mkdir -p output/data
+    mkdir -p output/images
+    mkdir -p output/stats
+fi
+
 # create audio samples
 source src/buildf/dat_create.sh
 
-# proccess data
-./build/REV
+# proccess data with apx_coeff = 600
+./build/REV 600
 
 # move files to to output directory 
 for file in src/audio_datcp/*
