@@ -16,31 +16,31 @@ int main(int argc, char **argv)
 
     /* load files from path */
     std::vector<std::string> files;
-    txt_file::loadFromPath("src/audio_dat/", files);
+    txt::loadFromPath("src/audio_dat/", files);
     int fils = files.size();
 
     if(files.size() > 0){
         uint32_t numOfCol = 0;
         uint32_t tempLen = 0; 
-        uint32_t minLen = txt_file::fileLineLenght(files[0]);
+        uint32_t minLen = txt::fileLineLenght(files[0]);
         uint32_t tempMax = 0;
         std::string result, temp;
 
         /* cut all data from peak, prepare files to be averaged */
         for(int i = 0; i < fils; i++){
-            txt_file::fileCutToLine(files[i], 3);
-            numOfCol = txt_file::columnsInLine(files[i]);
+            txt::fileCutToLine(files[i], 3);
+            numOfCol = txt::columnsInLine(files[i]);
 
             for(uint j = 0; j < numOfCol - 2; j++)
-                txt_file::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
+                txt::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
 
-            txt_file::fileFabs(files[i], "");
-            txt_file::fileAproximation(files[i], "", apx_coef);
+            txt::fileFabs(files[i], "");
+            txt::fileAproximation(files[i], "", apx_coef);
 
-            tempMax = txt_file::maximumInCol(files[i]);
-            txt_file::fileShortenOrdered(files[i], tempMax);
+            tempMax = txt::maximumInCol(files[i]);
+            txt::fileShortenOrdered(files[i], tempMax);
 
-            tempLen = txt_file::fileLineLenght(files[i]);
+            tempLen = txt::fileLineLenght(files[i]);
 
             if(tempLen < minLen)
                 minLen = tempLen;
@@ -59,25 +59,25 @@ int main(int argc, char **argv)
             getline(devide, temp, '/');
             result.append(temp);
 
-            txt_file::fileCopy(files[i], result);
+            txt::fileCopy(files[i], result);
         }
 
         /* cut all fata files to same lenght, neccessary to be averaged */
         for(long unsigned int i = 0; i < files.size(); i ++){
-            txt_file::fileCutFromLine(files[i], minLen, 2);
+            txt::fileCutFromLine(files[i], minLen, 2);
         }
 
         /* average files and set decreasement values logarithmic */
-        txt_file::filesAverage(files, "output/data/average.dat");
-        txt_file::fileLogCopy("output/data/average.dat", "");
+        txt::filesAverage(files, "output/data/average.dat");
+        txt::fileLogCopy("output/data/average.dat", "");
 
-        txt_file::loadFromPath("src/audio_datcp/", files);
+        txt::loadFromPath("src/audio_datcp/", files);
         for(long unsigned int i = 0; i < files.size(); i++){
             uint32_t max;
-            max = txt_file::maximumInCol(files[i]);
+            max = txt::maximumInCol(files[i]);
 
-            txt_file::fileShortenOrdered(files[i], max);
-            txt_file::fileLogCopy(files[i], "");
+            txt::fileShortenOrdered(files[i], max);
+            txt::fileLogCopy(files[i], "");
         }
 
         return 0;

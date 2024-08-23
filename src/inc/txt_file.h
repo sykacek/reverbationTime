@@ -42,7 +42,7 @@
  * Library functions for text handling
  */
 
-namespace txt_file
+namespace txt
 {
     /* lib function, check if file has .txt extention*/
      std::string nameProtect(std::string fileName);
@@ -51,7 +51,7 @@ namespace txt_file
      void message(std::string text, bool mode);
 
     /* determine size of array */
-     uint16_t arr_s(double * arr);
+     uint16_t arr_s(float * arr);
 
     /* returns number of tab-separated cells in the file*/
     uint32_t fileLenght(std::string fileName);
@@ -62,44 +62,44 @@ namespace txt_file
     /* returns number of tab-separated columns per line in the file*/
     uint32_t columnsInLine(std::string fileName);
 
-    /* reads file into the array of doubles*/
-    bool fileRead(std::string fileName, double readArray[]);
+    /* reads file into the array of floats*/
+    bool fileRead(std::string fileName, float readArray[]);
 
-    /* reads file into  2 arrays of doubles, handy for reading 2 column files*/
-    bool fileRead(std::string fileName, double readArray1[], double readArray2[]);
+    /* reads file into  2 arrays of floats, handy for reading 2 column files*/
+    bool fileRead(std::string fileName, float readArray1[], float readArray2[]);
 
     /**
-     * Reads cells from the file located in the pos-th column and stores them in readvector of doubles
+     * Reads cells from the file located in the pos-th column and stores them in readvector of floats
      * pos is indexed from 0
      */
-    bool fileRead(std::string fileName, std::vector<double> &readvector, uint16_t col_per_row = 2, uint16_t pos = 1);
+    bool fileRead(std::string fileName, std::vector<float> &readvector, uint16_t col_per_row = 2, uint16_t pos = 1);
 
     /* write data to the text file, every value on new line*/
-    bool fileWrite(std::string fileName, double array1[]);
+    bool fileWrite(std::string fileName, float array1[]);
 
     /* write data to the text file in two columns*/
-    bool fileWrite(std::string fileName, double array1[], double array2[]);
+    bool fileWrite(std::string fileName, float array1[], float array2[]);
 
     /* write data to the text file, every value on new line*/
-    bool fileWrite(std::string fileName, std::vector<double> & vect);
+    bool fileWrite(std::string fileName, std::vector<float> & vect);
 
     /* write data to the text file in two columns*/
-    bool fileWrite(std::string fileName, std::vector<double> & one, std::vector<double> & two);
+    bool fileWrite(std::string fileName, std::vector<float> & one, std::vector<float> & two);
 
     /* append data to the text file, every value on new line*/
-    bool fileAppendLine(std::string fileName, double array1[]);
+    bool fileAppendLine(std::string fileName, float array1[]);
 
     /*append data to the next file, values are tab-separated*/
-    bool fileAppendTab(std::string fileName, double array1[]);
+    bool fileAppendTab(std::string fileName, float array1[]);
 
     /*reduce number of lines of file n times*/
     bool fileAproximation(std::string fileRead, std::string fileWrite, int n = 10);
     
     /* expand contents of src n times to dest*/
-    bool arrayExpand(double dest[], double src[], int n);
+    bool arrayExpand(float dest[], float src[], int n);
 
     /* vect[i] = 10*log(vect[i])*/
-    bool logValue(std::vector<double> &vect);
+    bool logValue(std::vector<float> &vect);
 
     /* clear contents of text file*/
     bool fileClear(std::string fileName);
@@ -123,7 +123,7 @@ namespace txt_file
     bool fileColumnRemove(std::string fileName, uint16_t col_per_row = 3, uint16_t eliminate = 1);
     
     /* rewrite file from index startPoint, value between lines differ by d*/
-    bool fileShortenOrdered(std::string fileName, uint32_t startPoint, double d = 0);
+    bool fileShortenOrdered(std::string fileName, uint32_t startPoint, float d = 0);
 
     /* rewrite file to line index cut*/
     bool fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_row = 2);
@@ -135,7 +135,7 @@ namespace txt_file
     bool filesAverage(std::vector<std::string> & files, std::string fileWrite, uint32_t col_per_row = 2, uint32_t order1 = 0, uint32_t order2 = 1);
     
     /* returns value from first column on same line as value*/
-    double returnTimeFromValue(std::string fileName, double value, uint16_t col_per_row = 2, uint16_t column = 1);
+    float returnTimeFromValue(std::string fileName, float value, uint16_t col_per_row = 2, uint16_t column = 1);
     
     /* load files from path to %vector
      * WARNING: if path is relative, it will be relative to the directory where the program is run!
@@ -143,10 +143,10 @@ namespace txt_file
     bool loadFromPath(std::string path, std::vector<std::string> & files);
     
     /* returns index of line where is first discover different between values biger than diff*/
-    uint32_t findLineFromDiff(std::string fileName, uint32_t startLine = 1, double diff = -30, uint16_t col_per_row = 2, uint16_t column = 1);
+    uint32_t findLineFromDiff(std::string fileName, uint32_t startLine = 1, float diff = -30, uint16_t col_per_row = 2, uint16_t column = 1);
     
     /* returns biggest decrease of values in column*/
-    double biggestDecrease(std::string fileName, uint32_t startLine = 1, uint16_t col_per_row = 2, uint16_t column = 1);
+    float biggestDecrease(std::string fileName, uint32_t startLine = 1, uint16_t col_per_row = 2, uint16_t column = 1);
 };
 
 #endif
