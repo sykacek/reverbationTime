@@ -22,6 +22,7 @@ out
 src/audio_dat
 src/audio_datcp
 src/temp
+output/
 
 #VS CODE
 .vscode
