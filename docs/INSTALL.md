@@ -21,7 +21,7 @@ make sure you have right privileges, to obtain executable privilege execute
 ```sh
     chmod u+x build.sh
 ```
-which will run installation script. This will prepare workspace for further usage.
+Build script will prepare workspace for further usage.
 
 ### PROJECT TREE
 
@@ -36,7 +36,7 @@ reverbationTime
 │   ├── data - raw .dat output data
 │   ├── images - gnuplot generated plots 
 │   └── stats - statistical data from measurement
-├── src - sprogram files
+├── src - program files
 └── test - unit tests
 ```
 
@@ -51,4 +51,10 @@ and then in the root directory of the project execute `./analyze.sh`
     # if you are not in root directory already
     cd /path-to-repository/
     ./analyze.sh
+```
+
+When running `analyze.sh` scipt, output files are not cleared by default. To clear output files run
+```sh
+    # delete contents of output directory
+    ./clear.sh
 ```
