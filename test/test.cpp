@@ -18,6 +18,7 @@ TEST(nameprotect, retndot){
 TEST(arr_s, terminate_1){
     double arr[20];
     memset(arr, 0, sizeof(double) * 20);
+
     for(int i = 0; i < 15; i++)
         arr[i] = i + 0.25147;
 
@@ -28,11 +29,12 @@ TEST(arr_s, terminate_1){
 TEST(arr_s, terminate_2){
     double arr[20];
     memset(arr, 0, sizeof(double) * 20);
+
     for(int i = 0; i < 15; i++)
         arr[i] = i + 0.25147;
 
     int len = txt_file::arr_s(arr);
-    ASSERT_NE(*(arr + --len), 0);
+    ASSERT_NE(arr[--len], 0);
 }
 
 

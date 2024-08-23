@@ -51,7 +51,7 @@ done
 for file in output/images/*.dat.png
 do
     var=${file%.*}
-    mv $file ${var%.*}
+    mv $file ${var%.*}.png
 done
 
 # create additional statistical data
