@@ -16,7 +16,14 @@
 #define EXAMPLE_LIN_BIG_LINES (143999)
 #define EXAMPLE_LIN_BIG_COLS (3)
 
+/* file to test write functions */
 #define EXAMPLE_WRITE "../example_write.txt"
+
+/* file to match files with 2 columns */
+#define EXAMPLE_MATCH2 "../write_match_col2.txt"
+
+/* file to match files with one column */
+#define EXAMPLE_MATCH1 "../write_match_col1.txt"
 
 TEST(nameprotect, retwdot){
     std::string name = "hello.";
@@ -169,23 +176,11 @@ TEST(file_write, array_cells_lines){
     int ret = txt::fileLenght(EXAMPLE_WRITE);
     int lines = txt::fileLineLenght(EXAMPLE_WRITE);
 
-    ASSERT_EQ(lines - 1, ret);
+    ASSERT_EQ(lines, ret);
     ASSERT_EQ(len, ret);
 }
 
-TEST(file_write, array_lines){
-    float arr[CACHE_BUFFER_SIZE] = {0};
-    int len = 20;
-    for(int i = 0; i < len; i++)
-        arr[i] = i + 0.1254;
-
-    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
-    int ret = txt::fileLineLenght(EXAMPLE_WRITE);
-
-    ASSERT_EQ(len, ret);
-}
-
-TEST(file_write, two_array_cells){
+TEST(file_write, two_array_cells_lines){
     float arr1[CACHE_BUFFER_SIZE] = {0}, arr2[CACHE_BUFFER_SIZE] = {0};
     int len = 15;
 
@@ -196,26 +191,13 @@ TEST(file_write, two_array_cells){
 
     EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
     int ret = txt::fileLenght(EXAMPLE_WRITE);
+    int lines = txt::fileLineLenght(EXAMPLE_WRITE);
 
+    ASSERT_EQ(len, lines);
     ASSERT_EQ(ret, len * 2);
 }
 
-TEST(file_write, two_array_lines){
-    float arr1[CACHE_BUFFER_SIZE] = {0}, arr2[CACHE_BUFFER_SIZE] = {0};
-    int len = 15;
-
-    for(int i = 0; i < len; ++i){
-        arr1[i] = i + 0.15478;
-        arr2[i] = 2*i + 0.12589;
-    }
-
-    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
-    int ret = txt::fileLineLenght(EXAMPLE_WRITE);
-
-    ASSERT_EQ(ret, len);
-}
-
-TEST(file_write, vector_cells){
+TEST(file_write, vector_cells_lines){
     std::vector<float> vect;
     int len = 30;
     for(int i = 0; i < len; ++i)
@@ -225,13 +207,54 @@ TEST(file_write, vector_cells){
     int ret = txt::fileLenght(EXAMPLE_WRITE);
     int lines = txt::fileLineLenght(EXAMPLE_WRITE);
 
-    ASSERT_EQ(ret, lines - 1);
+    ASSERT_EQ(ret, lines);
     ASSERT_EQ(ret, len);
 }
 
-/* Compare contents using bash cmp command */
+/* Compare contents of files using bash cmp command */
+int cmp_files(char *file1, char *file2){
+    char cmd[50] = "cmp";
+    int i = 0;
+    while(*(cmd + i))
+        i++;
+
+    cmd[i++] = ' ';
+    char *p = file1;
+    while(*p)
+        cmd[i++] = *(p++);
+
+    cmd[i++] = ' ';
+    p = file2;
+    while(*p)
+        cmd[i++] = *(p++);
+
+    return std::system(cmd);
+}
+
 TEST(file_write, array_contents){
-    ASSERT_EQ(2 + 2, 4);
+    float arr[20] = {0};
+    for(int i = 0; i < 10; ++i)
+        arr[i] = i + 1;
+
+    txt::fileWrite(EXAMPLE_WRITE, arr);
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH1;
+
+    ASSERT_EQ(cmp_files(written, match), 0);    
+}
+
+TEST(file_write, two_array_contents){
+    float arr1[20] = {0}, arr2[10] = {0};
+    for(int i = 0; i < 10; ++i){
+        arr1[i] = i + 1;
+        arr2[i] = i + 1;
+    }
+
+    txt::fileWrite(EXAMPLE_WRITE, arr1, arr2);
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH2;
+
+    ASSERT_EQ(cmp_files(written, match), 0);
 }
 
 int main(int argc, char **argv)
