@@ -54,13 +54,13 @@ namespace txt
      uint16_t arr_s(float * arr);
 
     /* returns number of tab-separated cells in the file*/
-    uint32_t fileLenght(std::string fileName);
+    uint32_t file_len(std::string fileName);
     
     /* return number of '\n' separated lines in the file*/
-    uint32_t fileLineLenght(std::string fileName);
+    uint32_t file_line_len(std::string fileName);
     
     /* returns number of tab-separated columns per line in the file*/
-    uint32_t columnsInLine(std::string fileName);
+    uint32_t col_per_row(std::string fileName);
 
     /* reads file into the array of floats*/
     bool fileRead(std::string fileName, float readArray[]);

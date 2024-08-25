@@ -16,4 +16,4 @@ target_link_libraries(tests_exe
     PRIVATE
     GTest::GTest)
 
-target_compile_options(tests_exe PRIVATE -Wall)
+target_compile_options(tests_exe PRIVATE -Wall -ggdb -O0)

@@ -22,14 +22,14 @@ int main(int argc, char **argv)
     if(files.size() > 0){
         uint32_t numOfCol = 0;
         uint32_t tempLen = 0; 
-        uint32_t minLen = txt::fileLineLenght(files[0]);
+        uint32_t minLen = txt::file_line_len(files[0]);
         uint32_t tempMax = 0;
         std::string result, temp;
 
         /* cut all data from peak, prepare files to be averaged */
         for(int i = 0; i < fils; i++){
             txt::fileCutToLine(files[i], 3);
-            numOfCol = txt::columnsInLine(files[i]);
+            numOfCol = txt::col_per_row(files[i]);
 
             for(uint j = 0; j < numOfCol - 2; j++)
                 txt::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
             tempMax = txt::maximumInCol(files[i]);
             txt::fileShortenOrdered(files[i], tempMax);
 
-            tempLen = txt::fileLineLenght(files[i]);
+            tempLen = txt::file_line_len(files[i]);
 
             if(tempLen < minLen)
                 minLen = tempLen;
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
             txt::fileCopy(files[i], result);
         }
 
-        /* cut all fata files to same lenght, neccessary to be averaged */
+        /* cut all fata files to same length, neccessary to be averaged */
         for(long unsigned int i = 0; i < files.size(); i ++){
             txt::fileCutFromLine(files[i], minLen, 2);
         }

@@ -16,6 +16,7 @@ CMakeUserPresets.json
 #test build files
 test/build
 test/example_write.txt
+test/example_copy.txt
 
 #application build files
 build

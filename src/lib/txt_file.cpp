@@ -33,13 +33,14 @@
         ret++;
     return ret;
 }
-uint32_t txt::fileLenght(std::string fileName)
+
+uint32_t txt::file_len(std::string fileName)
 {
     fileName = txt::nameProtect(fileName);
     std::fstream read(fileName, std::ios_base::in);
 
     if(read.is_open()){
-        //std::cout << "(fileLenght)";
+        //std::cout << "(length)";
         message(fileName, true);
         uint32_t i = 0;
         float temp;
@@ -60,7 +61,7 @@ uint32_t txt::fileLenght(std::string fileName)
         return (uint32_t) 0;
 }
 
-uint32_t txt::fileLineLenght(std::string fileName)
+uint32_t txt::file_line_len(std::string fileName)
 {
     std::fstream read(fileName, std::ios_base::in);
     if(read.is_open()){
@@ -83,7 +84,7 @@ uint32_t txt::fileLineLenght(std::string fileName)
     }
 }
 
-uint32_t txt::columnsInLine(std::string fileName)
+uint32_t txt::col_per_row(std::string fileName)
 {
     std::fstream read(fileName, std::ios_base::in);
     std::string line, temp{};
@@ -105,7 +106,7 @@ bool txt::fileRead(std::string fileName, float readArray[])
     fileName = txt::nameProtect(fileName);
     uint32_t len;
 
-    len = fileLenght(fileName);
+    len = file_len(fileName);
     std::fstream read(fileName, std::ios_base::in);
     if(read.is_open()){
         message(fileName, true);
@@ -132,7 +133,7 @@ bool txt::fileRead(std::string fileName, float readArray1[], float readArray2[])
         return false;
 
     uint32_t len;
-    len = fileLenght(fileName);
+    len = file_len(fileName);
 
     float *x = readArray1, *y = readArray2;
     for(uint32_t i = 0; i < len; i++){
@@ -147,13 +148,15 @@ bool txt::fileRead(std::string fileName, float readArray1[], float readArray2[])
 
 bool txt::fileRead(std::string fileName, std::vector<float> &readvector, uint16_t col_per_row, uint16_t pos)
 {
+    if(!col_per_row)
+        return false;
     fileName = txt::nameProtect(fileName);
     std::fstream file(fileName, std::ios_base::in);
 
     if(file.is_open()){
         float temp;
         message(fileName, true);
-        uint32_t len = fileLenght(fileName);
+        uint32_t len = file_len(fileName);
 
         for(uint32_t i = 0; i < len; i++){
             file >> temp;
@@ -171,8 +174,8 @@ bool txt::fileRead(std::string fileName, std::vector<float> &readvector, uint16_
 
 bool txt::fileWrite(std::string fileName, float array1[])
 {
-    int lenght = arr_s(array1);
-    if(!lenght)
+    int length = arr_s(array1);
+    if(!length)
         return false;
     
     fileName = txt::nameProtect(fileName);
@@ -182,10 +185,10 @@ bool txt::fileWrite(std::string fileName, float array1[])
         message(fileName, true);
         
         float *p = array1;
-        for(int i = 0; i < lenght - 1; i++){
+        for(int i = 0; i < length - 1; i++){
             file << *(p + i) << "\n";
         }
-        file << *(p + lenght - 1);
+        file << *(p + length - 1);
 
         file.close();
         message(fileName, false);
@@ -197,15 +200,9 @@ bool txt::fileWrite(std::string fileName, float array1[])
 
 bool txt::fileWrite(std::string fileName, float array1[], float array2[])
 {
-    int lenght = arr_s(array1);
-    if(!lenght)
+    uint length = std::min(arr_s(array1), arr_s(array2));
+    if(!length)
         return false;
-    
-    int lenght2 = arr_s(array2);
-    if(!lenght2)
-        return false;
-
-    lenght = std::min(lenght, lenght2);
 
     fileName = txt::nameProtect(fileName);
     std::fstream file(fileName, std::ios_base::out);
@@ -216,10 +213,10 @@ bool txt::fileWrite(std::string fileName, float array1[], float array2[])
         float *p = array1;
         float *z = array2;
 
-        for(int i = 0; i < lenght - 1; i++){
+        for(uint i = 0; i < length - 1; i++){
             file << *(p +i) << "\t" << *(z+i) << "\n";
         }
-        file << *(p + lenght - 1) << "\t" << *(z + lenght - 1);
+        file << *(p + length - 1) << "\t" << *(z + length - 1);
         
         file.close();
         message(fileName, false);
@@ -230,8 +227,11 @@ bool txt::fileWrite(std::string fileName, float array1[], float array2[])
 
 bool txt::fileWrite(std::string fileName, std::vector<float> &vect)
 {
-    std::fstream file(fileName, std::ios_base::out);
     uint len = vect.size();
+    if(!len)
+        return false;
+    
+    std::fstream file(fileName, std::ios_base::out);
     if(file.is_open()){
         message(fileName, true);
         for(uint i = 0; i < len - 1; i++)
@@ -250,22 +250,18 @@ bool txt::fileWrite(std::string fileName, std::vector<float> &vect)
 
 bool txt::fileWrite(std::string fileName, std::vector<float> &one, std::vector<float> &two)
 {
-    uint16_t len = one.size();
+    uint len = std::min(one.size(), two.size());
     if(!len)
         return false;
-
-    uint16_t len2 = two.size();
-    if(!len2)
-        return false;
-
-    len = std::min(len, len2);
     
     std::fstream file(fileName, std::ios_base::out);
 
     if(file.is_open()){
         message(fileName, true);
-        for(uint16_t i = 0; i < len; i ++)
+        for(uint16_t i = 0; i < len - 1; i ++)
             file << one[i] << "\t" << two[i] << "\n";
+
+        file << one[len - 1] << "\t" << two[len - 1];
         message(fileName, false);
 
         return true;
@@ -277,17 +273,22 @@ bool txt::fileWrite(std::string fileName, std::vector<float> &one, std::vector<f
 
 bool txt::fileAppendLine(std::string fileName, float array1[])
 {
+    int len = arr_s(array1);
+    if(!len)
+        return false;
+    
     fileName = txt::nameProtect(fileName);
     std::fstream file(fileName, std::ios_base::app);
 
     if(file.is_open()){
         message(fileName, true);
-        int fileLen = arr_s(array1);
 
         float * p = array1;
-        for(int i = 0; i < fileLen; i++){
-            file << *(p + i) << "\n";
+        for(int i = 0; i < len - 1; i++){
+            file << *(p++) << "\n";
         }
+        file << *(p);
+
         file.close();
         message(fileName, false);
 
@@ -303,13 +304,13 @@ bool txt::fileAppendTab(std::string fileName, float array1[])
     
     if(file.is_open()){
         message(fileName, true);
-        int fileLen = arr_s(array1);
+        int len = arr_s(array1);
 
         float * p = array1;
-        for(int i = 0; i < fileLen; i++){
-            file << *(p + i) << "\t";
+        for(int i = 0; i < len - 1; i++){
+            file << *(p++) << "\t";
         }
-        file << "\n";
+        file << *p;
         file.close();
         message(fileName, false);
 
@@ -330,7 +331,10 @@ bool txt::fileAproximation(std::string fileRead, std::string fileWrite, int n)
         message(fileRead, true);
         message(fileWrite, true);
 
-        uint32_t len = fileLenght(fileRead);
+        uint32_t len = file_len(fileRead);
+        if(!len)
+            return false;
+            
         len /= n;
         len /= 2;
         len -= 1;
@@ -449,7 +453,7 @@ bool txt::fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint1
         message(fileNameWrite, true);
 
         float temp1, temp2, temp3;
-        uint32_t len = fileLenght(fileNameRead);
+        uint32_t len = file_len(fileNameRead);
 
         for(uint32_t i = 0; i < len; i++){
             fileRead >> temp1;
@@ -603,7 +607,7 @@ bool txt::fileShortenOrdered(std::string fileName, uint32_t startPoint, float d)
     if(startPoint == 1)
         return true;
 
-    if(startPoint == fileLineLenght(fileName) - 2)
+    if(startPoint == file_line_len(fileName) - 2)
         return false;
 
     std::fstream read1(fileName, std::ios_base::in);
@@ -652,7 +656,7 @@ bool txt::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_r
 
     if(read.is_open() && write.is_open()){
         message(fileName, true);
-        uint32_t len = fileLineLenght(fileName);
+        uint32_t len = file_line_len(fileName);
 
         if(len < cut)
             return false;
@@ -744,7 +748,7 @@ bool txt::filesAverage(std::vector<std::string> &files, std::string fileWrite, u
         }
     }
     write.close();
-    len = fileLenght(fileWrite);
+    len = file_len(fileWrite);
 
     if(len > 0)
         return true;

@@ -19,11 +19,17 @@
 /* file to test write functions */
 #define EXAMPLE_WRITE "../example_write.txt"
 
+/* need more files to copying etc. */
+#define EXAMPLE_COPY "../example_copy.txt"
+
 /* file to match files with 2 columns */
 #define EXAMPLE_MATCH2 "../write_match_col2.txt"
 
 /* file to match files with one column */
 #define EXAMPLE_MATCH1 "../write_match_col1.txt"
+
+/* how many times repeat the tests*/
+#define REPEAT 1000
 
 TEST(nameprotect, retwdot){
     std::string name = "hello.";
@@ -60,25 +66,25 @@ TEST(arr_s, terminate_2){
 /* Testing of file read/write functions is compared to human produced results */
 /* So lines, cells etc. were counted manually */
 TEST(file_len, ret_small){
-    int ret = txt::fileLenght(EXAMPLE_LOG_SMALL);
+    int ret = txt::file_len(EXAMPLE_LOG_SMALL);
 
     ASSERT_EQ(ret, EXAMPLE_LOG_SMALL_LINES * EXAMPLE_LOG_SMALL_COLS);
 }
 
 TEST(file_len, ret_big){
-    int ret = txt::fileLenght(EXAMPLE_LIN_BIG);
+    int ret = txt::file_len(EXAMPLE_LIN_BIG);
 
     ASSERT_EQ(ret, EXAMPLE_LIN_BIG_COLS * EXAMPLE_LIN_BIG_LINES);
 }
 
 TEST(file_line_len, ret_small){
-    int ret = txt::fileLineLenght(EXAMPLE_LOG_SMALL);
+    int ret = txt::file_line_len(EXAMPLE_LOG_SMALL);
 
     ASSERT_EQ(ret, EXAMPLE_LOG_SMALL_LINES);
 }
 
 TEST(file_line_len, ret_big){
-    int ret = txt::fileLineLenght(EXAMPLE_LIN_BIG);
+    int ret = txt::file_line_len(EXAMPLE_LIN_BIG);
 
     /* there is an empty extra line in the file, so return value will be one bigger*/
     ASSERT_EQ(ret, EXAMPLE_LIN_BIG_LINES + 1);
@@ -99,7 +105,7 @@ TEST(col_per_row, ret){
         i++;
     }
 
-    int ret = txt::columnsInLine(EXAMPLE_LOG_SMALL);
+    int ret = txt::col_per_row(EXAMPLE_LOG_SMALL);
     EXPECT_EQ(ret, EXAMPLE_LOG_SMALL_COLS);
     ASSERT_EQ(ret, j);
 }
@@ -164,7 +170,7 @@ TEST(file_read, vector_contents){
         ASSERT_EQ(vect[i], i + 1);
 }
 
-/* Test lenght of wiritten file using already tested functions */
+/* Test length of wiritten file using already tested functions */
 /* there will be an extra '\n' at the end of the file */
 TEST(file_write, array_cells_lines){
     float arr[CACHE_BUFFER_SIZE] = {0};
@@ -173,8 +179,8 @@ TEST(file_write, array_cells_lines){
         arr[i] = i + 0.1254;
 
     EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
-    int ret = txt::fileLenght(EXAMPLE_WRITE);
-    int lines = txt::fileLineLenght(EXAMPLE_WRITE);
+    int ret = txt::file_len(EXAMPLE_WRITE);
+    int lines = txt::file_line_len(EXAMPLE_WRITE);
 
     ASSERT_EQ(lines, ret);
     ASSERT_EQ(len, ret);
@@ -190,8 +196,8 @@ TEST(file_write, two_array_cells_lines){
     }
 
     EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
-    int ret = txt::fileLenght(EXAMPLE_WRITE);
-    int lines = txt::fileLineLenght(EXAMPLE_WRITE);
+    int ret = txt::file_len(EXAMPLE_WRITE);
+    int lines = txt::file_line_len(EXAMPLE_WRITE);
 
     ASSERT_EQ(len, lines);
     ASSERT_EQ(ret, len * 2);
@@ -204,8 +210,8 @@ TEST(file_write, vector_cells_lines){
         vect.push_back(i + 0.1245);
 
     EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect));
-    int ret = txt::fileLenght(EXAMPLE_WRITE);
-    int lines = txt::fileLineLenght(EXAMPLE_WRITE);
+    int ret = txt::file_len(EXAMPLE_WRITE);
+    int lines = txt::file_line_len(EXAMPLE_WRITE);
 
     ASSERT_EQ(ret, lines);
     ASSERT_EQ(ret, len);
@@ -236,7 +242,7 @@ TEST(file_write, array_contents){
     for(int i = 0; i < 10; ++i)
         arr[i] = i + 1;
 
-    txt::fileWrite(EXAMPLE_WRITE, arr);
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
     char written[] = EXAMPLE_WRITE;
     char match[] = EXAMPLE_MATCH1;
 
@@ -250,19 +256,195 @@ TEST(file_write, two_array_contents){
         arr2[i] = i + 1;
     }
 
-    txt::fileWrite(EXAMPLE_WRITE, arr1, arr2);
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
     char written[] = EXAMPLE_WRITE;
     char match[] = EXAMPLE_MATCH2;
 
     ASSERT_EQ(cmp_files(written, match), 0);
 }
 
+TEST(file_write, vector_contents){
+    std::vector<float> vect;
+    for(int i = 0; i < 10; ++i)
+        vect.push_back(i + 1);
+
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect));
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH1;
+    
+    ASSERT_EQ(cmp_files(written, match), 0);
+}
+
+TEST(file_write, two_vector_contents){
+    std::vector<float> vect1, vect2;
+    for(int i = 0; i < 10; ++i){
+        vect1.push_back(i + 1);
+        vect2.push_back(i + 1);
+    }
+
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect1, vect2));
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH2;
+    
+    ASSERT_EQ(cmp_files(written, match), 0);
+}
+
+TEST(file_write, two_array_diff_size){
+    float arr1[CACHE_BUFFER_SIZE] = {0}, arr2[CACHE_BUFFER_SIZE] = {0};
+    for(int i = 0; i < 10; ++i)
+        arr1[i] = i + 1;
+    for(int i = 0; i < 15; ++i)
+        arr2[i] = i + 1;
+
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH2;
+    
+    ASSERT_EQ(cmp_files(written, match), 0);
+}
+
+TEST(file_write, two_vector_diff_size){
+    std::vector<float> vect1, vect2;
+    for(int i = 0; i < 10; ++i)
+        vect1.push_back(i + 1);
+    for(int i = 0; i < 15; ++i)
+        vect2.push_back(i + 1);
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect1, vect2));
+    char written[] = EXAMPLE_WRITE;
+    char match[] = EXAMPLE_MATCH2;
+    
+    ASSERT_EQ(cmp_files(written, match), 0);
+}
+
+TEST(file_append_line, contents){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 1000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
+    float read_arr[CACHE_BUFFER_SIZE] = {0};
+    txt::fileRead(EXAMPLE_WRITE, read_arr);
+    int read_len = txt::arr_s(read_arr);
+
+    ASSERT_EQ(len, read_len);
+    for(int i = 0; i < len; ++i)
+        ASSERT_EQ(arr[i], read_arr[i]);
+}
+
+TEST(file_append_line, lines){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 1000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
+    int ret = txt::file_line_len(EXAMPLE_WRITE);
+
+    ASSERT_EQ(ret, len);
+}
+
+TEST(file_append_line, columns){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 1000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
+    int ret = txt::col_per_row(EXAMPLE_WRITE);
+
+    ASSERT_EQ(ret, 1);
+}
+
+TEST(file_append_tab, lines){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 1000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
+    int ret = txt::file_line_len(EXAMPLE_WRITE);
+
+    ASSERT_EQ(ret, 1);
+}
+
+TEST(file_append_tab, columns){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 14512;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
+    int ret = txt::col_per_row(EXAMPLE_WRITE);
+
+    ASSERT_EQ(ret, len);
+}
+
+TEST(file_append_tab, contents){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 1000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+    /* clear file */
+    std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
+    read.clear();
+    read.close();
+
+    EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
+    float read_arr[CACHE_BUFFER_SIZE] = {0};
+
+    txt::fileRead(EXAMPLE_WRITE, read_arr);
+    int read_len = txt::arr_s(read_arr);
+
+    ASSERT_EQ(read_len, len);
+
+    for(int i = 0; i < len; ++i)
+        ASSERT_EQ(arr[i], read_arr[i]);    
+}
+
+
+/* fix aproximation to be cols independent!!!!*/
+TEST(file_aproximate, lines){
+    float arr[CACHE_BUFFER_SIZE] = {0};
+    int len = 10000;
+    for(int i = 0; i < len; ++i)
+        arr[i] = i + 1;
+
+    EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
+    int ret = txt::file_line_len(EXAMPLE_WRITE);
+
+    EXPECT_EQ(len, ret);
+    int factor = 10;
+
+    EXPECT_TRUE(txt::fileAproximation(EXAMPLE_WRITE, EXAMPLE_COPY, factor));
+    ret /= factor;
+    int apx_ret = txt::file_line_len(EXAMPLE_COPY);
+
+    ASSERT_EQ(ret, apx_ret);
+}
+
 int main(int argc, char **argv)
 {
-    if(argc > 1){
-        printf("Error: too many arguments\n");
-        return -EINVAL;
-    }
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
