@@ -100,18 +100,18 @@ uint32_t txt::columnsInLine(std::string fileName)
 bool txt::fileRead(std::string fileName, float readArray[])
 {
     fileName = txt::nameProtect(fileName);
-    uint32_t amountOfValues;
+    uint32_t len;
 
-    amountOfValues = fileLenght(fileName);
-    std::fstream testFile1(fileName, std::ios_base::in);
-    if(testFile1.is_open()){
+    len = fileLenght(fileName);
+    std::fstream read(fileName, std::ios_base::in);
+    if(read.is_open()){
         message(fileName, true);
         float *p = &readArray[0];
 
-        for(uint32_t i = 0; i < amountOfValues; i++)
-            testFile1 >> *(p+i);
+        for(uint32_t i = 0; i < len; i++)
+            read >> *(p+i);
 
-        testFile1.close();
+        read.close();
         message(fileName, false);
 
         return true;
@@ -125,19 +125,21 @@ bool txt::fileRead(std::string fileName, float readArray1[], float readArray2[])
 
     float array[CACHE_BUFFER_SIZE] = {};
     bool done = fileRead(fileName, array);
+    if(!done)
+        return false;
 
-    uint32_t amountOfValues;
-    amountOfValues = fileLenght(fileName);
+    uint32_t len;
+    len = fileLenght(fileName);
 
     float *x = readArray1, *y = readArray2;
-    for(uint32_t i = 0; i < amountOfValues; i++){
+    for(uint32_t i = 0; i < len; i++){
         if(i%2 == 0)
             *(x+i/2) = array[i];
         else
             *(y+(i-1)/2) = array[i];
     }
 
-    return done;
+    return true;
 }
 
 bool txt::fileRead(std::string fileName, std::vector<float> &readvector, uint16_t col_per_row, uint16_t pos)

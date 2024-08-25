@@ -20,7 +20,7 @@
 /* Library defines*/
 
 /* Maximum number of cells in file */
-#define CACHE_BUFFER_SIZE (100000)
+#define CACHE_BUFFER_SIZE (512000)
 
 /* Proccessing buffer size for approximating audio samples*/
 #define PROCCESSING_BUFFER_SIZE (64)
@@ -44,7 +44,7 @@
 
 namespace txt
 {
-    /* lib function, check if file has .txt extention*/
+    /* lib function, check if file has some .*** extention*/
      std::string nameProtect(std::string fileName);
 
     /*print additional info about opening and closing files*/
@@ -56,7 +56,7 @@ namespace txt
     /* returns number of tab-separated cells in the file*/
     uint32_t fileLenght(std::string fileName);
     
-    /* return number of lines in the file*/
+    /* return number of '\n' separated lines in the file*/
     uint32_t fileLineLenght(std::string fileName);
     
     /* returns number of tab-separated columns per line in the file*/
@@ -74,7 +74,7 @@ namespace txt
      */
     bool fileRead(std::string fileName, std::vector<float> &readvector, uint16_t col_per_row = 2, uint16_t pos = 1);
 
-    /* write data to the text file, every value on new line*/
+    /* write data to the text file in one column*/
     bool fileWrite(std::string fileName, float array1[]);
 
     /* write data to the text file in two columns*/

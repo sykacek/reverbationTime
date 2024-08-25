@@ -15,6 +15,7 @@ CMakeUserPresets.json
 
 #test build files
 test/build
+test/example_write.txt
 
 #application build files
 build
@@ -26,4 +27,4 @@ output/
 
 #VS CODE
 .vscode
-.vscode*
+.vscode-ctages
