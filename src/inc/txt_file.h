@@ -60,7 +60,7 @@ namespace txt
     uint32_t file_line_len(std::string fileName);
     
     /* returns number of tab-separated columns per line in the file*/
-    uint32_t col_per_row(std::string fileName);
+    uint32_t cols_per_row(std::string fileName);
 
     /* reads file into the array of floats*/
     bool fileRead(std::string fileName, float readArray[]);
@@ -93,11 +93,8 @@ namespace txt
     bool fileAppendTab(std::string fileName, float array1[]);
 
     /*reduce number of lines of file n times*/
-    bool fileAproximation(std::string fileRead, std::string fileWrite, int n = 10);
+    bool fileAproximation(std::string fileRead, std::string fileWrite, uint n = 10);
     
-    /* expand contents of src n times to dest*/
-    bool arrayExpand(float dest[], float src[], int n);
-
     /* vect[i] = 10*log(vect[i])*/
     bool logValue(std::vector<float> &vect);
 

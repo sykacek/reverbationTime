@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     int fils = files.size();
 
     if(files.size() > 0){
-        uint32_t numOfCol = 0;
+        uint32_t cols = 0;
         uint32_t tempLen = 0; 
         uint32_t minLen = txt::file_line_len(files[0]);
         uint32_t tempMax = 0;
@@ -29,10 +29,10 @@ int main(int argc, char **argv)
         /* cut all data from peak, prepare files to be averaged */
         for(int i = 0; i < fils; i++){
             txt::fileCutToLine(files[i], 3);
-            numOfCol = txt::col_per_row(files[i]);
+            cols = txt::cols_per_row(files[i]);
 
-            for(uint j = 0; j < numOfCol - 2; j++)
-                txt::fileColumnRemove(files[i], numOfCol - j, numOfCol - j - 1);
+            for(uint j = 0; j < cols - 2; j++)
+                txt::fileColumnRemove(files[i], cols - j, cols - j - 1);
 
             txt::fileFabs(files[i], "");
             txt::fileAproximation(files[i], "", apx_coef);

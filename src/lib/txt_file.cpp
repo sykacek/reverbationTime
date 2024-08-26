@@ -84,7 +84,7 @@ uint32_t txt::file_line_len(std::string fileName)
     }
 }
 
-uint32_t txt::col_per_row(std::string fileName)
+uint32_t txt::cols_per_row(std::string fileName)
 {
     std::fstream read(fileName, std::ios_base::in);
     std::string line, temp{};
@@ -185,7 +185,7 @@ bool txt::fileWrite(std::string fileName, float array1[])
         message(fileName, true);
         
         float *p = array1;
-        for(int i = 0; i < length - 1; i++){
+        for(int i = 0; i < length - 1; ++i){
             file << *(p + i) << "\n";
         }
         file << *(p + length - 1);
@@ -319,10 +319,21 @@ bool txt::fileAppendTab(std::string fileName, float array1[])
         return false;
 }
 
-bool txt::fileAproximation(std::string fileRead, std::string fileWrite, int n)
+bool txt::fileAproximation(std::string fileRead, std::string fileWrite, uint n)
 {
     if(fileWrite == "")
         fileWrite = PATH_FILEAPROXIMATION;
+
+    uint32_t len = file_line_len(fileRead);
+    if(!len)
+        return false;
+
+    const uint cols = cols_per_row(fileRead);
+    if(!cols)
+        return false;
+
+    if(!n)
+        return false;
 
     std::fstream read(fileRead, std::ios_base::in);
     std::fstream write(fileWrite, std::ios_base::out);
@@ -330,30 +341,42 @@ bool txt::fileAproximation(std::string fileRead, std::string fileWrite, int n)
     if(read.is_open() && write.is_open()){
         message(fileRead, true);
         message(fileWrite, true);
-
-        uint32_t len = file_len(fileRead);
-        if(!len)
-            return false;
-            
         len /= n;
-        len /= 2;
-        len -= 1;
 
-        float read1, read2, sum1, sum2;
-        for(uint32_t i = 0; i < len; i++){
-            sum1 = 0;
-            sum2 = 0;
-            for(int j = 0; j < n; j++){
-                read >> read1;
-                read >> read2;
-                sum1 += read1;
-                sum2 += read2;
+        /* dynamically allocate memory for all columns */
+        std::vector<float> read_vect, sum_vect;
+        for(uint i = 0; i < cols; ++i){
+            read_vect.push_back(0);
+            sum_vect.push_back(0);
+        }
+
+        for(uint i = 0; i < len; ++i){
+            /* set values 0 each start of loop */
+            for(uint k = 0; k < cols; ++k)
+                sum_vect[k] = 0;
+
+            /* read values to vector */
+            for(uint j = 0; j < n; j++){
+                for(uint k = 0; k < cols; ++k){
+                    read >> read_vect[k];
+                    sum_vect[k] += read_vect[k];
+                }
             }
 
-            sum1 /= n;
-            sum2 /= n;
-            write << sum1 << "\t" << sum2 << "\n";
+            /* get arithmetic mean */
+            for(uint k = 0; k < cols; ++k){
+                sum_vect[k] /= n;
+            }
+
+            /* write values */
+            for(uint k = 0; k < cols - 1; ++k)
+                write << sum_vect[k] << "\t";
+            if(i != len - 1)
+                write << sum_vect[cols - 1] << "\n";
+            else
+                write << sum_vect[cols - 1];
         }
+        
         message(fileRead, false);
         message(fileWrite, false);
 
@@ -367,22 +390,6 @@ bool txt::fileAproximation(std::string fileRead, std::string fileWrite, int n)
         std::cout << "Error: failed to open file " << fileRead << "\n";
         return false;
     }
-}
-
-bool txt::arrayExpand(float dest[], float src[], int n)
-{
-    int len = arr_s(src);
-
-    for(int i = 0; i < len; i++){
-        for(int j = 0; j < n; j++)
-            *(dest + i*n + j) = *(src + i);
-    }
-    len = arr_s(dest);
-
-    if(len > 0)
-        return true;
-    else 
-        return false;
 }
 
 bool txt::logValue(std::vector<float> &vect)
