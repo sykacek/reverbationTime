@@ -20,17 +20,18 @@
 /* Library defines*/
 
 /* Maximum number of cells in file */
-#define CACHE_BUFFER_SIZE (512000)
+#define CACHE_BUFFER_SIZE (524288) //buffer of floats will be 2 MB
 
 /* Proccessing buffer size for approximating audio samples*/
 #define PROCCESSING_BUFFER_SIZE (64)
 
-/* More generic defines*/
+/* More generic defines */
 #define DELTA (1)
 #define FILE_DELTA (0.5)
 #define PI (3.1415926)
-
-/* defualt file locations*/
+/* define output data precision */
+#define PREC 4
+/* defualt file locations */
 #define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
 #define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
 #define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
@@ -41,6 +42,8 @@
 /**
  * Library functions for text handling
  */
+
+
 
 namespace txt
 {
