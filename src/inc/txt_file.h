@@ -107,13 +107,16 @@ namespace txt
     /* copy contents of fileRead to fileWrite, formated by col_per_row */
     bool fileCopy(std::string fileRead, std::string fileWrite, uint32_t col_per_row = 2);
 
-    /* copy contents of fileRead to fileWrite, second column has logarithmic values*/
+    /* copy contents of fileNameRead to fileNameWrite, second column has logarithmic values */
+    /* different format is not accepted (2 columns) */
     bool fileLogCopy(std::string fileNameRead, std::string fileNameWrite);
     
     /* returns index where is maximum value in column*/
+    /* starts counting from 1 as line 1*/
     uint32_t maximumInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
 
     /* returns index where is minimum value in column */
+    /* starts counting from 1 as line 1*/
     uint32_t minimumInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
 
     /* copy contents of fileRead to fileWrite, all values are positive*/

@@ -484,7 +484,7 @@ bool txt::fileLogCopy(std::string fileNameRead, std::string fileNameWrite)
         return false;
 
     uint cols = colsPerRow(fileNameRead);
-    if(!cols || cols > 2)
+    if(cols != 2)
         return false;
     
     if(fileNameWrite == "")
@@ -537,14 +537,14 @@ uint32_t txt::maximumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
 {
     std::fstream read(fileName, std::ios_base::in);
     uint32_t counter = 0, line = 1;
-    double temp, maximum = -1e10, maxLine = 1;
+    double temp, maximum = -1e10, ret = 1;
 
     while(read){
         read >> temp;
         if(counter % col_per_row == column){
             if(temp > maximum){
                 maximum = temp;
-                maxLine = line;
+                ret = line;
             }
             line ++;
         }
@@ -552,7 +552,7 @@ uint32_t txt::maximumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
     }
     read.close();
 
-    return maxLine;
+    return ret;
 }
 
 uint32_t txt::minimumInCol(std::string fileName, uint32_t col_per_row, uint32_t column)
@@ -560,12 +560,12 @@ uint32_t txt::minimumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
     std::fstream read(fileName, std::ios_base::in);
 
     uint32_t counter = 0, line = 1;
-    double temp, minimum = 1e10, maxLine = 1;
+    double temp, minimum = 1e10, ret = 1;
     while(read){
         read >> temp;
         if(counter % col_per_row == column) {
             if(minimum > temp && read) {
-                maxLine = line;
+                ret = line;
                 minimum = temp;
             }
             line ++;
@@ -574,7 +574,7 @@ uint32_t txt::minimumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
     }
     read.close();
 
-    return maxLine;
+    return ret;
 }
 
 bool txt::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per_row)

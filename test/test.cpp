@@ -689,7 +689,83 @@ TEST(file_log_copy, format_and_contents){
             ASSERT_PREC(arr[0][i], arr[2][i]);
             ASSERT_PREC(20*log10(arr[1][i]), arr[3][i]);
         }
-        
+    }
+}
+
+TEST(maximum_minimum_in_col, return_and_range){
+    double arr[4][MAX_ARRAY_RAND] = {0};
+    int cols, max[2], min[2];
+    for(int j = 0; j < REPEAT; ++j){
+        for(int i = 0; i < 4; ++i)
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
+
+        int len = std::rand() % MAX_ARRAY_RAND;
+        if(len % 2){
+            cols = 1;
+            for(int i = 0; i < len; ++i)
+                arr[0][i] = RAND_DOUBLE;
+
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
+            max[0] = txt::maximumInCol(EXAMPLE_WRITE, cols, 0);
+            min[0] = txt::minimumInCol(EXAMPLE_WRITE, cols, 0);
+            
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[1]));
+
+            for(int i = 0; i < len; ++i){
+                ASSERT_PREC(arr[0][i], arr[1][i]);
+                ASSERT_LE(arr[1][i], arr[1][max[0] - 1]);
+                ASSERT_LE(arr[1][min[0] - 1], arr[1][i]);
+            }
+        } else {
+            cols = 2;
+            for(int i = 0; i < len; ++i){
+                arr[0][i] = RAND_DOUBLE;
+                arr[1][i] = RAND_DOUBLE;
+            }
+
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+            max[0] = txt::maximumInCol(EXAMPLE_WRITE, cols, 0);
+            max[1] = txt::maximumInCol(EXAMPLE_WRITE, cols, 1);
+            min[0] = txt::minimumInCol(EXAMPLE_WRITE, cols, 0);
+            min[1] = txt::minimumInCol(EXAMPLE_WRITE, cols, 1);
+
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
+
+            for(int i = 0; i < len; ++i){
+                ASSERT_PREC(arr[0][i], arr[2][i]);
+                ASSERT_PREC(arr[1][i], arr[3][i]);
+
+                ASSERT_LE(arr[0][i], arr[0][max[0] - 1]);
+                ASSERT_LE(arr[1][i], arr[1][max[1] - 1]);
+
+                ASSERT_LE(arr[0][min[0] - 1], arr[0][i]);
+                ASSERT_LE(arr[1][min[1] - 1], arr[1][i]);
+            }
+        }
+    }
+}
+
+TEST(file_fabs, contents_and_format){
+    double arr[4][MAX_ARRAY_RAND] = {0};
+    int cols, max[2], min[2];
+
+    for(int j = 0; j < REPEAT; ++j){
+        for(int i = 0; i < 4; ++i)
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
+
+        int len = std::rand() % MAX_ARRAY_RAND;
+        if(len % 2){
+            cols = 1;
+            for(int i = 0; i < len; ++i)
+                arr[0][i] = RAND_DOUBLE;
+        } else {
+            cols = 2;
+            for(int i = 0; i < len; ++i){
+                arr[0][i] = RAND_DOUBLE;
+                arr[1][i] = RAND_DOUBLE;
+            }
+        }
+
     }
 }
 
