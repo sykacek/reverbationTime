@@ -22,14 +22,14 @@ int main(int argc, char **argv)
     if(files.size() > 0){
         uint32_t cols = 0;
         uint32_t tempLen = 0; 
-        uint32_t minLen = txt::file_line_len(files[0]);
+        uint32_t minLen = txt::fileLineLen(files[0]);
         uint32_t tempMax = 0;
         std::string result, temp;
 
         /* cut all data from peak, prepare files to be averaged */
         for(int i = 0; i < fils; i++){
             txt::fileCutToLine(files[i], 3);
-            cols = txt::cols_per_row(files[i]);
+            cols = txt::colsPerRow(files[i]);
 
             for(uint j = 0; j < cols - 2; j++)
                 txt::fileColumnRemove(files[i], cols - j, cols - j - 1);
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
             tempMax = txt::maximumInCol(files[i]);
             txt::fileShortenOrdered(files[i], tempMax);
 
-            tempLen = txt::file_line_len(files[i]);
+            tempLen = txt::fileLineLen(files[i]);
 
             if(tempLen < minLen)
                 minLen = tempLen;

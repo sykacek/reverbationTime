@@ -40,19 +40,19 @@
 #define RAND_FLOAT (ceilf((float)std::rand()/(std::rand() + 1) * 1000)/1000)
 #define ROUND_DIFF (0.5)
 
-TEST(nameprotect, retwdot){
+TEST(nameprotect, ret_with_dot){
     std::string name = "hello.";
     std::string ret = txt::nameProtect(name);
     ASSERT_EQ(name, ret);
 }
 
-TEST(nameprotect, retndot){
+TEST(nameprotect, ret_without_dot){
     std::string name = "hello";
     std::string ret = txt::nameProtect(name);
     ASSERT_NE(name, ret);
 }
 
-TEST(arr_s, size_and_terminate){
+TEST(array_size, size_and_terminate){
     /* we need maximum of MAX_ARRAY_RAND numbers to be stored */
     float arr[MAX_ARRAY_RAND] = {0};
 
@@ -63,7 +63,7 @@ TEST(arr_s, size_and_terminate){
         for(int i = 0; i < size; i++)
             arr[i] = RAND_FLOAT;
 
-        uint32_t len = txt::arr_s(arr);
+        uint32_t len = txt::arraySize(arr);
         ASSERT_EQ(len, size);
         ASSERT_EQ(*(arr + len), 0);
         ASSERT_NE(arr[--len], 0);
@@ -72,26 +72,26 @@ TEST(arr_s, size_and_terminate){
 
 /* Testing of file read/write functions is compared to human produced results, */
 /* lines, cells etc. were counted manually */
-TEST(file_len, ret_small){
-    int ret = txt::file_len(EXAMPLE_LOG_SMALL);
+TEST(fileLen, ret_small){
+    int ret = txt::fileLen(EXAMPLE_LOG_SMALL);
 
     ASSERT_EQ(ret, EXAMPLE_LOG_SMALL_LINES * EXAMPLE_LOG_SMALL_COLS);
 }
 
-TEST(file_len, ret_big){
-    int ret = txt::file_len(EXAMPLE_LIN_BIG);
+TEST(fileLen, ret_big){
+    int ret = txt::fileLen(EXAMPLE_LIN_BIG);
 
     ASSERT_EQ(ret, EXAMPLE_LIN_BIG_COLS * EXAMPLE_LIN_BIG_LINES);
 }
 
-TEST(file_line_len, ret_small){
-    int ret = txt::file_line_len(EXAMPLE_LOG_SMALL);
+TEST(fileLineLen, ret_small){
+    int ret = txt::fileLineLen(EXAMPLE_LOG_SMALL);
 
     ASSERT_EQ(ret, EXAMPLE_LOG_SMALL_LINES);
 }
 
-TEST(file_line_len, ret_big){
-    int ret = txt::file_line_len(EXAMPLE_LIN_BIG);
+TEST(fileLineLen, ret_big){
+    int ret = txt::fileLineLen(EXAMPLE_LIN_BIG);
 
     /* there is an empty extra line in the file, so return value will be one bigger*/
     ASSERT_EQ(ret, EXAMPLE_LIN_BIG_LINES + 1);
@@ -112,7 +112,7 @@ TEST(col_per_row, ret){
         i++;
     }
 
-    int ret = txt::cols_per_row(EXAMPLE_LOG_SMALL);
+    int ret = txt::colsPerRow(EXAMPLE_LOG_SMALL);
     EXPECT_EQ(ret, EXAMPLE_LOG_SMALL_COLS);
     ASSERT_EQ(ret, j);
 }
@@ -122,7 +122,7 @@ TEST(file_read, array_size){
     float arr[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr));
-    uint32_t memsize = txt::arr_s(arr);
+    uint32_t memsize = txt::arraySize(arr);
 
     ASSERT_EQ(memsize, EXAMPLE_LOG_SMALL_COLS * EXAMPLE_LOG_SMALL_LINES);
 }
@@ -132,8 +132,8 @@ TEST(file_read, two_array_size){
     float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr1, arr2));
-    uint32_t memsize1 = txt::arr_s(arr1);
-    uint32_t memsize2 = txt::arr_s(arr2);
+    uint32_t memsize1 = txt::arraySize(arr1);
+    uint32_t memsize2 = txt::arraySize(arr2);
 
     EXPECT_EQ(memsize1, memsize2);
     ASSERT_EQ(memsize1, 130);
@@ -190,8 +190,8 @@ TEST(file_write, array_cells_lines){
             arr[i] = RAND_FLOAT;
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
-        int ret = txt::file_len(EXAMPLE_WRITE);
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLen(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(lines, ret);
         ASSERT_EQ(len, ret);
@@ -216,8 +216,8 @@ TEST(file_write, two_array_cells_lines){
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
         //usleep(100);
-        int ret = txt::file_len(EXAMPLE_WRITE);
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLen(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(len, lines);
         ASSERT_EQ(ret, len * 2);
@@ -236,8 +236,8 @@ TEST(file_write, vector_cells_lines){
             vect.push_back(i + 0.1245);
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect));
-        int ret = txt::file_len(EXAMPLE_WRITE);
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLen(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(ret, lines);
         ASSERT_EQ(ret, len);
@@ -259,8 +259,8 @@ TEST(file_write, two_vector_cells_lines){
         }
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, vect1, vect2));
-        int ret = txt::file_len(EXAMPLE_WRITE);
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLen(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(len, lines);
         ASSERT_EQ(ret, lines * 2);
@@ -385,7 +385,7 @@ TEST(file_append_line, contents){
 
         EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
         txt::fileRead(EXAMPLE_WRITE, read_arr);
-        int read_len = txt::arr_s(read_arr);
+        int read_len = txt::arraySize(read_arr);
 
         ASSERT_EQ(len, read_len);
         for(int i = 0; i < len; ++i)
@@ -409,7 +409,7 @@ TEST(file_append_line, lines){
         read.close();
 
         EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
-        int ret = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(ret, len);
     }    
@@ -431,7 +431,7 @@ TEST(file_append_line, columns){
         read.close();
 
         EXPECT_TRUE(txt::fileAppendLine(EXAMPLE_WRITE, arr));
-        int ret = txt::cols_per_row(EXAMPLE_WRITE);
+        int ret = txt::colsPerRow(EXAMPLE_WRITE);
 
         ASSERT_EQ(ret, 1);
     }
@@ -453,7 +453,7 @@ TEST(file_append_tab, lines){
         read.close();
 
         EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
-        int ret = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLineLen(EXAMPLE_WRITE);
 
         ASSERT_EQ(ret, 1);
     }
@@ -475,7 +475,7 @@ TEST(file_append_tab, columns){
         read.close();
 
         EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
-        int ret = txt::cols_per_row(EXAMPLE_WRITE);
+        int ret = txt::colsPerRow(EXAMPLE_WRITE);
 
         ASSERT_EQ(ret, len);
     }
@@ -499,7 +499,7 @@ TEST(file_append_tab, contents){
         float read_arr[MAX_ARRAY_RAND] = {0};
 
         txt::fileRead(EXAMPLE_WRITE, read_arr);
-        int read_len = txt::arr_s(read_arr);
+        int read_len = txt::arraySize(read_arr);
 
         ASSERT_EQ(read_len, len);
 
@@ -533,15 +533,15 @@ TEST(file_aproximate, lines_col){
 
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
         }
-        int ret = txt::file_line_len(EXAMPLE_WRITE);
+        int ret = txt::fileLineLen(EXAMPLE_WRITE);
 
         EXPECT_EQ(len, ret);
         int factor = 10;
 
         EXPECT_TRUE(txt::fileAproximation(EXAMPLE_WRITE, EXAMPLE_COPY, factor));
         ret /= factor;
-        int apx_lines = txt::file_line_len(EXAMPLE_COPY);
-        int apx_cols = txt::cols_per_row(EXAMPLE_COPY);
+        int apx_lines = txt::fileLineLen(EXAMPLE_COPY);
+        int apx_cols = txt::colsPerRow(EXAMPLE_COPY);
 
         ASSERT_EQ(apx_cols, cols);
         ASSERT_EQ(ret, apx_lines);
@@ -581,9 +581,9 @@ TEST(file_clear, cells_lines_cols){
             arr[i] = static_cast <float> (rand() / static_cast <float> (RAND_MAX)) + 1;
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
         EXPECT_TRUE(txt::fileClear(EXAMPLE_WRITE));
-        int cells = txt::file_len(EXAMPLE_WRITE);
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
-        int cols = txt::cols_per_row(EXAMPLE_WRITE);
+        int cells = txt::fileLen(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
+        int cols = txt::colsPerRow(EXAMPLE_WRITE);
 
         ASSERT_EQ(cells, 0);
         /* there will always be one line */
@@ -617,16 +617,16 @@ TEST(file_copy, contents_and_format){
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
         }
 
-        int lines = txt::file_line_len(EXAMPLE_WRITE);
-        int cols_ret = txt::cols_per_row(EXAMPLE_WRITE);
+        int lines = txt::fileLineLen(EXAMPLE_WRITE);
+        int cols_ret = txt::colsPerRow(EXAMPLE_WRITE);
 
         ASSERT_EQ(cols_ret, cols);
         ASSERT_EQ(lines, len);
 
         if(cols == 2){
             EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
-            int size1 = txt::arr_s(arr[2]);
-            int size2 = txt::arr_s(arr[3]);
+            int size1 = txt::arraySize(arr[2]);
+            int size2 = txt::arraySize(arr[3]);
 
             ASSERT_EQ(size1, size2);
             ASSERT_EQ(size1, len);
@@ -638,7 +638,7 @@ TEST(file_copy, contents_and_format){
             }
         } else {
             EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[1]));
-            int size = txt::arr_s(arr[1]);
+            int size = txt::arraySize(arr[1]);
 
             ASSERT_EQ(size, len);
 
@@ -647,8 +647,6 @@ TEST(file_copy, contents_and_format){
         }
     }
 }
-
-TEST(file_log_copy, format)
 
 int main(int argc, char **argv)
 {

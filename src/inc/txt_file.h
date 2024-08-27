@@ -54,16 +54,16 @@ namespace txt
      void message(std::string text, bool mode);
 
     /* determine size of array */
-     uint16_t arr_s(float * arr);
+     uint16_t arraySize(float * arr);
 
     /* returns number of tab-separated cells in the file*/
-    uint32_t file_len(std::string fileName);
+    uint32_t fileLen(std::string fileName);
     
     /* return number of '\n' separated lines in the file*/
-    uint32_t file_line_len(std::string fileName);
+    uint32_t fileLineLen(std::string fileName);
     
     /* returns number of tab-separated columns per line in the file*/
-    uint32_t cols_per_row(std::string fileName);
+    uint32_t colsPerRow(std::string fileName);
 
     /* reads file into the array of floats*/
     bool fileRead(std::string fileName, float readArray[]);
@@ -98,7 +98,7 @@ namespace txt
     /*reduce number of lines of file n times*/
     bool fileAproximation(std::string fileRead, std::string fileWrite, uint n = 10);
     
-    /* vect[i] = 10*log(vect[i])*/
+    /* vect[i] = 20*log(vect[i])*/
     bool logValue(std::vector<float> &vect);
 
     /* clear contents of text file*/
@@ -108,7 +108,7 @@ namespace txt
     bool fileCopy(std::string fileRead, std::string fileWrite, uint32_t col_per_row = 2);
 
     /* copy contents of fileRead to fileWrite, second column has logarithmic values*/
-    bool fileLogCopy(std::string fileNameRead, std::string fileNameWrite, uint16_t col_per_row = 2, uint16_t order1 = 0, uint16_t order2 = 1);
+    bool fileLogCopy(std::string fileNameRead, std::string fileNameWrite);
     
     /* returns index where is maximum value in column*/
     uint32_t maximumInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);

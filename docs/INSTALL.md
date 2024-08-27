@@ -23,7 +23,7 @@ make sure you have right privileges, to obtain executable privilege execute
 ```
 Build script will prepare workspace for further usage.
 
-### PROJECT TREE
+### Project tree
 
 Running build script will prepare workspace as shown below
 ``` sh
@@ -40,7 +40,7 @@ reverbationTime
 └── test - unit tests
 ```
 
-### ANALYZE AUDIO SAMPLES
+### Analyze audio samples
 Put desired audio samples into the `input` directory. Only .wav files are supported, other files in the directory will be ignored.
 ```sh
     cp /path-to-audio/audio.wav /path-po-repository/input/
