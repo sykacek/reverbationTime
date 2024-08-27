@@ -6,7 +6,7 @@ int main(void)
     std::vector<std::string> files;
     txt::loadFromPath("output/data/", files);
 
-    float startValue = 0, startTime = 0, time[5];
+    double startValue = 0, startTime = 0, time[5];
 
     for(long unsigned int i = 0; i < files.size(); i++){
         std::fstream read(files[i], std::ios_base::in);
@@ -17,7 +17,7 @@ int main(void)
         std::stringstream devide(files[i]);
         std::string newName, path = "output/stats/", printable;
         
-        float avarge = 0;
+        double avarge = 0;
         bool continuer = false;
         
         //append STATS suffix to filename
@@ -35,7 +35,7 @@ int main(void)
         int counter = 0;
 
         for(int j = 0; j < 6; j++){
-            float temp = -j*10 + startValue - 10, revTime;
+            double temp = -j*10 + startValue - 10, revTime;
             time[j] = txt::returnTimeFromValue(files[i], temp);
             time[j] -= startTime;
 
@@ -51,7 +51,7 @@ int main(void)
 
         /* if decreasement of 60 dB was not mesured, append maximum decreasement values */
         if(continuer == true){
-            float tm, value, revTime;
+            double tm, value, revTime;
             value = txt::biggestDecrease(files[i]);
             write << "\n\nBigest decrease was " << value;
             value *= -1;

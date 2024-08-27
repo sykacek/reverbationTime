@@ -36,9 +36,12 @@
 
 #define MAX_ARRAY_RAND 50000
 
- /* random rounded non zero float number */
-#define RAND_FLOAT (ceilf((float)std::rand()/(std::rand() + 1) * 1000)/1000)
+ /* random rounded non zero double number */
+ /* also not equal exactly one - log10(1) = 0 */
+#define RAND_DOUBLE (ceilf((double)std::rand()/(std::rand()) * 1000)/1000 + 1.12)
 #define ROUND_DIFF (0.5)
+
+#define ASSERT_PREC(a, b) ASSERT_NEAR(a, b, ROUND_DIFF)
 
 TEST(nameprotect, ret_with_dot){
     std::string name = "hello.";
@@ -54,14 +57,14 @@ TEST(nameprotect, ret_without_dot){
 
 TEST(array_size, size_and_terminate){
     /* we need maximum of MAX_ARRAY_RAND numbers to be stored */
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
 
     int size;
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         size = std::rand() % MAX_ARRAY_RAND;
         for(int i = 0; i < size; i++)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
 
         uint32_t len = txt::arraySize(arr);
         ASSERT_EQ(len, size);
@@ -119,7 +122,7 @@ TEST(col_per_row, ret){
 
 TEST(file_read, array_size){
     /* number of elements of buffer should be same as number of cells in the file */
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr));
     uint32_t memsize = txt::arraySize(arr);
@@ -129,7 +132,7 @@ TEST(file_read, array_size){
 
 TEST(file_read, two_array_size){
     /* number of each array should be same as number of lines */
-    float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
+    double arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr1, arr2));
     uint32_t memsize1 = txt::arraySize(arr1);
@@ -141,7 +144,7 @@ TEST(file_read, two_array_size){
 
 TEST(file_read, vector_size){
     /* read any column, size of vector should be number of lines */
-    std::vector<float> vector;
+    std::vector<double> vector;
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, vector, 2, 1));
     uint32_t ret = vector.size();
@@ -151,7 +154,7 @@ TEST(file_read, vector_size){
 
 TEST(file_read, array_contents){
     /* first column is 1, 2, 3 ... 128, compare */
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr));
 
@@ -160,7 +163,7 @@ TEST(file_read, array_contents){
 }
 
 TEST(file_read, two_array_contents){
-    float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
+    double arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, arr1, arr2));
 
@@ -169,7 +172,7 @@ TEST(file_read, two_array_contents){
 }
 
 TEST(file_read, vector_contents){
-    std::vector<float> vect;
+    std::vector<double> vect;
 
     EXPECT_TRUE(txt::fileRead(EXAMPLE_LOG_SMALL, vect, 2, 0));
 
@@ -180,14 +183,14 @@ TEST(file_read, vector_contents){
 /* Test length of wiritten file using already tested functions */
 /* there will be an extra '\n' at the end of the file */
 TEST(file_write, array_cells_lines){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len;
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; i++)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
         int ret = txt::fileLen(EXAMPLE_WRITE);
@@ -201,17 +204,17 @@ TEST(file_write, array_cells_lines){
 char wr[] = EXAMPLE_WRITE;
 
 TEST(file_write, two_array_cells_lines){
-    float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
+    double arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr1, 0, MAX_ARRAY_RAND * sizeof(float));
-        memset(arr2, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr1, 0, MAX_ARRAY_RAND * sizeof(double));
+        memset(arr2, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i){
-            arr1[i] = RAND_FLOAT;
-            arr2[i] = RAND_FLOAT;
+            arr1[i] = RAND_DOUBLE;
+            arr2[i] = RAND_DOUBLE;
         }
 
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
@@ -225,7 +228,7 @@ TEST(file_write, two_array_cells_lines){
 }
 
 TEST(file_write, vector_cells_lines){
-    std::vector<float> vect;
+    std::vector<double> vect;
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
@@ -245,7 +248,7 @@ TEST(file_write, vector_cells_lines){
 }
 
 TEST(file_write, two_vector_cells_lines){
-    std::vector<float> vect1, vect2;
+    std::vector<double> vect1, vect2;
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
@@ -287,8 +290,8 @@ int cmp_files(char *file1, char *file2){
     return std::system(cmd);
 }
 
-TEST(file_write, array_contents){
-    float arr[20] = {0};
+TEST(file_write, array_match){
+    double arr[20] = {0};
     for(int i = 0; i < 10; ++i)
         arr[i] = i + 1;
 
@@ -299,8 +302,8 @@ TEST(file_write, array_contents){
     ASSERT_EQ(cmp_files(written, match), 0);    
 }
 
-TEST(file_write, two_array_contents){
-    float arr1[20] = {0}, arr2[10] = {0};
+TEST(file_write, two_array_match){
+    double arr1[20] = {0}, arr2[10] = {0};
     for(int i = 0; i < 10; ++i){
         arr1[i] = i + 1;
         arr2[i] = i + 1;
@@ -313,8 +316,8 @@ TEST(file_write, two_array_contents){
     ASSERT_EQ(cmp_files(written, match), 0);
 }
 
-TEST(file_write, vector_contents){
-    std::vector<float> vect;
+TEST(file_write, vector_match){
+    std::vector<double> vect;
     for(int i = 0; i < 10; ++i)
         vect.push_back(i + 1);
 
@@ -325,8 +328,8 @@ TEST(file_write, vector_contents){
     ASSERT_EQ(cmp_files(written, match), 0);
 }
 
-TEST(file_write, two_vector_contents){
-    std::vector<float> vect1, vect2;
+TEST(file_write, two_vector_match){
+    std::vector<double> vect1, vect2;
     for(int i = 0; i < 10; ++i){
         vect1.push_back(i + 1);
         vect2.push_back(i + 1);
@@ -340,7 +343,7 @@ TEST(file_write, two_vector_contents){
 }
 
 TEST(file_write, two_array_diff_size){
-    float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
+    double arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
     for(int i = 0; i < 10; ++i)
         arr1[i] = i + 1;
     for(int i = 0; i < 15; ++i)
@@ -354,7 +357,7 @@ TEST(file_write, two_array_diff_size){
 }
 
 TEST(file_write, two_vector_diff_size){
-    std::vector<float> vect1, vect2;
+    std::vector<double> vect1, vect2;
     for(int i = 0; i < 10; ++i)
         vect1.push_back(i + 1);
     for(int i = 0; i < 15; ++i)
@@ -368,16 +371,16 @@ TEST(file_write, two_vector_diff_size){
 }
 
 TEST(file_append_line, contents){
-    float arr[MAX_ARRAY_RAND] = {0}, read_arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0}, read_arr[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
+        memset(read_arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
@@ -389,20 +392,20 @@ TEST(file_append_line, contents){
 
         ASSERT_EQ(len, read_len);
         for(int i = 0; i < len; ++i)
-            ASSERT_NEAR(arr[i], read_arr[i], ROUND_DIFF);
+            ASSERT_PREC(arr[i], read_arr[i]);
     }
 }
 
 TEST(file_append_line, lines){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
@@ -416,15 +419,15 @@ TEST(file_append_line, lines){
 }
 
 TEST(file_append_line, columns){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len = 1000;
     
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
@@ -438,15 +441,15 @@ TEST(file_append_line, columns){
 }
 
 TEST(file_append_tab, lines){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
@@ -460,15 +463,15 @@ TEST(file_append_tab, lines){
 }
 
 TEST(file_append_tab, columns){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
@@ -481,22 +484,22 @@ TEST(file_append_tab, columns){
     }
 }
 TEST(file_append_tab, contents){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i)
-            arr[i] = RAND_FLOAT;
+            arr[i] = RAND_DOUBLE;
         /* clear file */
         std::fstream read(EXAMPLE_WRITE, std::ios_base::out);
         read.clear();
         read.close();
 
         EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
-        float read_arr[MAX_ARRAY_RAND] = {0};
+        double read_arr[MAX_ARRAY_RAND] = {0};
 
         txt::fileRead(EXAMPLE_WRITE, read_arr);
         int read_len = txt::arraySize(read_arr);
@@ -504,31 +507,31 @@ TEST(file_append_tab, contents){
         ASSERT_EQ(read_len, len);
 
         for(int i = 0; i < len; ++i)
-            ASSERT_NEAR(arr[i], read_arr[i], ROUND_DIFF);
+            ASSERT_PREC(arr[i], read_arr[i]);
     }
 }
 
 TEST(file_aproximate, lines_col){
-    float arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
+    double arr1[MAX_ARRAY_RAND] = {0}, arr2[MAX_ARRAY_RAND] = {0};
     int len, cols;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr1, 0, MAX_ARRAY_RAND * sizeof(float));
-        memset(arr2, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr1, 0, MAX_ARRAY_RAND * sizeof(double));
+        memset(arr2, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         /* test */
         if(len % 2){
             cols = 1;
             for(int i = 0; i < len; ++i)
-                arr1[i] = RAND_FLOAT;
+                arr1[i] = RAND_DOUBLE;
 
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1));
         } else {
             cols = 2;
             for(int i = 0; i < len; ++i){
-                arr1[i] = RAND_FLOAT;
-                arr2[i] = RAND_FLOAT;
+                arr1[i] = RAND_DOUBLE;
+                arr2[i] = RAND_DOUBLE;
             }
 
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr1, arr2));
@@ -549,7 +552,7 @@ TEST(file_aproximate, lines_col){
 }
 
 TEST(log_value, values){
-    std::vector<float> vect, check;
+    std::vector<double> vect, check;
     int len = 0;
 
     for(int j = 0; j < REPEAT; ++j){
@@ -558,7 +561,7 @@ TEST(log_value, values){
         len = std::rand() % MAX_ARRAY_RAND;
 
         for(int i = 0; i < len; ++i){
-            vect.push_back(RAND_FLOAT);
+            vect.push_back(RAND_DOUBLE);
             check.push_back(vect[i]);
         }
 
@@ -566,19 +569,19 @@ TEST(log_value, values){
 
         ASSERT_EQ(vect.size(), check.size());
         for(int i = 0; i < len; ++i)
-            ASSERT_NEAR(vect[i], 10*log10(check[i]), ROUND_DIFF);
+            ASSERT_PREC(vect[i], 20*log10(check[i]));
     }
 }
 
 TEST(file_clear, cells_lines_cols){
-    float arr[MAX_ARRAY_RAND] = {0};
+    double arr[MAX_ARRAY_RAND] = {0};
     int len = 0;
 
     for(int j = 0; j < REPEAT; ++j){
-        memset(arr, 0, MAX_ARRAY_RAND * sizeof(float));
+        memset(arr, 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
         for(int i = 0; i < len; ++i)
-            arr[i] = static_cast <float> (rand() / static_cast <float> (RAND_MAX)) + 1;
+            arr[i] = static_cast <double> (rand() / static_cast <double> (RAND_MAX)) + 1;
         EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr));
         EXPECT_TRUE(txt::fileClear(EXAMPLE_WRITE));
         int cells = txt::fileLen(EXAMPLE_WRITE);
@@ -593,38 +596,40 @@ TEST(file_clear, cells_lines_cols){
 }
 
 TEST(file_copy, contents_and_format){
-    static float arr[4][MAX_ARRAY_RAND] = {0};
+    double arr[4][MAX_ARRAY_RAND] = {0};
     int len, cols;
 
     for(int j = 0; j < REPEAT; ++j){
         for(int i = 0; i < 4; ++i)
-            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(float));
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
         len = std::rand() % MAX_ARRAY_RAND;
 
         if(len % 2){
             cols = 2;
             for(int i = 0; i < len; ++i){
-                arr[0][i] = RAND_FLOAT;
-                arr[1][i] = RAND_FLOAT;
+                arr[0][i] = RAND_DOUBLE;
+                arr[1][i] = RAND_DOUBLE;
             }
             
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
         } else {
             cols = 1;
             for(int i = 0; i < len; ++i)
-                arr[0][i] = RAND_FLOAT;
+                arr[0][i] = RAND_DOUBLE;
             
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
         }
 
-        int lines = txt::fileLineLen(EXAMPLE_WRITE);
-        int cols_ret = txt::colsPerRow(EXAMPLE_WRITE);
+        EXPECT_TRUE(txt::fileCopy(EXAMPLE_WRITE, EXAMPLE_COPY, 2));
+
+        int lines = txt::fileLineLen(EXAMPLE_COPY);
+        int cols_ret = txt::colsPerRow(EXAMPLE_COPY);
 
         ASSERT_EQ(cols_ret, cols);
         ASSERT_EQ(lines, len);
 
         if(cols == 2){
-            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_COPY, arr[2], arr[3]));
             int size1 = txt::arraySize(arr[2]);
             int size2 = txt::arraySize(arr[3]);
 
@@ -633,24 +638,63 @@ TEST(file_copy, contents_and_format){
 
             for(int i = 0; i < len; ++i){
                 /* they may not be really same, because of */
-                ASSERT_NEAR(arr[0][i], arr[2][i], ROUND_DIFF) << i << "\n";
-                ASSERT_NEAR(arr[1][i], arr[3][i], ROUND_DIFF) << i << "\n";
+                ASSERT_PREC(arr[0][i], arr[2][i]) << i << "\n";
+                ASSERT_PREC(arr[1][i], arr[3][i]) << i << "\n";
             }
         } else {
-            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[1]));
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_COPY, arr[1]));
             int size = txt::arraySize(arr[1]);
 
             ASSERT_EQ(size, len);
 
             for(int i = 0; i < len; ++i)
-                ASSERT_NEAR(arr[1][i], arr[0][i], ROUND_DIFF) << i << "\n";
+                ASSERT_PREC(arr[1][i], arr[0][i]) << i << "\n";
         }
+    }
+}
+
+TEST(file_log_copy, format_and_contents){
+    double arr[4][MAX_ARRAY_RAND] = {0};
+    int len;
+
+    for(int j = 0; j < REPEAT; ++j){
+        for(int i = 0; i < 4; ++i)
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
+        len = std::rand() % MAX_ARRAY_RAND;
+
+        for(int i = 0; i < len; ++i){
+            arr[0][i] = RAND_DOUBLE;
+            arr[1][i] = RAND_DOUBLE;
+        }
+        
+        EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+
+
+        EXPECT_TRUE(txt::fileLogCopy(EXAMPLE_WRITE, EXAMPLE_COPY));
+        int lines = txt::fileLineLen(EXAMPLE_COPY);
+        int read_cols = txt::colsPerRow(EXAMPLE_COPY);
+
+        ASSERT_EQ(lines, len);
+        ASSERT_EQ(read_cols, 2);
+
+        EXPECT_TRUE(txt::fileRead(EXAMPLE_COPY, arr[2], arr[3]));
+        int size[2];
+        size[0] = txt::arraySize(arr[2]);
+        size[1] = txt::arraySize(arr[3]);
+
+        ASSERT_EQ(size[0], size[1]);
+        ASSERT_EQ(size[0], len);
+
+        for(int i = 0; i < len; ++i){
+            ASSERT_PREC(arr[0][i], arr[2][i]);
+            ASSERT_PREC(20*log10(arr[1][i]), arr[3][i]);
+        }
+        
     }
 }
 
 int main(int argc, char **argv)
 {
-    /* if we MAX_ARRAY_RAND arrays are too big for 8 MB stack, it has to be increased */
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
