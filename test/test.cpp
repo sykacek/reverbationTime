@@ -43,6 +43,17 @@
 
 #define ASSERT_PREC(a, b) ASSERT_NEAR(a, b, ROUND_DIFF)
 
+/* maximum size of random text files */
+/* size is lines * cols * cell_size (4 - 11 bytes) */
+#define MAX_RAND_LINES 900
+#define MAX_RAND_COLS 900 /* 8,5 MB */
+
+#if MAX_RAND_COLS > MAX_RAND_LINES
+#define MAX_FORMAT MAX_RAND_COLS
+#else
+#define MAX_FORMAT MAX_RAND_LINES
+#endif
+
 TEST(nameprotect, ret_with_dot){
     std::string name = "hello.";
     std::string ret = txt::nameProtect(name);
@@ -706,8 +717,8 @@ TEST(maximum_minimum_in_col, return_and_range){
                 arr[0][i] = RAND_DOUBLE;
 
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
-            max[0] = txt::maximumInCol(EXAMPLE_WRITE, cols, 0);
-            min[0] = txt::minimumInCol(EXAMPLE_WRITE, cols, 0);
+            max[0] = txt::maxInCol(EXAMPLE_WRITE, cols, 0);
+            min[0] = txt::minInCol(EXAMPLE_WRITE, cols, 0);
             
             EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[1]));
 
@@ -724,10 +735,10 @@ TEST(maximum_minimum_in_col, return_and_range){
             }
 
             EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
-            max[0] = txt::maximumInCol(EXAMPLE_WRITE, cols, 0);
-            max[1] = txt::maximumInCol(EXAMPLE_WRITE, cols, 1);
-            min[0] = txt::minimumInCol(EXAMPLE_WRITE, cols, 0);
-            min[1] = txt::minimumInCol(EXAMPLE_WRITE, cols, 1);
+            max[0] = txt::maxInCol(EXAMPLE_WRITE, cols, 0);
+            max[1] = txt::maxInCol(EXAMPLE_WRITE, cols, 1);
+            min[0] = txt::minInCol(EXAMPLE_WRITE, cols, 0);
+            min[1] = txt::minInCol(EXAMPLE_WRITE, cols, 1);
 
             EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
 
@@ -747,25 +758,116 @@ TEST(maximum_minimum_in_col, return_and_range){
 
 TEST(file_fabs, contents_and_format){
     double arr[4][MAX_ARRAY_RAND] = {0};
-    int cols, max[2], min[2];
+    int cols, lines[2];
 
     for(int j = 0; j < REPEAT; ++j){
         for(int i = 0; i < 4; ++i)
             memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
 
         int len = std::rand() % MAX_ARRAY_RAND;
+        /* declare array with all values negative */
         if(len % 2){
             cols = 1;
             for(int i = 0; i < len; ++i)
-                arr[0][i] = RAND_DOUBLE;
+                arr[0][i] = - RAND_DOUBLE;
+
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
+            lines[0] = txt::fileLineLen(EXAMPLE_WRITE);
+
+            ASSERT_EQ(lines[0], len);
         } else {
             cols = 2;
             for(int i = 0; i < len; ++i){
-                arr[0][i] = RAND_DOUBLE;
-                arr[1][i] = RAND_DOUBLE;
+                arr[0][i] = - RAND_DOUBLE;
+                arr[1][i] = - RAND_DOUBLE;
             }
+
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+            lines[0] = txt::fileLineLen(EXAMPLE_WRITE);
+
+            ASSERT_EQ(lines[0], len);
+        }
+        EXPECT_TRUE(txt::fileFabs(EXAMPLE_WRITE, EXAMPLE_COPY, cols));
+        lines[0] = txt::fileLineLen(EXAMPLE_COPY);
+        lines[1] = txt::colsPerRow(EXAMPLE_COPY);
+
+        ASSERT_EQ(lines[0], len);
+        ASSERT_EQ(lines[1], cols);
+
+        if(cols == 2){
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_COPY, arr[2], arr[3]));
+            lines[0] = txt::arraySize(arr[2]);
+            lines[1] = txt::arraySize(arr[3]);
+
+            ASSERT_EQ(lines[0], lines[1]);
+            ASSERT_EQ(lines[0], len);
+
+            for(int i = 0; i < len; ++i){
+                ASSERT_PREC(arr[0][i], -arr[2][i]);
+                ASSERT_PREC(arr[1][i], -arr[3][i]);
+            }
+        } else {
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_COPY, arr[1]));
+            lines[0] = txt::arraySize(arr[1]);
+
+            ASSERT_EQ(lines[0], len);
+
+            for(int i = 0; i < len; ++i)
+                ASSERT_PREC(arr[1][i], -arr[0][i]);
         }
 
+    }
+}
+
+/* FIX IT!!!!*/
+TEST(file_col_remove, format){
+    /* becaue of stack overflow, text files will be filled with constastant value instead of random doubles... */
+    double arr[MAX_FORMAT] = {0};
+    uint format[4];
+    /**
+     * format [0]   check lines
+     * format [1]   cols
+     * format [2]   read lines
+     * format [3]   read cols
+     */
+    for(int j = 0; j < REPEAT; ++j){
+        std::fstream reset(EXAMPLE_WRITE, std::ios_base::out);
+        reset.clear();
+        reset.close();
+
+        format[0] = std::rand() % MAX_RAND_LINES;
+        format[1] = std::rand() % MAX_RAND_COLS;
+
+        for(uint m = 0; m < format[1]; ++m)
+                        arr[m] = 0.12354896;
+
+        for(uint i = 0; i < format[0] - 1; ++i){
+            EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
+            std::fstream newline(EXAMPLE_WRITE, std::ios_base::app);
+            newline << '\n';
+            newline.close();
+        }
+
+        EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
+
+        format[2] = txt::fileLineLen(EXAMPLE_WRITE);
+        format[3] = txt::colsPerRow(EXAMPLE_WRITE);
+
+        ASSERT_EQ(format[0], format[2]);
+        ASSERT_EQ(format[1], format[3]);
+
+        printf("\n\n%d\n\n", format[1]);
+
+        while(format[1]){
+            format[3] = format[1];
+            txt::fileColumnRemove(EXAMPLE_WRITE, format[1], format[1] - 1);
+            format[1]--;
+            format[2] = txt::fileLineLen(EXAMPLE_WRITE);    
+            format[3] = txt::colsPerRow(EXAMPLE_WRITE);
+
+            ASSERT_EQ(format[2], format[0]);
+            ASSERT_EQ(format[1], format[3]);
+        }
     }
 }
 
@@ -773,4 +875,4 @@ int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-}
+} 

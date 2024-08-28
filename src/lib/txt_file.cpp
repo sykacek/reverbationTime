@@ -533,7 +533,7 @@ bool txt::fileLogCopy(std::string fileNameRead, std::string fileNameWrite)
     }
 }
 
-uint32_t txt::maximumInCol(std::string fileName, uint32_t col_per_row, uint32_t column)
+uint32_t txt::maxInCol(std::string fileName, uint32_t col_per_row, uint32_t column)
 {
     std::fstream read(fileName, std::ios_base::in);
     uint32_t counter = 0, line = 1;
@@ -555,7 +555,7 @@ uint32_t txt::maximumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
     return ret;
 }
 
-uint32_t txt::minimumInCol(std::string fileName, uint32_t col_per_row, uint32_t column)
+uint32_t txt::minInCol(std::string fileName, uint32_t col_per_row, uint32_t column)
 {
     std::fstream read(fileName, std::ios_base::in);
 
@@ -579,6 +579,13 @@ uint32_t txt::minimumInCol(std::string fileName, uint32_t col_per_row, uint32_t 
 
 bool txt::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per_row)
 {
+    if(!col_per_row)
+        return false;
+
+    uint len = fileLen(fileRead);
+    if(!len)
+        return false;
+
     if(fileWrite == "")
         fileWrite = PATH_FILEFABS;
 
@@ -590,19 +597,21 @@ bool txt::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per
         write << std::setprecision(PREC);
 
         double temp;
-        uint32_t counter = 0;
-        while(read) {
+        for(uint i = 0; i < len - 1; ++i){
             read >> temp;
-            if(!read)
-                break;
             temp = fabs(temp);
             write << temp;
-            
-            if(counter++ % col_per_row == 0)
-                write << "\t";
+
+            if(i % col_per_row == col_per_row - 1)
+                write << '\n';
             else
-                write << "\n";
+                write << '\t';
         }
+
+        read >> temp;
+        temp = fabs(temp);
+        write << temp;
+
         message(fileRead, false);
         message(fileWrite, false);
 
@@ -621,6 +630,16 @@ bool txt::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per
 
 bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t eliminate)
 {
+    uint len = fileLen(fileName);
+    if(!len)
+        return false;
+    
+    if(eliminate >= col_per_row)
+        return false;
+
+    if(!col_per_row)
+        return false;
+    
     std::fstream read(fileName, std::ios_base::in);
     std::fstream write(PATH_FILECOLUMNREMOVE, std::ios_base::out);
 
@@ -628,22 +647,38 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
         message(fileName, true);
         write << std::setprecision(PREC);
         double temp;
-        uint32_t counter = 0, pos = col_per_row - 1;
+        uint32_t counter = 0, end = col_per_row - 1;
 
-        if(eliminate == pos)
-            pos--;
+        if(eliminate == end)
+            --end;
 
         while(read) {
             read >> temp;
             if(!read)
                 break;
             if(counter % col_per_row != eliminate)
-                write << temp << "\t";
-            if(counter % col_per_row == pos)
-                write << "\n";
+                write << temp;
+            if(counter % col_per_row == end)
+                write << '\n';
+            else
+                write << '\t';
 
             counter++;
         }
+        /*for(uint i = 0; i < len - 1; ++i){
+            read >> temp;
+            if(i % col_per_row != eliminate)
+                write << temp;
+
+            if(i % col_per_row == end)
+                write << '\n';
+            else
+                write << '\t';
+        }*/
+
+        read >> temp;
+        write << temp;
+
         read.close();
         write.close();
         message(fileName, false);

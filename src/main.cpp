@@ -37,7 +37,7 @@ int main(int argc, char **argv)
             txt::fileFabs(files[i], "");
             txt::fileAproximation(files[i], "", apx_coef);
 
-            tempMax = txt::maximumInCol(files[i]);
+            tempMax = txt::maxInCol(files[i]);
             txt::fileShortenOrdered(files[i], tempMax);
 
             tempLen = txt::fileLineLen(files[i]);
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
         txt::loadFromPath("src/audio_datcp/", files);
         for(long unsigned int i = 0; i < files.size(); i++){
             uint32_t max;
-            max = txt::maximumInCol(files[i]);
+            max = txt::maxInCol(files[i]);
 
             txt::fileShortenOrdered(files[i], max);
             txt::fileLogCopy(files[i], "");

@@ -113,11 +113,11 @@ namespace txt
     
     /* returns index where is maximum value in column*/
     /* starts counting from 1 as line 1*/
-    uint32_t maximumInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
+    uint32_t maxInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
 
     /* returns index where is minimum value in column */
     /* starts counting from 1 as line 1*/
-    uint32_t minimumInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
+    uint32_t minInCol(std::string fileName, uint32_t col_per_row = 2, uint32_t column = 1);
 
     /* copy contents of fileRead to fileWrite, all values are positive*/
     bool fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per_row = 2);
