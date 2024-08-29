@@ -639,57 +639,61 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
 
     if(!col_per_row)
         return false;
-    
+
     std::fstream read(fileName, std::ios_base::in);
-    std::fstream write(PATH_FILECOLUMNREMOVE, std::ios_base::out);
-
-    if(read.is_open() && write.is_open()) {
-        message(fileName, true);
-        write << std::setprecision(PREC);
-        double temp;
-        uint32_t counter = 0, end = col_per_row - 1;
-
-        if(eliminate == end)
-            --end;
-
-        while(read) {
-            read >> temp;
-            if(!read)
-                break;
-            if(counter % col_per_row != eliminate)
-                write << temp;
-            if(counter % col_per_row == end)
-                write << '\n';
-            else
-                write << '\t';
-
-            counter++;
-        }
-        /*for(uint i = 0; i < len - 1; ++i){
-            read >> temp;
-            if(i % col_per_row != eliminate)
-                write << temp;
-
-            if(i % col_per_row == end)
-                write << '\n';
-            else
-                write << '\t';
-        }*/
-
-        read >> temp;
-        write << temp;
-
-        read.close();
-        write.close();
-        message(fileName, false);
-        fileCopy(PATH_FILECOLUMNREMOVE, fileName);
-
-        return true;
-    } else {
-        std::cout << "unable to open file " << fileName << "\n";
+    if(!read.is_open()){
+        std::cerr << "Error: failed to open " << fileName << "\n";
         return false;
     }
-}
+    std::fstream write(PATH_FILECOLUMNREMOVE, std::ios_base::out);
+    if(!write.is_open()){
+        std::cerr << "Error: failed to open " << PATH_FILECOLUMNREMOVE << "\n";
+        return false;
+    }
+
+    std::cout << "(fileColumnRemove) init was valid!\n";
+    message(fileName, true);
+    write << std::setprecision(PREC);
+    double temp;
+    uint32_t counter = 0, end = col_per_row - 1;
+
+    //if(eliminate == end)
+    //    --end;
+
+    while(read) {
+        read >> temp;
+        if(!read)
+            break;
+        if(counter % col_per_row != eliminate)
+            write << temp;
+        if(counter % col_per_row == end)
+            write << '\n';
+        else
+            write << '\t';
+
+        counter++;
+    }
+    /*for(uint i = 0; i < len - 1; ++i){
+        read >> temp;
+        if(i % col_per_row != eliminate)
+            write << temp;
+
+        if(i % col_per_row == end)
+            write << '\n';
+        else
+            write << '\t';
+    }*/
+
+    read >> temp;
+    write << temp;
+
+    read.close();
+    write.close();
+    message(fileName, false);
+    fileCopy(PATH_FILECOLUMNREMOVE, fileName);
+
+    return true;
+    }
 
 bool txt::fileShortenOrdered(std::string fileName, uint32_t startPoint, double d)
 {

@@ -31,7 +31,9 @@
 #define PI (3.1415926)
 /* define output data precision */
 #define PREC 9
-/* defualt file locations */
+/* defualt temporary files locations */
+
+#ifndef PATHS_DO_NOT_DEFINE
 #define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
 #define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
 #define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
@@ -39,6 +41,10 @@
 #define PATH_FILEFABS                       "src/temp/fileFabstxt"
 #define PATH_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
 #define PATH_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
+#else
+#include "../inc/cutom_paths.h"
+#endif
+
 /**
  * Library functions for text handling
  */
