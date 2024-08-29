@@ -271,7 +271,7 @@ bool txt::fileWrite(std::string fileName, std::vector<double> &one, std::vector<
 
     if(file.is_open()){
         message(fileName, true);
-        file << std::setprecision(PREC);
+        //file << std::setprecision(PREC);
 
         for(uint16_t i = 0; i < len - 1; i ++)
             file << one[i] << "\t" << two[i] << "\n";
@@ -322,7 +322,6 @@ bool txt::fileAppendTab(std::string fileName, double array1[])
         message(fileName, true);
         int len = arraySize(array1);
         file << std::setprecision(PREC);
-
 
         double * p = array1;
         for(int i = 0; i < len - 1; i++){
@@ -655,25 +654,12 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
     message(fileName, true);
     write << std::setprecision(PREC);
     double temp;
-    uint32_t counter = 0, end = col_per_row - 1;
+    uint32_t end = col_per_row - 1;
 
-    //if(eliminate == end)
-    //    --end;
+    if(eliminate == end)
+        --end;
 
-    while(read) {
-        read >> temp;
-        if(!read)
-            break;
-        if(counter % col_per_row != eliminate)
-            write << temp;
-        if(counter % col_per_row == end)
-            write << '\n';
-        else
-            write << '\t';
-
-        counter++;
-    }
-    /*for(uint i = 0; i < len - 1; ++i){
+    for(uint i = 0; i < len - 1; ++i){
         read >> temp;
         if(i % col_per_row != eliminate)
             write << temp;
@@ -682,7 +668,7 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
             write << '\n';
         else
             write << '\t';
-    }*/
+    }
 
     read >> temp;
     write << temp;
@@ -690,7 +676,7 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
     read.close();
     write.close();
     message(fileName, false);
-    fileCopy(PATH_FILECOLUMNREMOVE, fileName);
+    //fileCopy(PATH_FILECOLUMNREMOVE, fileName);
 
     return true;
     }
