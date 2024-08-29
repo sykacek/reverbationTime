@@ -1,26 +1,10 @@
 #include "inc/txt_file.h"
 
-#undef PATH_FILEAPROXIMATION 
-#undef PATH_FILECOLUMNREMOVE
-#undef PATH_FILECUTFROMLINE
-#undef PATH_FILECUTTOLINE
-#undef PATH_FILEFABS
-#undef PATH_FILELOGCOPY
-#undef PATH_FILESHORTENORDER
-
-#define PATH_FILEAPROXIMATION               "src/temp/fileAproximation.txt"
-#define PATH_FILECOLUMNREMOVE               "src/temp/fileColumnRemove.txt"
-#define PATH_FILECUTFROMLINE                "src/temp/fileCutFromLine.txt"
-#define PATH_FILECUTTOLINE                  "src/temp/fileCutToLine.txt"
-#define PATH_FILEFABS                       "src/temp/fileFabstxt"
-#define PATH_FILELOGCOPY                    "src/temp/fileLogCopy.txt"
-#define PATH_FILESHORTENORDER               "src/temp/fileShortenOrdered.txt"
-
 int main(void)
 {
     /* load data from path */
     std::vector<std::string> files;
-    txt_file::loadFromPath("output/data/", files);
+    txt::loadFromPath("output/data/", files);
 
     double startValue = 0, startTime = 0, time[5];
 
@@ -52,7 +36,7 @@ int main(void)
 
         for(int j = 0; j < 6; j++){
             double temp = -j*10 + startValue - 10, revTime;
-            time[j] = txt_file::returnTimeFromValue(files[i], temp);
+            time[j] = txt::returnTimeFromValue(files[i], temp);
             time[j] -= startTime;
 
             if(time[j] > 0){
@@ -68,11 +52,11 @@ int main(void)
         /* if decreasement of 60 dB was not mesured, append maximum decreasement values */
         if(continuer == true){
             double tm, value, revTime;
-            value = txt_file::biggestDecrease(files[i]);
+            value = txt::biggestDecrease(files[i]);
             write << "\n\nBigest decrease was " << value;
             value *= -1;
             value += startValue;
-            tm = txt_file::returnTimeFromValue(files[i], value);
+            tm = txt::returnTimeFromValue(files[i], value);
             tm -= startTime;
             value -= startValue;
             value *= -1;

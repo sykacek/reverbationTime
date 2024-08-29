@@ -15,6 +15,8 @@ CMakeUserPresets.json
 
 #test build files
 test/build
+test/example_write.txt
+test/example_copy.txt
 
 #application build files
 build
@@ -22,6 +24,8 @@ out
 src/audio_dat
 src/audio_datcp
 src/temp
+output/
 
 #VS CODE
 .vscode
+.vscode-ctages

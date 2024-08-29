@@ -2,15 +2,15 @@
 
  Utility for plotting and analyzing reverbation from .wav files.
 
-## INTRO
+## Intro
 
 This project was made as tool for analyzing reverabation time for academic purposes. More than single executable program, the project is colection of already existing components connected together. Though there was still need to write compuation engine. Designing project this way allows higher customitization in sense of changing the components of the project.
 
-## INSTALL & RUN
+## Install & run
 
 For detailed instruction please see [instalation guide](docs/INSTALL.md).
 
-## CUSTOMIZATION
+## Customization
 
 Before customization, look at 3 stages, how program works:
 
@@ -20,7 +20,7 @@ Before customization, look at 3 stages, how program works:
 
 You can customize the project for your specific needs. There are many reasons why to replace some components, you may need higher performance, support more audio format or interpret data different way. C++ engine is working with text based files, so all those customizations are avaible
 
-#### HOW TO REPLACE SOX
+#### How to replace sox
 
 For converting audio you may use different utilities, but to keep compatibility with C++ engine you need to pass data in specific format. Only accepted format is tab-separated text files.
 ```
@@ -32,7 +32,7 @@ For converting audio you may use different utilities, but to keep compatibility 
   time n    val n
 ```
 
-#### HOW TO REPLACE GNUPLOT
+#### How to replace gnuplot
 
 Again, output files from C++ engine are in the same format as input files.
 ```
@@ -44,7 +44,7 @@ Again, output files from C++ engine are in the same format as input files.
   time n    val n
 ```
 
-### TESTS
+### Tests
 
 Because functions in C++ engine can be seen as generic string proccessing functions, you can use it as library.
 Results may be seen in `tests` directory, if you would like to execute the test please see [testing guide](docs/TESTING.md).
