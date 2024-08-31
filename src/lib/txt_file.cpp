@@ -630,6 +630,7 @@ bool txt::fileFabs(std::string fileRead, std::string fileWrite, uint32_t col_per
 bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t eliminate)
 {
     uint len = fileLen(fileName);
+    uint lines = fileLineLen(fileName);
     if(!len)
         return false;
     
@@ -650,28 +651,34 @@ bool txt::fileColumnRemove(std::string fileName, uint16_t col_per_row, uint16_t 
         return false;
     }
 
-    std::cout << "(fileColumnRemove) init was valid!\n";
     message(fileName, true);
     write << std::setprecision(PREC);
     double temp;
-    uint32_t end = col_per_row - 1;
+    uint32_t end = col_per_row - 1, j = 0;
 
     if(eliminate == end)
         --end;
 
     for(uint i = 0; i < len - 1; ++i){
+        if(j == lines - 1)
+            break;
+        
         read >> temp;
         if(i % col_per_row != eliminate)
             write << temp;
 
-        if(i % col_per_row == end)
+        if(i % col_per_row == end){
             write << '\n';
-        else
+            j++;
+        } else if(i % col_per_row != 0 && i != eliminate)
             write << '\t';
     }
 
-    read >> temp;
-    write << temp;
+    for(uint i = 0; i < col_per_row; ++i){
+        read >> temp;
+        if(i % col_per_row != eliminate)
+            write << temp;
+    }
 
     read.close();
     write.close();
@@ -731,6 +738,9 @@ bool txt::fileShortenOrdered(std::string fileName, uint32_t startPoint, double d
 
 bool txt::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_row)
 {
+    if(!col_per_row)
+        return false;
+    
     std::fstream read(fileName, std::ios_base::in);
     std::fstream write(PATH_FILECUTFROMLINE, std::ios_base::out);
 
@@ -743,12 +753,14 @@ bool txt::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_r
             return false;
         
         std::string ligne;
-        uint32_t count = 0;
-        while(count < cut){
+
+        for(uint i = 1; i < cut - 1; ++i){
             getline(read, ligne);
             write << ligne << "\n";
-            count ++;
         }
+        getline(read, ligne);
+        write << ligne;
+
         read.close();
         write.close();
         message(fileName, false);
@@ -756,13 +768,20 @@ bool txt::fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_r
 
         return true;
     } else {
-        std::cout << "unable to file " << fileName << "\n";
+        std::cout << "Error: failed to open files " << fileName << " " << PATH_FILECUTFROMLINE << "\n";
         return false;
     }
 }
 
 bool txt::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_per_row)
 {
+    uint len = fileLineLen(fileName);
+    if(!len)
+        return false;
+    
+    if(!col_per_row)
+        return  false;
+
     std::fstream read(fileName, std::ios_base::in);
     std::fstream write(PATH_FILECUTTOLINE, std::ios_base::out);
 
@@ -771,13 +790,16 @@ bool txt::fileCutToLine(std::string fileName, uint32_t line, uint32_t col_per_ro
         write << std::setprecision(PREC);
         std::string ligne;
 
-        for(uint32_t i = 0; i < line; i++)
+        for(uint32_t i = 1; i < line; i++)
             getline(read, ligne);
 
-        while(read){
+        for(uint i = line; i < len - 1; ++i){
             getline(read, ligne);
             write << ligne << "\n";
         }
+        getline(read, ligne);
+        write << ligne;
+
         read.close();
         write.close();
         message(fileName, false);
@@ -939,6 +961,9 @@ double txt::biggestDecrease(std::string fileName, uint32_t startLine, uint16_t c
 
     if(column >= col_per_row)
         return 0;
+
+    if(!startLine)
+        return 0;
     
     std::fstream read(fileName, std::ios_base::in);
     if(read.is_open()){
@@ -954,7 +979,7 @@ double txt::biggestDecrease(std::string fileName, uint32_t startLine, uint16_t c
             read >> temp;
         read >> start;
 
-        for(int i = column; i < col_per_row - 1; i++)
+        for(int i = column + 1; i < col_per_row - 1; i++)
             read >> temp;
         maximum = start;
         
@@ -968,7 +993,7 @@ double txt::biggestDecrease(std::string fileName, uint32_t startLine, uint16_t c
 
         return (start - maximum);
     } else {
-        std::cout << "unable to open file " << fileName << "\n";
+        std::cerr << "Error: failed to open file " << fileName << "\n";
         return 0;
     }
 }

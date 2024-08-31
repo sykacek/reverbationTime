@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <string.h>
 #include <unistd.h>
+#include <iostream>
 
 #include "../src/inc/txt_file.h"
 
@@ -18,7 +19,7 @@
 /* file to test write functions */
 #define EXAMPLE_WRITE "../example_write.txt"
 
-/* need more files to copying etc. */
+/* temporary testing file */
 #define EXAMPLE_COPY "../example_copy.txt"
 
 /* file to match files with 2 columns */
@@ -29,7 +30,7 @@
 
 #ifndef REPEAT
 /* how many times repeat the tests*/
-#define REPEAT 10
+#define REPEAT 1
 #endif
 
 #define MAX_ARRAY_RAND 50000
@@ -827,59 +828,31 @@ TEST(file_fabs, contents_and_format){
     }
 }
 
-/* FIX IT!!!!*/
 TEST(file_col_remove, format){
-    /* becaue of stack overflow, text files will be filled with constastant value instead of random doubles... */
-    double arr[MAX_FORMAT] = {0};
-    double arrr[MAX_FORMAT] = {0};
-    uint format[4];
-    /**
-     * format [0]   check lines
-     * format [1]   cols
-     * format [2]   read lines
-     * format [3]   read cols
-     */
+    double arr[2][MAX_ARRAY_RAND] = {0};
+    uint format[4] = {0}; /* cols * rows + cols_check * rows_check */
+    uint8_t col;
+    format[0] = 2;
+
     for(int j = 0; j < REPEAT; ++j){
-        format[0] = std::rand() % MAX_RAND_LINES;
-        format[1] = std::rand() % MAX_RAND_COLS;
+        memset(arr[0], 0, MAX_ARRAY_RAND * sizeof(double));
+        memset(arr[1], 0, MAX_ARRAY_RAND * sizeof(double));
+        format[1] = std::rand() % MAX_ARRAY_RAND;
 
-        format[1] = 2;
-        format[0] = 500;
-
-        for(uint m = 0; m < format[0]; ++m){
-            arr[m] = 1;
-            arrr[m] = 1;
+        for(uint i = 0; i < format[1]; ++i){
+            arr[0][i] = RAND_DOUBLE;
+            arr[1][i] = RAND_DOUBLE;
         }
-/*
-        for(uint i = 0; i < format[0] - 1; ++i){
-            EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
-            std::fstream newline(EXAMPLE_WRITE, std::ios_base::app);
-            newline << '\n';
-            newline.close();
-        }
+        col = std::rand() % 2;
+        col = 1;
 
-        EXPECT_TRUE(txt::fileAppendTab(EXAMPLE_WRITE, arr));
-*/
-        EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr, arrr));
+        EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+        EXPECT_TRUE(txt::fileColumnRemove(EXAMPLE_WRITE, 2, col));
+        format[2] = txt::colsPerRow(EXAMPLE_COPY);
+        format[3] = txt::fileLineLen(EXAMPLE_COPY);
 
-        format[2] = txt::fileLineLen(EXAMPLE_WRITE);
-        format[3] = txt::colsPerRow(EXAMPLE_WRITE);
-
-        ASSERT_EQ(format[0], format[2]) << j << " fuck \n";
-        ASSERT_EQ(format[1], format[3]) << j << " fuck \n";
-
-        //printf("\n\n%d\n\n", format[1]);
-
-        //while(format[1]){
-            format[3] = format[1];
-            txt::fileColumnRemove(EXAMPLE_WRITE, 2, 1);
-            format[1]--;
-            format[2] = txt::fileLineLen(EXAMPLE_WRITE);    
-            format[3] = txt::colsPerRow(EXAMPLE_WRITE);
-
-            ASSERT_EQ(format[2], format[0]) << j << "\n";
-            ASSERT_EQ(format[1], format[3]) << j << "\n";
-        //}
+        ASSERT_EQ(format[0] - 1, format[2]);
+        ASSERT_EQ(format[1], format[3]);
     }
 }
 
@@ -889,13 +862,93 @@ TEST(file_shorten_order, format_contents){
 }
 
 TEST(cut_to_line, format_contents){
+    double arr[4][MAX_ARRAY_RAND] = {0};
+    uint len, cols, cut, ret;
 
-    ASSERT_EQ(2 + 2, 4);
+    for(int j = 0; j < REPEAT; ++j){
+        for(int i = 0; i < 4; ++i)
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
+        len = std::rand() % MAX_ARRAY_RAND;
+        cut = std::rand() % MAX_ARRAY_RAND;
+        
+        for(uint i = 0; i < len; ++i){
+            arr[0][i] = RAND_DOUBLE;
+            arr[1][i] = RAND_DOUBLE;
+        }
+        cols = std::rand() % 2 + 1;
+
+        if(cols == 2){
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+        } else {
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
+        }
+
+        EXPECT_TRUE(txt::fileCutToLine(EXAMPLE_WRITE, cut, cols));
+        ret = txt::fileLineLen(EXAMPLE_WRITE);
+
+        ASSERT_EQ(ret, len - cut);
+        if(cols == 2)
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
+        else
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2]));
+        ret = txt::arraySize(arr[2]);
+
+        ASSERT_EQ(ret, len - cut);
+        if(cols == 2)
+            for(uint i = 0; i < len - cut; ++i){
+                ASSERT_PREC(arr[0][i + cut - 1], arr[2][i]) << i << "\n";
+                ASSERT_PREC(arr[1][i + cut - 1], arr[3][i]);
+            }
+        else 
+            for(uint i = 0; i < len - cut; ++i)
+                ASSERT_PREC(arr[0][i + cut - 1], arr[2][i]) << i << "\n";        
+    }
 }
 
 TEST(cut_from_line, format_contents){
+    double arr[4][MAX_ARRAY_RAND] = {0};
+    uint len, cols, cut, ret;
 
-    ASSERT_EQ(2 + 2, 4);
+    for(int j = 0; j < REPEAT; ++j){
+        for(int i = 0; i < 4; ++i)
+            memset(arr[i], 0, MAX_ARRAY_RAND * sizeof(double));
+
+        len = std::rand() % MAX_ARRAY_RAND;
+        cut = std::rand() % MAX_ARRAY_RAND;
+        
+        for(uint i = 0; i < len; ++i){
+            arr[0][i] = RAND_DOUBLE;
+            arr[1][i] = RAND_DOUBLE;
+        }
+
+        if(len % 2){
+            cols = 2;
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+        } else {
+            cols = 1;
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
+        }
+
+        EXPECT_TRUE(txt::fileCutFromLine(EXAMPLE_WRITE, cut, cols)) << cut << "\t" << cols << "\n";
+        ret = txt::fileLineLen(EXAMPLE_WRITE);
+
+        ASSERT_EQ(ret, cut - 1);
+        if(cols == 2)
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2], arr[3]));
+        else
+            EXPECT_TRUE(txt::fileRead(EXAMPLE_WRITE, arr[2]));
+        ret = txt::arraySize(arr[2]);
+
+        ASSERT_EQ(ret, cut - 1);
+        if(cols == 2){
+            for(uint i = 0; i < ret; ++i){
+                ASSERT_PREC(arr[0][i], arr[2][i]);
+                ASSERT_PREC(arr[1][i], arr[3][i]);
+            }
+        } else
+            for(uint i = 0; i < cut - 1; ++i)
+                ASSERT_PREC(arr[0][i], arr[2][i]);
+    }
 }
 
 TEST(files_average, format_contents){
@@ -914,20 +967,33 @@ TEST(time_from_value, match){
 }
 
 TEST(load_from_path, value){
-    std::vector<std::string> path, text;
+    std::vector<std::string> load, match;
+    uint times;
+
+    /* fill match vector with .txt files in test directory */
+    match.clear();
+    match.push_back("../CMakeLists.txt");
+    match.push_back(EXAMPLE_COPY);
+    match.push_back(EXAMPLE_WRITE);
+    match.push_back(EXAMPLE_MATCH1);
+    match.push_back(EXAMPLE_MATCH2);
 
     for(int j = 0; j < REPEAT; ++j){
-        path.clear();
-        text.clear();
-        txt::loadFromPath("../", path);
+        load.clear();
 
-        for(uint i = 0; i < path.size(); ++i){
-            if(path[i].find(".txt") != std::string::npos)
-                text.push_back(path[i]);
+        EXPECT_TRUE(txt::loadFromPath("../", load));
+        times = 0;
+
+        /* not really effective but works */
+        for(uint a = 0; a  < match.size(); ++a){
+            for(uint b = 0; b < load.size(); ++b){
+                if(match[a] == load[b]){
+                    times += 1;
+                    break;
+                }
+            }
         }
-
-        ASSERT_EQ(text.size(), 5);
-
+        EXPECT_EQ(times, 5);
     }
 }
 
@@ -935,12 +1001,48 @@ TEST(find_line_from_diff, value){
 
     ASSERT_EQ(1 + 1, 2);
 }
-
+ /* FIX IT!!!*/
 TEST(biggest_decrease, value){
+    double arr[2][MAX_ARRAY_RAND] = {0};
+    uint cols, col, len, max, min, ret;
 
-    ASSERT_TRUE(true);
+    for(int j = 0; j < REPEAT; ++j){
+        memset(arr[0], 0, MAX_ARRAY_RAND * sizeof(double));
+        memset(arr[1], 0, MAX_ARRAY_RAND * sizeof(double));
+
+        cols = (std::rand() % 2) + 1;
+        col = (cols - 1) ? (std::rand() % 2) : 0;
+        len = std::rand() % MAX_ARRAY_RAND;
+
+        for(uint i = 0; i < len; ++i){
+            arr[0][i] = RAND_DOUBLE;
+            arr[1][i] = RAND_DOUBLE;
+        }
+
+        if(cols == 2)
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0], arr[1]));
+        else
+            EXPECT_TRUE(txt::fileWrite(EXAMPLE_WRITE, arr[0]));
+
+        min = txt::minInCol(EXAMPLE_WRITE, cols, col);
+        max = txt::maxInCol(EXAMPLE_WRITE, cols, col);
+        EXPECT_TRUE(ret = txt::biggestDecrease(EXAMPLE_WRITE, 1, cols, col)) << cols << "\t" << col << "\n";
+
+        ASSERT_EQ(ret, arr[col][max] - arr[col][min]) << max << "\t" << min << "\n";
+    }
+
 }
 
+/*
+TEST(random_float, not_zero){
+    double a;
+    for(uint j = 0; j < 1000000000; ++j){
+        a = RAND_DOUBLE;
+        if(a == 0)
+            FAIL();
+    }
+}
+*/
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);

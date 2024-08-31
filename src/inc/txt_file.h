@@ -134,10 +134,12 @@ namespace txt
     /* rewrite file from index startPoint, value between lines differ by d*/
     bool fileShortenOrdered(std::string fileName, uint32_t startPoint, double d = 0);
 
-    /* rewrite file to line index cut*/
+    /* cut all lines after cut line (cut line including)*/
+    /* (line numbering starts from 1) */
     bool fileCutFromLine(std::string fileName, uint32_t cut, uint32_t col_per_row = 2);
 
-    /* rewrite file from line index cut*/
+    /* cut all lines before cut line (cut line excluding)*/
+    /* (line numbering starts from 1) */
     bool fileCutToLine(std::string fileName, uint32_t cut, uint32_t col_per_row = 2);
     
     /* average values from files, write them to the fileWrite, formated*/
