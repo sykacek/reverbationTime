@@ -873,11 +873,11 @@ bool txt::filesAverage(std::vector<std::string> &files, std::string fileWrite, u
 
 double txt::returnTimeFromValue(std::string fileName, double value, uint16_t col_per_row, uint16_t column)
 {
-    if(!col_per_row)
-        return (double)0;
+    if(col_per_row < 1)
+        return (double)-1;
     
     if(column >= col_per_row)
-        return 0;
+        return -1;
     
     std::fstream read(fileName, std::ios_base::in);
     if(read.is_open()){
@@ -898,7 +898,7 @@ double txt::returnTimeFromValue(std::string fileName, double value, uint16_t col
 
         return time;
     } else {
-        std::cout << "unable to open file " << fileName << "\n";
+        std::cerr << "Error: failed to open file " << fileName << "\n";
         return (double)0;
     }
 }
@@ -915,55 +915,17 @@ bool txt::loadFromPath(std::string path, std::vector<std::string> &files)
         return false;
 }
 
-uint32_t txt::findLineFromDiff(std::string fileName, uint32_t startLine, double diff, uint16_t col_per_row, uint16_t column)
-{
-    if(!col_per_row)
-        return 0;
-    std::fstream read(fileName, std::ios_base::in);
-    if(read.is_open()){
-        message(fileName, true);
-
-        std::string line;
-        double temp, max;
-        uint32_t counter = 0;
-
-        for(uint32_t i = 1; i < startLine; i++)
-            getline(read, line);
-
-        for(int i = 0; i < column; i++)
-            read >> temp;
-
-        read >> max;
-        diff += max;
-
-        for(int i = max + 1; i < col_per_row; i++)
-            read >> temp;
-
-        while(read){
-            read >> temp;
-            if(counter++ % col_per_row == column && temp < diff)
-                break;
-        }
-        message(fileName, false);
-        read.close();
-
-        return counter/col_per_row;
-    } else {
-        std::cout << "unable to open file " << fileName << "\n";
-        return 0;
-    }
-}
-
 double txt::biggestDecrease(std::string fileName, uint32_t startLine, uint16_t col_per_row, uint16_t column)
 {
     if(!col_per_row)
-        return 0;
+        return -1;
 
     if(column >= col_per_row)
-        return 0;
+        return -1;
 
     if(!startLine)
-        return 0;
+        return -1;
+
     
     std::fstream read(fileName, std::ios_base::in);
     if(read.is_open()){

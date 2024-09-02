@@ -145,7 +145,8 @@ namespace txt
     /* average values from files, write them to the fileWrite, formated*/
     bool filesAverage(std::vector<std::string> & files, std::string fileWrite, uint32_t col_per_row = 2, uint32_t order1 = 0, uint32_t order2 = 1);
     
-    /* returns value from first column on same line as value*/
+    /* returns value in first column on same line as value*/
+    /* @return assumes time is positive - success = positive, failed = -1*/
     double returnTimeFromValue(std::string fileName, double value, uint16_t col_per_row = 2, uint16_t column = 1);
     
     /* load files from path to %vector
@@ -153,10 +154,9 @@ namespace txt
     */
     bool loadFromPath(std::string path, std::vector<std::string> & files);
     
-    /* returns index of line where is first discover different between values biger than diff*/
-    uint32_t findLineFromDiff(std::string fileName, uint32_t startLine = 1, double diff = -30, uint16_t col_per_row = 2, uint16_t column = 1);
-    
-    /* returns biggest decrease of values in column*/
+    /* returns biggest decrease from first value in column, */
+    /* values has to decreasing if they are not, returns -1*/
+    /* @return positive means success, -1 when failed*/
     double biggestDecrease(std::string fileName, uint32_t startLine = 1, uint16_t col_per_row = 2, uint16_t column = 1);
 };
 
