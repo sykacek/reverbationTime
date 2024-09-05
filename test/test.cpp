@@ -1041,7 +1041,7 @@ TEST(biggest_decrease, value){
 
 }
 
-/*
+
 TEST(random_float, not_zero){
     double a;
     for(uint j = 0; j < 1000000000; ++j){
@@ -1050,7 +1050,7 @@ TEST(random_float, not_zero){
             FAIL();
     }
 }
-*/
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);

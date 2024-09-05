@@ -10,8 +10,8 @@ First, install dependencies
 Then clone the repository
 
 ```sh
-    git clone https://github.com/sykacek/reverbationTime.git
-    cd reverbationTime
+    git clone https://github.com/sykacek/reverberation-time.git
+    cd reverberation-time
 ```
 then execute
 ```sh
@@ -27,7 +27,7 @@ Build script will prepare workspace for further usage.
 
 Running build script will prepare workspace as shown below
 ``` sh
-reverbationTime
+reverberation-time
 │
 ├── build - CMake build files are located here
 ├── docs - documentation

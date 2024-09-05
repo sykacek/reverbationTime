@@ -1,6 +1,6 @@
-# Reverbation Time
+# Reverberation Time
 
- Utility for plotting and analyzing reverbation from .wav files.
+ Utility for plotting and analyzing reverberation from .wav files.
 
 ## Intro
 
@@ -46,5 +46,4 @@ Again, output files from C++ engine are in the same format as input files.
 
 ### Tests
 
-Because functions in C++ engine can be seen as generic string proccessing functions, you can use it as library.
-Results may be seen in `tests` directory, if you would like to execute the test please see [testing guide](docs/TESTING.md).
+Core C++ engine function were unit testes using [Google Tests](https://github.com/google/googletest). Source files for unit testing are located in `test` directory.For further information about unit testing (and results) please refer to [testing guide](docs/TESTING.md).

@@ -20,3 +20,5 @@ Tests were aimed to various aspects of functions, trying to reach maximum level 
 * Each test suit is named after the functions which is tested.
 * Capital letters are substituted with underscore + letter, eg. function fooBar will be foo_bar
 * Test names should be intuitive
+
+## Results
